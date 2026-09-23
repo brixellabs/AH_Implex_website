@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import TopBar from './components/TopBar';
 import Navbar from './components/Navbar';
 import HeroSection from './components/HeroSection';
 import CompanyPillars from './components/CompanyPillars';
@@ -31,10 +30,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-navy-950 text-slate-100 flex flex-col selection:bg-gold-500 selection:text-navy-950">
-      {/* 1. Trust & International Announcement Bar */}
-      <TopBar />
-
-      {/* 2. Sticky Glassmorphic Navigation Bar */}
+      {/* Sticky Glassmorphic Navigation Bar */}
       <Navbar onOpenQuoteModal={handleOpenQuoteModal} />
 
       {/* Main Page Landmark */}
