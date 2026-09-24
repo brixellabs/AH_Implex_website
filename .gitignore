@@ -1,5 +1,19 @@
+# ==============================================================================
+# A&H IMPEX - GIT IGNORE CONFIGURATION (REACT + VITE + DJANGO REST)
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# 1. NODE / FRONTEND / VITE
+# ------------------------------------------------------------------------------
+node_modules/
+dist/
+dist-ssr/
+*.local
+.eslintcache
+.stylelintcache
+
 # Logs
-logs
+logs/
 *.log
 npm-debug.log*
 yarn-debug.log*
@@ -7,18 +21,92 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
+# ------------------------------------------------------------------------------
+# 2. PYTHON / DJANGO BACKEND
+# ------------------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
 
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
+# Virtual Environments
+venv/
+venv*/
+env/
+env*/
+ENV/
+.venv/
+backend/venv/
+backend/env/
+
+# Django Databases & Cache
+*.sqlite3
+db.sqlite3
+backend/db.sqlite3
+
+# Django Media & Static collected files
+media/
+backend/media/
+staticfiles/
+backend/staticfiles/
+
+# Testing & Coverage
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+nosetests.xml
+coverage.xml
+
+# ------------------------------------------------------------------------------
+# 3. ENVIRONMENT & SECRET KEYS (Keep .env.example tracked)
+# ------------------------------------------------------------------------------
+.env
+.env.*
+!.env.example
+backend/.env
+backend/.env.*
+!backend/.env.example
+
+# ------------------------------------------------------------------------------
+# 4. OS & IDE ARTIFACTS
+# ------------------------------------------------------------------------------
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# Editors (VS Code, JetBrains, Sublime, Vim)
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.idea/
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+*.swo
+*.swn
+*~

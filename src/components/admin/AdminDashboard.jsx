@@ -1,9 +1,10 @@
 /**
  * ==============================================================================
- * A&H IMPEX - COMPREHENSIVE ADMIN DASHBOARD & CMS PORTAL
+ * A&H IMPEX - COMPREHENSIVE ADMIN DASHBOARD & CMS PORTAL (DJANGO INTEGRATED)
  * ==============================================================================
  * Purpose: Full management suite for product catalog, categories, descriptions,
- *          technical specs, image uploads (file/URL), hero copy, and RFQ inquiries.
+ *          technical specs, image uploads (file/URL), hero copy, and RFQ inquiries,
+ *          with 3 distinct roles: SuperAdmin, Admin, and User (Client).
  * ==============================================================================
  */
 
@@ -37,14 +38,33 @@ import {
   faCopy,
   faClock,
   faEye,
-  faCircleExclamation
+  faCircleExclamation,
+  faUsers,
+  faCrown,
+  faUser,
+  faRightFromBracket,
+  faRightToBracket,
+  faServer,
+  faPaperPlane
 } from '@fortawesome/free-solid-svg-icons';
 import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import { useData } from '../../context/DataContext';
 import logoImg from '../../assets/logo.jpeg';
+import AuthModal from './AuthModal';
+import UserManagerTab from './UserManagerTab';
 
 export default function AdminDashboard({ onExitAdmin }) {
   const {
+    currentUser,
+    userRole,
+    isSuperAdmin,
+    isAdmin,
+    isRegularUser,
+    isAuthenticated,
+    backendStatus,
+    isBackendConnected,
+    login,
+    logout,
     products,
     categories,
     companyInfo,
@@ -56,20 +76,26 @@ export default function AdminDashboard({ onExitAdmin }) {
     updateCategory,
     deleteCategory,
     updateCompanyInfo,
+    updateInquiryStatus,
     deleteInquiry,
     resetAllData
   } = useData();
 
-  // Active navigation tab: 'overview' | 'products' | 'categories' | 'content' | 'inquiries'
+  // Active navigation tab: 'overview' | 'products' | 'categories' | 'content' | 'inquiries' | 'users'
   const [activeTab, setActiveTab] = useState('overview');
 
   // Search & Filters
   const [productSearch, setProductSearch] = useState('');
   const [productFilterCat, setProductFilterCat] = useState('all');
 
+  // Auth Modal State
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [authModalMode, setAuthModalMode] = useState('login');
+
   // Product Modal State
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
+  const [productImageFile, setProductImageFile] = useState(null);
   const [productFormData, setProductFormData] = useState({
     title: '',
     category: '',
@@ -107,6 +133,24 @@ export default function AdminDashboard({ onExitAdmin }) {
     }
   });
 
+  // Sync company form data when companyInfo context updates
+  React.useEffect(() => {
+    if (companyInfo) {
+      setCompanyFormData({
+        eyebrow: companyInfo.eyebrow || '',
+        heroDescription: companyInfo.heroDescription || '',
+        contact: {
+          email: companyInfo.contact?.email || '',
+          whatsapp: companyInfo.contact?.whatsapp || '',
+          whatsappClean: companyInfo.contact?.whatsappClean || '',
+          phone: companyInfo.contact?.phone || '',
+          address: companyInfo.contact?.address || '',
+          addressNote: companyInfo.contact?.addressNote || ''
+        }
+      });
+    }
+  }, [companyInfo]);
+
   // Toast notification
   const [toastMessage, setToastMessage] = useState(null);
   const showToast = (msg) => {
@@ -114,18 +158,16 @@ export default function AdminDashboard({ onExitAdmin }) {
     setTimeout(() => setToastMessage(null), 3500);
   };
 
-  // Image Upload handler (Base64 file reader)
+  // Image Upload handler (Stores file for Django backend multipart upload + reads data URL for local preview)
   const fileInputRef = useRef(null);
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
-      if (file.size > 2 * 1024 * 1024) {
-        alert('Image file size is large (>2MB). Please consider using a smaller image or an image URL.');
-      }
+      setProductImageFile(file);
       const reader = new FileReader();
       reader.onloadend = () => {
         setProductFormData((prev) => ({ ...prev, image: reader.result }));
-        showToast('Image uploaded successfully!');
+        showToast('Image attached and ready for upload!');
       };
       reader.readAsDataURL(file);
     }
@@ -135,6 +177,7 @@ export default function AdminDashboard({ onExitAdmin }) {
   const handleOpenAddProduct = () => {
     const firstCat = categories.find((c) => c.id !== 'all') || categories[0];
     setEditingProduct(null);
+    setProductImageFile(null);
     setProductFormData({
       title: '',
       category: firstCat ? firstCat.id : 'home-textiles',
@@ -158,6 +201,7 @@ export default function AdminDashboard({ onExitAdmin }) {
   // Open Edit Product
   const handleOpenEditProduct = (prod) => {
     setEditingProduct(prod);
+    setProductImageFile(null);
     setProductFormData({
       title: prod.title || '',
       category: prod.category || '',
@@ -178,8 +222,8 @@ export default function AdminDashboard({ onExitAdmin }) {
     setIsProductModalOpen(true);
   };
 
-  // Save Product (Create / Update)
-  const handleSaveProduct = (e) => {
+  // Save Product (Create / Update with Django Backend Image handling)
+  const handleSaveProduct = async (e) => {
     e.preventDefault();
     if (!productFormData.title.trim()) {
       alert('Please enter a product title');
@@ -195,44 +239,44 @@ export default function AdminDashboard({ onExitAdmin }) {
     };
 
     if (editingProduct) {
-      updateProduct(editingProduct.id, payload);
-      showToast(`Updated product "${payload.title}"`);
+      await updateProduct(editingProduct.id, payload, productImageFile);
+      showToast(`Updated product "${payload.title}" successfully`);
     } else {
-      addProduct(payload);
-      showToast(`Added new product "${payload.title}"`);
+      await addProduct(payload, productImageFile);
+      showToast(`Created product "${payload.title}" successfully`);
     }
 
     setIsProductModalOpen(false);
   };
 
   // Handle Delete Product
-  const handleDeleteProduct = (prod) => {
+  const handleDeleteProduct = async (prod) => {
     if (window.confirm(`Are you sure you want to delete "${prod.title}"?`)) {
-      deleteProduct(prod.id);
+      await deleteProduct(prod.id);
       showToast(`Deleted product "${prod.title}"`);
     }
   };
 
   // Handle Add Category
-  const handleAddCategory = (e) => {
+  const handleAddCategory = async (e) => {
     e.preventDefault();
     if (!newCatLabel.trim()) return;
-    const cat = addCategory({ label: newCatLabel.trim() });
+    const cat = await addCategory({ label: newCatLabel.trim() });
     setNewCatLabel('');
-    showToast(`Added new category "${cat.label}"`);
+    showToast(`Added category "${cat.label}"`);
   };
 
   // Handle Save Edited Category
-  const handleSaveEditCategory = (catId) => {
+  const handleSaveEditCategory = async (catId) => {
     if (!editingCatLabel.trim()) return;
-    updateCategory(catId, { label: editingCatLabel.trim() });
+    await updateCategory(catId, { label: editingCatLabel.trim() });
     setEditingCatId(null);
     setEditingCatLabel('');
     showToast('Category updated successfully');
   };
 
   // Handle Delete Category
-  const handleDeleteCategory = (cat) => {
+  const handleDeleteCategory = async (cat) => {
     if (cat.id === 'all') return;
     const count = products.filter((p) => p.category === cat.id).length;
     if (
@@ -240,16 +284,43 @@ export default function AdminDashboard({ onExitAdmin }) {
         `Are you sure you want to delete category "${cat.label}"? (${count} product(s) linked to this category)`
       )
     ) {
-      deleteCategory(cat.id);
+      await deleteCategory(cat.id);
       showToast(`Deleted category "${cat.label}"`);
     }
   };
 
   // Handle Save Company Info
-  const handleSaveCompanyInfo = (e) => {
+  const handleSaveCompanyInfo = async (e) => {
     e.preventDefault();
-    updateCompanyInfo(companyFormData);
-    showToast('Company details and Hero copy updated successfully!');
+    await updateCompanyInfo(companyFormData);
+    showToast('Company information updated successfully');
+  };
+
+  // Handle Inquiry Status Update
+  const handleInquiryStatusChange = async (inquiryId, newStatus) => {
+    await updateInquiryStatus(inquiryId, newStatus);
+    showToast(`Inquiry #${inquiryId} updated to "${newStatus}"`);
+  };
+
+  // Handle Admin / SuperAdmin Logout with direct return to live website
+  const handleAdminLogout = () => {
+    logout();
+    if (onExitAdmin) {
+      onExitAdmin();
+    } else {
+      window.location.hash = '';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  // Quick Demo Role Switcher Handlers
+  const handleSwitchDemoRole = async (username, password) => {
+    const res = await login(username, password);
+    if (res.success) {
+      showToast(`Logged in as ${res.user.role}: ${res.user.username}`);
+    } else {
+      showToast(`Login failed: ${res.error}`);
+    }
   };
 
   // Filtered products list for Product Manager tab
@@ -262,6 +333,70 @@ export default function AdminDashboard({ onExitAdmin }) {
       (p.specs?.composition && p.specs.composition.toLowerCase().includes(productSearch.toLowerCase()));
     return matchesCat && matchesSearch;
   });
+
+  // Access Guard: If current user is NOT an authorized Admin/SuperAdmin, show Restricted / Staff Login screen
+  if (!isAdmin) {
+    return (
+      <div className="min-h-screen bg-[#071830] text-white flex flex-col items-center justify-center p-6 text-center selection:bg-brand-500 selection:text-white relative overflow-hidden">
+        {/* Ambient subtle background glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        {/* Auth Modal */}
+        <AuthModal
+          isOpen={isAuthModalOpen}
+          onClose={() => setIsAuthModalOpen(false)}
+          defaultMode="login"
+          onLoginSuccess={(user) => {
+            showToast(`Welcome ${user.username} (${user.role})`);
+            setIsAuthModalOpen(false);
+          }}
+        />
+
+        <div className="relative z-10 max-w-md w-full flex flex-col items-center bg-brand-900/80 border border-brand-700/80 rounded-3xl p-8 backdrop-blur-xl shadow-2xl">
+          <div className="w-16 h-16 rounded-2xl bg-brand-800/90 border border-brand-500/40 text-rose-400 flex items-center justify-center text-2xl mb-5 shadow-lg shadow-rose-900/20">
+            <FontAwesomeIcon icon={faShieldHalved} />
+          </div>
+          
+          <h2 className="text-2xl font-bold font-display text-white mb-2">
+            Administrative Access Restricted
+          </h2>
+
+          {isAuthenticated && isRegularUser ? (
+            <p className="text-xs sm:text-sm text-slate-300 mb-6 leading-relaxed">
+              Signed in as <span className="text-amber-300 font-semibold font-mono">"{currentUser?.username}"</span> (Client Role). Commercial buyer accounts do not have access to backend management controls.
+            </p>
+          ) : (
+            <p className="text-xs sm:text-sm text-slate-300 mb-6 leading-relaxed">
+              Authentication required. Please sign in with authorized Staff Administrator or SuperAdmin credentials to access the console.
+            </p>
+          )}
+
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 w-full">
+            <button
+              onClick={() => {
+                if (isAuthenticated && isRegularUser) {
+                  logout();
+                }
+                setIsAuthModalOpen(true);
+              }}
+              className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 via-brand-500 to-brand-600 hover:from-blue-500 hover:to-brand-500 text-white font-bold text-xs tracking-wide shadow-md flex items-center justify-center gap-2 transition-all shimmer-sweep active:scale-98"
+            >
+              <FontAwesomeIcon icon={faRightToBracket} className="text-xs" />
+              <span>{isAuthenticated && isRegularUser ? 'Sign In as Staff' : 'Staff Sign In'}</span>
+            </button>
+
+            <button
+              onClick={onExitAdmin}
+              className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-brand-800/80 hover:bg-brand-700 text-slate-200 hover:text-white border border-brand-600/50 font-semibold text-xs transition-all active:scale-98 flex items-center justify-center gap-2"
+            >
+              <FontAwesomeIcon icon={faGlobe} className="text-xs" />
+              <span>Return to Website</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 flex flex-col font-sans selection:bg-brand-500 selection:text-white">
@@ -281,53 +416,86 @@ export default function AdminDashboard({ onExitAdmin }) {
         )}
       </AnimatePresence>
 
-      {/* Admin Top Navigation Bar */}
-      <header className="sticky top-0 z-40 bg-brand-900 border-b border-brand-800 backdrop-blur-xl shadow-xl text-white">
+      {/* Auth Modal */}
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onClose={() => setIsAuthModalOpen(false)}
+        defaultMode={authModalMode}
+        onLoginSuccess={(user) => showToast(`Welcome ${user.username} (${user.role})`)}
+      />
+
+      {/* Admin Top Navigation Bar (Consistent with Main Website glass-nav) */}
+      <header className="sticky top-0 z-40 glass-nav border-b border-brand-700/80 text-white shadow-2xl backdrop-blur-xl">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 gap-4">
             
-            {/* Left Brand info with Admin Badge */}
+            {/* Left Brand Identity */}
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-lg overflow-hidden bg-brand-800 border border-brand-500/40 flex items-center justify-center shrink-0 shadow-md">
-                <img src={logoImg} alt="A&H Impex" className="w-full h-full object-cover" />
+              <div className="w-9 h-9 rounded-xl overflow-hidden bg-brand-800 border border-brand-500/40 flex items-center justify-center shrink-0 shadow-lg">
+                <img src={logoImg} alt="A&H Impex Logo" className="w-full h-full object-cover" />
               </div>
-              <div className="flex flex-col">
-                <div className="flex items-center gap-2">
-                  <span className="text-base font-extrabold text-white tracking-tight font-display">
-                    A&amp;H <span className="text-brand-300 font-light">IMPEX</span>
-                  </span>
-                  <span className="px-2 py-0.5 rounded-md bg-brand-700 text-brand-200 border border-brand-500/40 text-[10px] font-bold font-mono uppercase tracking-wider">
-                    Admin Portal
-                  </span>
+              <div className="flex items-center gap-2.5">
+                <span className="text-base font-extrabold text-white tracking-tight font-display">
+                  A&amp;H <span className="text-brand-300 font-light">IMPEX</span>
+                </span>
+                <span className="hidden sm:inline-block px-2.5 py-0.5 rounded-full bg-brand-800/90 text-brand-200 border border-brand-600/50 text-[10px] font-semibold tracking-wide">
+                  Console
+                </span>
+                <div className="hidden lg:flex items-center gap-1.5 text-[11px] text-brand-200/80 ml-2 border-l border-brand-700/80 pl-3">
+                  <span className={`w-1.5 h-1.5 rounded-full ${isBackendConnected ? 'bg-emerald-400' : 'bg-amber-400'}`}></span>
+                  <span className="font-medium text-slate-300">{backendStatus}</span>
                 </div>
-                <span className="text-[10px] text-slate-300 font-medium">Textile Catalog &amp; CMS Manager</span>
               </div>
             </div>
 
-            {/* Right Action buttons: View Live Site & Reset Data */}
-            <div className="flex items-center gap-2.5">
-              <button
-                onClick={() => {
-                  if (window.confirm('Reset all catalog data and inquiries to factory defaults?')) {
-                    resetAllData();
-                    showToast('Catalog data reset to initial defaults');
-                  }
-                }}
-                className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-brand-800 hover:bg-rose-900/60 border border-brand-700 hover:border-rose-500/40 text-slate-300 hover:text-rose-200 text-xs transition-all"
-                title="Reset local changes to original defaults"
-              >
-                <FontAwesomeIcon icon={faRotateLeft} className="text-xs" />
-                <span>Reset Defaults</span>
-              </button>
-
+            {/* Right Action Cluster */}
+            <div className="flex items-center gap-3">
               <button
                 onClick={onExitAdmin}
-                className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-blue-600 via-brand-500 to-brand-600 hover:from-blue-500 hover:to-brand-500 text-white font-bold text-xs shadow-md hover:shadow-cyan-500/20 transition-all hover:scale-[1.02] active:scale-[0.98] shimmer-sweep"
+                className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-gradient-to-r from-blue-600 via-brand-500 to-brand-600 hover:from-blue-500 hover:to-brand-500 text-white font-semibold text-xs tracking-wide shadow-md hover:shadow-cyan-500/25 transition-all shimmer-sweep"
+                title="View public website"
               >
                 <FontAwesomeIcon icon={faGlobe} className="text-xs" />
-                <span>View Live Website</span>
-                <FontAwesomeIcon icon={faArrowRight} className="text-xs ml-0.5" />
+                <span className="hidden sm:inline">Live Website</span>
+                <FontAwesomeIcon icon={faArrowRight} className="text-[10px] text-blue-200 ml-0.5" />
               </button>
+
+              <div className="h-5 w-px bg-brand-700/80"></div>
+
+              {/* User Profile Widget */}
+              {isAuthenticated ? (
+                <div className="flex items-center gap-2.5">
+                  <div className="w-8 h-8 rounded-lg bg-brand-800 border border-brand-600/60 flex items-center justify-center text-xs font-bold text-brand-200 shadow-sm">
+                    {currentUser?.username ? currentUser.username.slice(0, 2).toUpperCase() : 'ST'}
+                  </div>
+                  <div className="hidden md:flex flex-col text-left">
+                    <span className="text-xs font-bold text-white leading-none">
+                      {currentUser?.username || 'Administrator'}
+                    </span>
+                    <span className="text-[10px] font-medium text-brand-300 mt-0.5">
+                      {isSuperAdmin ? 'Super Administrator' : 'Staff Admin'}
+                    </span>
+                  </div>
+                  <button
+                    onClick={handleAdminLogout}
+                    className="w-8 h-8 rounded-lg bg-brand-800 hover:bg-rose-900/60 border border-brand-700 hover:border-rose-500/40 text-slate-300 hover:text-rose-200 flex items-center justify-center text-xs transition-all ml-1 shadow-sm"
+                    title="Sign out and return to website"
+                  >
+                    <FontAwesomeIcon icon={faRightFromBracket} />
+                  </button>
+                </div>
+              ) : (
+                <button
+                  onClick={() => {
+                    setAuthModalMode('login');
+                    setIsAuthModalOpen(true);
+                  }}
+                  className="px-3.5 py-1.5 rounded-lg bg-gradient-to-r from-blue-600 via-brand-500 to-brand-600 text-white text-xs font-semibold shadow-md transition-all flex items-center gap-1.5"
+                >
+                  <FontAwesomeIcon icon={faRightToBracket} className="text-xs" />
+                  <span>Sign In</span>
+                </button>
+              )}
             </div>
 
           </div>
@@ -338,39 +506,42 @@ export default function AdminDashboard({ onExitAdmin }) {
       <div className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
         
         {/* Navigation Tabs Bar */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-4 mb-8 border-b border-slate-200 no-scrollbar">
+        <div className="flex flex-wrap items-center gap-2 pb-4 mb-6 border-b border-slate-200">
           {[
-            { id: 'overview', label: 'Overview', icon: faGauge, count: null },
-            { id: 'products', label: 'Products & Collections', icon: faBoxesStacked, count: products.length },
-            { id: 'categories', label: 'Category Manager', icon: faTags, count: categories.length },
-            { id: 'content', label: 'Hero Copy & Company Details', icon: faBuilding, count: null },
-            { id: 'inquiries', label: 'Buyer RFQs & Inquiries', icon: faInbox, count: inquiries.length },
-          ].map((tab) => {
-            const isActive = activeTab === tab.id;
-            return (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all ${
-                  isActive
-                    ? 'bg-gradient-to-r from-blue-600 via-brand-500 to-brand-600 text-white shadow-md shadow-brand-500/20'
-                    : 'bg-white hover:bg-slate-100 text-slate-700 hover:text-slate-900 border border-slate-200 shadow-sm'
-                }`}
-              >
-                <FontAwesomeIcon icon={tab.icon} className="text-xs" />
-                <span>{tab.label}</span>
-                {tab.count !== null && (
-                  <span
-                    className={`px-1.5 py-0.2 rounded-full text-[10px] font-mono font-bold ${
-                      isActive ? 'bg-white text-brand-800' : 'bg-slate-100 text-slate-600'
-                    }`}
-                  >
-                    {tab.count}
-                  </span>
-                )}
-              </button>
-            );
-          })}
+            { id: 'overview', label: 'Overview', icon: faGauge, count: null, visible: true },
+            { id: 'products', label: 'Products & Collections', icon: faBoxesStacked, count: products.length, visible: !isRegularUser },
+            { id: 'categories', label: 'Categories', icon: faTags, count: categories.length, visible: !isRegularUser },
+            { id: 'content', label: 'Company CMS', icon: faBuilding, count: null, visible: !isRegularUser },
+            { id: 'inquiries', label: 'Buyer RFQs', icon: faInbox, count: inquiries.length, visible: true },
+            { id: 'users', label: 'Staff & Roles', icon: faUsers, count: null, visible: isSuperAdmin },
+          ]
+            .filter(tab => tab.visible)
+            .map((tab) => {
+              const isActive = activeTab === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all ${
+                    isActive
+                      ? 'bg-gradient-to-r from-blue-600 via-brand-500 to-brand-600 text-white shadow-md shadow-brand-500/20 border border-brand-400/40'
+                      : 'bg-white hover:bg-brand-50/70 text-slate-700 hover:text-brand-700 border border-slate-200 shadow-sm'
+                  }`}
+                >
+                  <FontAwesomeIcon icon={tab.icon} className={`text-[11px] ${isActive ? 'text-white' : 'text-slate-400'}`} />
+                  <span>{tab.label}</span>
+                  {tab.count !== null && (
+                    <span
+                      className={`px-1.5 py-0.2 rounded-full text-[10px] font-semibold ${
+                        isActive ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-600'
+                      }`}
+                    >
+                      {tab.count}
+                    </span>
+                  )}
+                </button>
+              );
+            })}
         </div>
 
         {/* TAB 1: OVERVIEW & QUICK METRICS */}
@@ -382,18 +553,18 @@ export default function AdminDashboard({ onExitAdmin }) {
             className="space-y-8"
           >
             {/* KPI Metric Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
               
               <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm relative overflow-hidden">
                 <div className="flex items-center justify-between">
                   <span className="text-xs text-slate-500 font-medium">Export Product Lines</span>
-                  <div className="w-8 h-8 rounded-lg bg-brand-50 text-brand-700 flex items-center justify-center">
+                  <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
                     <FontAwesomeIcon icon={faBoxesStacked} />
                   </div>
                 </div>
                 <div className="mt-3">
-                  <span className="text-3xl font-extrabold text-slate-900 font-serif">{products.length}</span>
-                  <span className="text-xs text-slate-500 block mt-1">Active items live on site</span>
+                  <span className="text-3xl font-extrabold text-slate-900 font-display">{products.length}</span>
+                  <span className="text-xs text-slate-500 block mt-1">Active items live on catalog</span>
                 </div>
               </div>
 
@@ -405,7 +576,7 @@ export default function AdminDashboard({ onExitAdmin }) {
                   </div>
                 </div>
                 <div className="mt-3">
-                  <span className="text-3xl font-extrabold text-slate-900 font-serif">{categories.length - 1}</span>
+                  <span className="text-3xl font-extrabold text-slate-900 font-display">{categories.length}</span>
                   <span className="text-xs text-slate-500 block mt-1">Specialized collections</span>
                 </div>
               </div>
@@ -413,26 +584,13 @@ export default function AdminDashboard({ onExitAdmin }) {
               <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm relative overflow-hidden">
                 <div className="flex items-center justify-between">
                   <span className="text-xs text-slate-500 font-medium">Received RFQ Inquiries</span>
-                  <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
+                  <div className="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center">
                     <FontAwesomeIcon icon={faInbox} />
                   </div>
                 </div>
                 <div className="mt-3">
-                  <span className="text-3xl font-extrabold text-slate-900 font-serif">{inquiries.length}</span>
+                  <span className="text-3xl font-extrabold text-slate-900 font-display">{inquiries.length}</span>
                   <span className="text-xs text-slate-500 block mt-1">International buyer leads</span>
-                </div>
-              </div>
-
-              <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm relative overflow-hidden">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs text-slate-500 font-medium">Export Destinations</span>
-                  <div className="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center">
-                    <FontAwesomeIcon icon={faGlobe} />
-                  </div>
-                </div>
-                <div className="mt-3">
-                  <span className="text-3xl font-extrabold text-slate-900 font-serif">25+</span>
-                  <span className="text-xs text-slate-500 block mt-1">Global ports &amp; markets</span>
                 </div>
               </div>
 
@@ -444,91 +602,84 @@ export default function AdminDashboard({ onExitAdmin }) {
               {/* Left 2 Cols: Quick Management Actions */}
               <div className="lg:col-span-2 p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-4">
                 <div className="flex items-center justify-between">
-                  <h3 className="text-lg font-bold text-slate-900 font-serif">Quick Management Actions</h3>
-                  <span className="text-xs text-slate-500">Instant catalog updates</span>
+                  <div>
+                    <h3 className="text-lg font-bold text-slate-900 font-display">Quick Management Actions</h3>
+                    <p className="text-xs text-slate-500 mt-0.5">Direct shortcuts to manage commercial catalog &amp; buyer workflows</p>
+                  </div>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
                   <button
                     onClick={handleOpenAddProduct}
-                    className="p-4 rounded-xl bg-slate-50 hover:bg-white border border-slate-200 hover:border-brand-500 hover:shadow-md text-left transition-all group"
+                    className="p-4 rounded-xl border border-slate-200 hover:border-blue-500 hover:bg-slate-50 text-left transition-all group"
                   >
-                    <div className="w-10 h-10 rounded-lg bg-brand-100 text-brand-700 flex items-center justify-center mb-3 group-hover:bg-brand-600 group-hover:text-white transition-colors">
-                      <FontAwesomeIcon icon={faPlus} className="text-base" />
+                    <div className="w-9 h-9 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
+                      <FontAwesomeIcon icon={faPlus} />
                     </div>
-                    <h4 className="text-sm font-bold text-slate-900 group-hover:text-brand-700 transition-colors">Add New Product</h4>
-                    <p className="text-xs text-slate-500 mt-1">Upload image, set yarn specs, MOQ and export description.</p>
+                    <span className="font-bold text-slate-900 text-xs block">Add New Product</span>
+                    <span className="text-[11px] text-slate-500">Upload images &amp; export specs</span>
                   </button>
 
                   <button
                     onClick={() => setActiveTab('categories')}
-                    className="p-4 rounded-xl bg-slate-50 hover:bg-white border border-slate-200 hover:border-emerald-500 hover:shadow-md text-left transition-all group"
+                    className="p-4 rounded-xl border border-slate-200 hover:border-emerald-500 hover:bg-slate-50 text-left transition-all group"
                   >
-                    <div className="w-10 h-10 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center mb-3 group-hover:bg-emerald-600 group-hover:text-white transition-colors">
-                      <FontAwesomeIcon icon={faTags} className="text-base" />
+                    <div className="w-9 h-9 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
+                      <FontAwesomeIcon icon={faTags} />
                     </div>
-                    <h4 className="text-sm font-bold text-slate-900 group-hover:text-emerald-700 transition-colors">Manage Categories</h4>
-                    <p className="text-xs text-slate-500 mt-1">Create new textile categories or rename existing collections.</p>
-                  </button>
-
-                  <button
-                    onClick={() => setActiveTab('content')}
-                    className="p-4 rounded-xl bg-slate-50 hover:bg-white border border-slate-200 hover:border-blue-500 hover:shadow-md text-left transition-all group"
-                  >
-                    <div className="w-10 h-10 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center mb-3 group-hover:bg-blue-600 group-hover:text-white transition-colors">
-                      <FontAwesomeIcon icon={faBuilding} className="text-base" />
-                    </div>
-                    <h4 className="text-sm font-bold text-slate-900 group-hover:text-blue-700 transition-colors">Edit Hero &amp; Contacts</h4>
-                    <p className="text-xs text-slate-500 mt-1">Update hero banner copy, phone numbers, email and WhatsApp.</p>
+                    <span className="font-bold text-slate-900 text-xs block">Manage Categories</span>
+                    <span className="text-[11px] text-slate-500">Edit product sectors &amp; taxonomy</span>
                   </button>
 
                   <button
                     onClick={() => setActiveTab('inquiries')}
-                    className="p-4 rounded-xl bg-slate-50 hover:bg-white border border-slate-200 hover:border-purple-500 hover:shadow-md text-left transition-all group"
+                    className="p-4 rounded-xl border border-slate-200 hover:border-indigo-500 hover:bg-slate-50 text-left transition-all group"
                   >
-                    <div className="w-10 h-10 rounded-lg bg-purple-100 text-purple-700 flex items-center justify-center mb-3 group-hover:bg-purple-600 group-hover:text-white transition-colors">
-                      <FontAwesomeIcon icon={faInbox} className="text-base" />
+                    <div className="w-9 h-9 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
+                      <FontAwesomeIcon icon={faInbox} />
                     </div>
-                    <h4 className="text-sm font-bold text-slate-900 group-hover:text-purple-700 transition-colors">Review RFQ Leads ({inquiries.length})</h4>
-                    <p className="text-xs text-slate-500 mt-1">View buyer submissions, target port, and technical inquiries.</p>
+                    <span className="font-bold text-slate-900 text-xs block">View Buyer RFQs</span>
+                    <span className="text-[11px] text-slate-500">Check incoming quotes &amp; dispatch</span>
                   </button>
                 </div>
               </div>
 
-              {/* Right Col: Live System Information */}
+              {/* Right Col: Recent Buyer Inquiries Summary */}
               <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-4">
-                <h3 className="text-lg font-bold text-slate-900 font-serif">System Status</h3>
-                
-                <div className="space-y-3 text-xs text-slate-700">
-                  <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between">
-                    <span className="text-slate-500">Database Engine</span>
-                    <span className="font-mono text-emerald-700 font-bold">LocalStorage (Live)</span>
-                  </div>
-
-                  <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between">
-                    <span className="text-slate-500">Real-time Website Sync</span>
-                    <span className="font-mono text-emerald-700 font-bold">Active (0ms Delay)</span>
-                  </div>
-
-                  <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between">
-                    <span className="text-slate-500">Active Company Email</span>
-                    <span className="font-mono text-brand-700 font-bold truncate max-w-[140px]">{companyInfo.contact?.email}</span>
-                  </div>
-
-                  <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between">
-                    <span className="text-slate-500">Active WhatsApp Desk</span>
-                    <span className="font-mono text-emerald-700 font-bold">{companyInfo.contact?.whatsapp}</span>
-                  </div>
+                <div className="flex items-center justify-between">
+                  <h3 className="text-base font-bold text-slate-900 font-display">Recent Inquiries</h3>
+                  <button
+                    onClick={() => setActiveTab('inquiries')}
+                    className="text-xs text-blue-600 hover:text-blue-700 font-medium"
+                  >
+                    View All &rarr;
+                  </button>
                 </div>
 
-                <div className="pt-2">
-                  <button
-                    onClick={onExitAdmin}
-                    className="w-full py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs border border-slate-200 flex items-center justify-center gap-2 transition-colors shadow-sm"
-                  >
-                    <FontAwesomeIcon icon={faEye} />
-                    <span>Preview Live Storefront</span>
-                  </button>
+                <div className="space-y-2.5">
+                  {inquiries && inquiries.length > 0 ? (
+                    inquiries.slice(0, 3).map((inq, idx) => (
+                      <div key={inq.id || idx} className="p-3 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-between gap-3">
+                        <div className="min-w-0">
+                          <span className="text-xs font-semibold text-slate-900 block truncate">{inq.name || 'Commercial Buyer'}</span>
+                          <span className="text-[11px] text-slate-500 block truncate">{inq.company || inq.email}</span>
+                        </div>
+                        <span className={`shrink-0 px-2 py-0.5 rounded-md text-[10px] font-semibold border ${
+                          inq.status === 'Quoted'
+                            ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                            : inq.status === 'Under Review'
+                            ? 'bg-amber-50 text-amber-700 border-amber-200'
+                            : 'bg-blue-50 text-blue-700 border-blue-200'
+                        }`}>
+                          {inq.status || 'New'}
+                        </span>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="py-6 text-center text-xs text-slate-400">
+                      No pending buyer inquiries.
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -544,37 +695,30 @@ export default function AdminDashboard({ onExitAdmin }) {
             transition={{ duration: 0.3 }}
             className="space-y-6"
           >
-            {/* Action Bar: Search, Category Filter, and Add Product Button */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
-              
-              <div className="flex flex-1 items-center gap-3">
-                {/* Search Input */}
-                <div className="relative flex-1 max-w-md">
+            {/* Action & Filter Toolbar */}
+            <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-3 flex-1">
+                {/* Search */}
+                <div className="relative flex-1 max-w-sm">
                   <FontAwesomeIcon icon={faSearch} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs" />
                   <input
                     type="text"
                     value={productSearch}
                     onChange={(e) => setProductSearch(e.target.value)}
-                    placeholder="Search by title, yarn spec, GSM, or description..."
-                    className="w-full pl-9 pr-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 placeholder-slate-400 text-xs focus:outline-none focus:border-brand-500 focus:bg-white"
+                    placeholder="Search products by title, specs, or yarn..."
+                    className="w-full pl-9 pr-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-xs placeholder-slate-400 focus:outline-none focus:border-brand-500"
                   />
-                  {productSearch && (
-                    <button
-                      onClick={() => setProductSearch('')}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700"
-                    >
-                      <FontAwesomeIcon icon={faXmark} className="text-xs" />
-                    </button>
-                  )}
                 </div>
 
                 {/* Category Filter */}
-                <div className="shrink-0">
+                <div className="flex items-center gap-2">
+                  <FontAwesomeIcon icon={faFilter} className="text-slate-400 text-xs" />
                   <select
                     value={productFilterCat}
                     onChange={(e) => setProductFilterCat(e.target.value)}
-                    className="px-3 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-800 text-xs font-medium focus:outline-none focus:border-brand-500 focus:bg-white"
+                    className="px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-slate-700 text-xs focus:outline-none focus:border-brand-500"
                   >
+                    <option value="all">All Categories ({products.length})</option>
                     {categories.map((c) => (
                       <option key={c.id} value={c.id}>
                         {c.label}
@@ -584,395 +728,448 @@ export default function AdminDashboard({ onExitAdmin }) {
                 </div>
               </div>
 
-              {/* Add New Product Trigger */}
+              {/* Add Product Button */}
               <button
                 onClick={handleOpenAddProduct}
-                className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 via-brand-500 to-brand-600 hover:from-blue-500 hover:to-brand-500 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all shrink-0 shimmer-sweep"
+                className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 via-brand-500 to-brand-600 hover:from-blue-500 hover:to-brand-500 text-white font-bold text-xs uppercase tracking-wider shadow-md flex items-center justify-center gap-2 shimmer-sweep shrink-0"
               >
                 <FontAwesomeIcon icon={faPlus} className="text-xs" />
-                <span>Add New Product</span>
+                <span>Add Export Product</span>
               </button>
             </div>
 
             {/* Products Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredProducts.map((prod) => (
+              {filteredProducts.map((p) => (
                 <div
-                  key={prod.id}
-                  className="rounded-2xl bg-white border border-slate-200 overflow-hidden shadow-sm hover:shadow-xl hover:border-brand-500 transition-all flex flex-col group"
+                  key={p.id}
+                  className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between"
                 >
-                  {/* Thumbnail Image with Badges */}
-                  <div className="relative h-48 bg-slate-100 overflow-hidden">
-                    <img
-                      src={prod.image}
-                      alt={prod.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent" />
-                    
-                    <span className="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-brand-900/90 backdrop-blur-md border border-brand-500/30 text-white text-[10px] font-bold uppercase tracking-wider font-mono">
-                      {prod.categoryName || prod.category}
-                    </span>
-
-                    {prod.badge && (
-                      <span className="absolute top-3 right-3 px-2 py-0.5 rounded-md bg-emerald-600 text-white text-[10px] font-bold shadow">
-                        {prod.badge}
+                  <div>
+                    {/* Cover Image */}
+                    <div className="h-44 w-full relative bg-slate-100 overflow-hidden">
+                      <img
+                        src={p.image || 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=800&q=80'}
+                        alt={p.title}
+                        className="w-full h-full object-cover"
+                      />
+                      <span className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-brand-900/90 backdrop-blur-md text-brand-300 text-[10px] font-bold font-mono uppercase tracking-wider border border-brand-500/30">
+                        {p.badge || 'Export Grade'}
                       </span>
-                    )}
-
-                    <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-[11px] text-slate-100 font-mono">
-                      <span>MOQ: {prod.specs?.moq || '500 Sets'}</span>
-                      <span>{prod.specs?.gsm || 'Export Quality'}</span>
+                      <span className="absolute top-3 right-3 px-2 py-0.5 rounded-md bg-black/70 backdrop-blur-md text-white text-[10px] font-mono">
+                        {p.categoryName || p.category}
+                      </span>
                     </div>
-                  </div>
 
-                  {/* Card Body */}
-                  <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
-                    <div>
-                      <h4 className="text-base font-bold text-slate-900 font-serif line-clamp-1">{prod.title}</h4>
-                      {prod.tagline && (
-                        <p className="text-xs text-brand-700 font-bold mt-0.5 line-clamp-1 font-mono">{prod.tagline}</p>
-                      )}
-                      <p className="text-xs text-slate-600 mt-2 line-clamp-2 leading-relaxed font-normal">
-                        {prod.description}
-                      </p>
-
-                      {/* Technical Specs Tags */}
-                      <div className="mt-3 pt-3 border-t border-slate-100 space-y-1 text-[11px] text-slate-600 font-normal">
-                        {prod.specs?.composition && (
-                          <p><strong className="text-slate-800 font-semibold font-mono">Yarn / Weave:</strong> {prod.specs.composition}</p>
+                    {/* Content */}
+                    <div className="p-5 space-y-2.5">
+                      <h4 className="font-bold text-slate-900 text-sm font-serif line-clamp-1">{p.title}</h4>
+                      <p className="text-xs text-slate-500 line-clamp-2">{p.tagline || p.description}</p>
+                      
+                      {/* Specs pills */}
+                      <div className="pt-2 border-t border-slate-100 flex flex-wrap gap-1.5 text-[10px]">
+                        {p.specs?.composition && (
+                          <span className="px-2 py-0.5 rounded-md bg-slate-100 text-slate-700 font-mono">
+                            {p.specs.composition}
+                          </span>
                         )}
-                        {prod.specs?.leadTime && (
-                          <p><strong className="text-slate-800 font-semibold font-mono">Lead Time:</strong> {prod.specs.leadTime}</p>
+                        {p.specs?.moq && (
+                          <span className="px-2 py-0.5 rounded-md bg-brand-50 text-brand-700 font-mono font-bold">
+                            MOQ: {p.specs.moq}
+                          </span>
                         )}
                       </div>
                     </div>
+                  </div>
 
-                    {/* Action Buttons */}
-                    <div className="flex items-center gap-2 pt-3 border-t border-slate-100">
-                      <button
-                        onClick={() => handleOpenEditProduct(prod)}
-                        className="flex-1 py-2 rounded-xl bg-brand-50 hover:bg-brand-600 hover:text-white text-brand-700 text-xs font-bold border border-brand-200 hover:border-transparent flex items-center justify-center gap-1.5 transition-all shadow-sm"
-                      >
-                        <FontAwesomeIcon icon={faPenToSquare} className="text-xs" />
-                        <span>Edit Product</span>
-                      </button>
-
-                      <button
-                        onClick={() => handleDeleteProduct(prod)}
-                        className="p-2 rounded-xl bg-slate-100 hover:bg-rose-600 text-slate-500 hover:text-white text-xs border border-slate-200 hover:border-rose-600 transition-all"
-                        title="Delete product"
-                      >
-                        <FontAwesomeIcon icon={faTrash} />
-                      </button>
-                    </div>
+                  {/* Card Footer Actions */}
+                  <div className="px-5 py-3 bg-slate-50 border-t border-slate-100 flex items-center justify-end gap-2">
+                    <button
+                      onClick={() => handleOpenEditProduct(p)}
+                      className="px-3 py-1.5 rounded-lg bg-white hover:bg-brand-50 text-brand-700 border border-slate-200 text-xs font-bold flex items-center gap-1.5 transition-colors shadow-sm"
+                    >
+                      <FontAwesomeIcon icon={faPenToSquare} className="text-xs" />
+                      <span>Edit</span>
+                    </button>
+                    <button
+                      onClick={() => handleDeleteProduct(p)}
+                      className="px-3 py-1.5 rounded-lg bg-white hover:bg-rose-50 text-rose-600 border border-slate-200 text-xs font-bold flex items-center gap-1.5 transition-colors shadow-sm"
+                    >
+                      <FontAwesomeIcon icon={faTrash} className="text-xs" />
+                      <span>Delete</span>
+                    </button>
                   </div>
                 </div>
               ))}
             </div>
-
-            {filteredProducts.length === 0 && (
-              <div className="py-16 text-center bg-white rounded-2xl border border-slate-200 shadow-sm space-y-3">
-                <FontAwesomeIcon icon={faBoxesStacked} className="text-4xl text-slate-300" />
-                <h4 className="text-lg font-bold text-slate-900 font-serif">No Products Found</h4>
-                <p className="text-xs text-slate-500 max-w-sm mx-auto">
-                  No items match the current search query or category filter. Try clearing filters or create a new product.
-                </p>
-                <button
-                  onClick={handleOpenAddProduct}
-                  className="px-4 py-2 rounded-xl bg-gradient-to-r from-blue-600 to-brand-600 text-white font-bold text-xs inline-flex items-center gap-2 mt-2 shadow"
-                >
-                  <FontAwesomeIcon icon={faPlus} />
-                  <span>Add First Product</span>
-                </button>
-              </div>
-            )}
           </motion.div>
         )}
 
-        {/* TAB 3: CATEGORY MANAGER */}
+        {/* TAB 3: CATEGORIES MANAGER */}
         {activeTab === 'categories' && (
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
-            className="space-y-6 max-w-4xl"
+            className="space-y-6 w-full"
           >
-            {/* Add Category Card */}
-            <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-4">
-              <div className="flex items-center gap-2">
-                <FontAwesomeIcon icon={faTags} className="text-brand-600 text-base" />
-                <h3 className="text-lg font-bold text-slate-900 font-serif">Add New Textile Category</h3>
+            {/* Header / Intro Bar */}
+            <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+              <div>
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-800 text-xs font-semibold uppercase tracking-wider mb-2 border border-blue-100">
+                  <FontAwesomeIcon icon={faTags} className="text-blue-600 text-xs" />
+                  <span>Taxonomy &amp; Catalog Management</span>
+                </div>
+                <h2 className="text-xl sm:text-2xl font-bold text-slate-900 font-display">
+                  Product Categories &amp; Classifications
+                </h2>
+                <p className="text-xs sm:text-sm text-slate-500 mt-1 max-w-2xl">
+                  Define and structure export product categories. Categories instantly organize catalog browsing and power buyer quote routing.
+                </p>
               </div>
-              <p className="text-xs text-slate-600 font-normal">
-                Categories are dynamically displayed in the navigation tabs and product filters across the entire website.
-              </p>
 
-              <form onSubmit={handleAddCategory} className="flex flex-col sm:flex-row gap-3 pt-2">
-                <input
-                  type="text"
-                  required
-                  value={newCatLabel}
-                  onChange={(e) => setNewCatLabel(e.target.value)}
-                  placeholder="e.g. Institutional Towels &amp; Bath Robes"
-                  className="flex-1 px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 placeholder-slate-400 text-xs focus:outline-none focus:border-brand-500 focus:bg-white"
-                />
-                <button
-                  type="submit"
-                  className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 via-brand-500 to-brand-600 text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shrink-0 shadow-md hover:scale-[1.02] transition-all"
-                >
-                  <FontAwesomeIcon icon={faPlus} />
-                  <span>Create Category</span>
-                </button>
-              </form>
+              <div className="flex items-center gap-3 shrink-0">
+                <div className="px-4 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs font-mono text-slate-600">
+                  Total Collections: <strong className="text-brand-800 font-bold">{categories.length}</strong>
+                </div>
+              </div>
             </div>
 
-            {/* Existing Categories List */}
-            <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-4">
-              <div className="flex items-center justify-between">
-                <h3 className="text-lg font-bold text-slate-900 font-serif">Active Product Categories</h3>
-                <span className="text-xs text-slate-500">{categories.length} Categories Registered</span>
-              </div>
-
-              <div className="divide-y divide-slate-100">
-                {categories.map((cat) => {
-                  const isAll = cat.id === 'all';
-                  const prodCount = isAll
-                    ? products.length
-                    : products.filter((p) => p.category === cat.id).length;
-                  const isEditing = editingCatId === cat.id;
-
-                  return (
-                    <div key={cat.id} className="py-3.5 flex items-center justify-between gap-4">
-                      {isEditing ? (
-                        <div className="flex-1 flex items-center gap-2">
-                          <input
-                            type="text"
-                            value={editingCatLabel}
-                            onChange={(e) => setEditingCatLabel(e.target.value)}
-                            className="flex-1 px-3 py-1.5 rounded-lg bg-slate-50 border border-brand-500 text-slate-900 text-xs focus:outline-none"
-                          />
-                          <button
-                            onClick={() => handleSaveEditCategory(cat.id)}
-                            className="px-3 py-1.5 rounded-lg bg-emerald-600 text-white text-xs font-bold hover:bg-emerald-500"
-                          >
-                            <FontAwesomeIcon icon={faCheck} className="mr-1" />
-                            Save
-                          </button>
-                          <button
-                            onClick={() => setEditingCatId(null)}
-                            className="px-2.5 py-1.5 rounded-lg bg-slate-200 text-slate-700 text-xs hover:bg-slate-300"
-                          >
-                            Cancel
-                          </button>
-                        </div>
-                      ) : (
-                        <div className="flex items-center gap-3">
-                          <span className="w-2 h-2 rounded-full bg-brand-600" />
-                          <span className="text-sm font-semibold text-slate-900">{cat.label}</span>
-                          <span className="px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 text-[10px] font-mono border border-slate-200">
-                            ID: {cat.id}
-                          </span>
-                          <span className="text-xs text-brand-700 font-bold font-mono">({prodCount} products)</span>
-                        </div>
-                      )}
-
-                      {!isEditing && !isAll && (
-                        <div className="flex items-center gap-2">
-                          <button
-                            onClick={() => {
-                              setEditingCatId(cat.id);
-                              setEditingCatLabel(cat.label);
-                            }}
-                            className="px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs border border-slate-200"
-                          >
-                            <FontAwesomeIcon icon={faPenToSquare} />
-                          </button>
-                          <button
-                            onClick={() => handleDeleteCategory(cat)}
-                            className="px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-rose-600 text-slate-500 hover:text-white text-xs border border-slate-200"
-                          >
-                            <FontAwesomeIcon icon={faTrash} />
-                          </button>
-                        </div>
-                      )}
-
-                      {isAll && (
-                        <span className="text-[11px] text-slate-400 italic">System Default Filter</span>
-                      )}
+            {/* 2-Column Responsive Grid Layout for Laptops & Desktops */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+              
+              {/* Left Column: Create New Category Form & Taxonomy Tips (lg:col-span-5 xl:col-span-4) */}
+              <div className="lg:col-span-5 xl:col-span-4 space-y-6 lg:sticky lg:top-24">
+                <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm">
+                  <div className="flex items-center gap-2.5 mb-2">
+                    <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center text-xs">
+                      <FontAwesomeIcon icon={faPlus} />
                     </div>
-                  );
-                })}
+                    <div>
+                      <h3 className="text-base font-bold text-slate-900 font-serif">Create New Category</h3>
+                      <p className="text-[11px] text-slate-500">Add export classifications</p>
+                    </div>
+                  </div>
+
+                  <form onSubmit={handleAddCategory} className="space-y-4 mt-4">
+                    <div>
+                      <label className="block text-xs font-bold text-slate-700 mb-1.5">Category Name *</label>
+                      <input
+                        type="text"
+                        value={newCatLabel}
+                        onChange={(e) => setNewCatLabel(e.target.value)}
+                        placeholder="e.g. Technical Textiles & Geotextiles"
+                        className="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-xs focus:outline-none focus:border-brand-500 focus:bg-white transition-all shadow-inner"
+                      />
+                    </div>
+                    <button
+                      type="submit"
+                      className="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-blue-600 via-brand-500 to-brand-600 hover:from-blue-500 hover:to-brand-500 text-white font-semibold text-xs tracking-wide shadow-md hover:shadow-cyan-500/25 flex items-center justify-center gap-2 transition-all shimmer-sweep active:scale-98"
+                    >
+                      <FontAwesomeIcon icon={faPlus} className="text-xs" />
+                      <span>Add Category</span>
+                    </button>
+                  </form>
+                </div>
+
+                {/* Catalog Integration Advice Box */}
+                <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 text-xs text-slate-600 space-y-2.5">
+                  <div className="flex items-center gap-2 font-bold text-slate-800 text-xs font-serif">
+                    <FontAwesomeIcon icon={faBoxesStacked} className="text-blue-600 text-[11px]" />
+                    <span>Catalog Integration</span>
+                  </div>
+                  <p className="text-[11px] leading-relaxed text-slate-500">
+                    Categories automatically synchronize with the frontend product filter tabs and RFQ specification selectors across the live portal.
+                  </p>
+                </div>
               </div>
+
+              {/* Right Column: Category Cards Grid (lg:col-span-7 xl:col-span-8) */}
+              <div className="lg:col-span-7 xl:col-span-8 space-y-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {categories.map((cat) => {
+                    const count = products.filter((p) => p.category === cat.id).length;
+                    const isEditing = editingCatId === cat.id;
+
+                    return (
+                      <div
+                        key={cat.id}
+                        className="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between gap-4 group"
+                      >
+                        {isEditing ? (
+                          <div className="space-y-3">
+                            <div>
+                              <label className="block text-[11px] font-bold text-slate-700 mb-1">Edit Category Name</label>
+                              <input
+                                type="text"
+                                value={editingCatLabel}
+                                onChange={(e) => setEditingCatLabel(e.target.value)}
+                                className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-300 text-xs font-bold text-slate-900 focus:outline-none focus:border-brand-500"
+                                autoFocus
+                              />
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <button
+                                onClick={() => handleSaveEditCategory(cat.id)}
+                                className="flex-1 py-2 rounded-xl bg-gradient-to-r from-blue-600 via-brand-500 to-brand-600 text-white text-xs font-bold shadow-sm"
+                              >
+                                Save Changes
+                              </button>
+                              <button
+                                onClick={() => setEditingCatId(null)}
+                                className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-medium"
+                              >
+                                Cancel
+                              </button>
+                            </div>
+                          </div>
+                        ) : (
+                          <>
+                            <div className="flex items-start justify-between gap-3">
+                              <div className="flex items-start gap-3">
+                                <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-sm shrink-0 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                                  <FontAwesomeIcon icon={faTags} />
+                                </div>
+                                <div>
+                                  <h4 className="font-bold text-slate-900 text-sm leading-tight">{cat.label}</h4>
+                                  <span className="text-[11px] text-slate-400 font-mono block mt-0.5">
+                                    slug: {cat.id}
+                                  </span>
+                                </div>
+                              </div>
+
+                              <div className="flex items-center gap-1 shrink-0">
+                                <button
+                                  onClick={() => {
+                                    setEditingCatId(cat.id);
+                                    setEditingCatLabel(cat.label);
+                                  }}
+                                  title="Edit category name"
+                                  className="p-2 rounded-lg text-slate-400 hover:text-brand-700 hover:bg-brand-50 transition-colors"
+                                >
+                                  <FontAwesomeIcon icon={faPenToSquare} className="text-xs" />
+                                </button>
+                                <button
+                                  onClick={() => handleDeleteCategory(cat)}
+                                  title="Delete category"
+                                  className="p-2 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors"
+                                >
+                                  <FontAwesomeIcon icon={faTrash} className="text-xs" />
+                                </button>
+                              </div>
+                            </div>
+
+                            <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-[11px]">
+                              <span className="text-slate-500 font-mono">Linked Products</span>
+                              <span className="px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 font-bold font-mono">
+                                {count} product{count === 1 ? '' : 's'}
+                              </span>
+                            </div>
+                          </>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
             </div>
           </motion.div>
         )}
 
-        {/* TAB 4: CONTENT & HERO DESCRIPTIONS */}
+        {/* TAB 4: HERO & COMPANY CONTENT */}
         {activeTab === 'content' && (
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
-            className="space-y-6 max-w-4xl"
+            className="space-y-6 w-full"
           >
-            <form onSubmit={handleSaveCompanyInfo} className="space-y-6">
-              
-              {/* Hero Banner Descriptions */}
-              <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-4">
-                <div className="flex items-center gap-2">
-                  <FontAwesomeIcon icon={faStar} className="text-brand-600 text-base" />
-                  <h3 className="text-lg font-bold text-slate-900 font-serif">Hero Banner &amp; Tagline Content</h3>
+            {/* Header / Intro Bar */}
+            <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+              <div>
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-800 text-xs font-semibold uppercase tracking-wider mb-2 border border-blue-100">
+                  <FontAwesomeIcon icon={faBuilding} className="text-blue-600 text-xs" />
+                  <span>Content Management System</span>
                 </div>
+                <h2 className="text-xl sm:text-2xl font-bold text-slate-900 font-display">
+                  Hero Section &amp; Commercial Contacts
+                </h2>
+                <p className="text-xs sm:text-sm text-slate-500 mt-1 max-w-2xl">
+                  Update live corporate hero copywriting, value propositions, and official export desk communications. All changes sync in real-time.
+                </p>
+              </div>
 
-                <div className="space-y-4">
+              <div className="flex items-center gap-3 shrink-0">
+                <span className="px-3 py-1.5 rounded-xl bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-semibold flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                  REST API Synced
+                </span>
+              </div>
+            </div>
+
+            {/* Responsive 2-Column Grid on Laptops */}
+            <form onSubmit={handleSaveCompanyInfo} className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+              
+              {/* Left Column (7 cols): Hero Copywriting & Live Preview */}
+              <div className="lg:col-span-7 space-y-6">
+                
+                {/* Hero Copy Card */}
+                <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-5">
+                  <div className="border-b border-slate-100 pb-3">
+                    <h3 className="text-base font-bold text-slate-900 font-serif">Hero Section Copywriting</h3>
+                    <p className="text-xs text-slate-500">Live dynamic text displayed on the main website homepage</p>
+                  </div>
+
                   <div>
-                    <label className="block text-xs font-semibold text-slate-700 mb-1">
-                      Hero Eyebrow Badge Text
+                    <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                      Hero Subheading / Eyebrow Text
                     </label>
                     <input
                       type="text"
                       value={companyFormData.eyebrow}
-                      onChange={(e) =>
-                        setCompanyFormData({ ...companyFormData, eyebrow: e.target.value })
-                      }
-                      placeholder="e.g. Vertically Integrated Textile Manufacturer & Exporter"
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-xs focus:outline-none focus:border-brand-500 focus:bg-white"
+                      onChange={(e) => setCompanyFormData({ ...companyFormData, eyebrow: e.target.value })}
+                      placeholder="e.g. Institutional Bedding • Hospitality Linens • Workwear Textiles"
+                      className="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:outline-none focus:border-brand-500 focus:bg-white transition-all shadow-inner"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-slate-700 mb-1">
-                      Hero Section Supporting Description
+                    <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                      Hero Paragraph Description
                     </label>
                     <textarea
                       rows={4}
                       value={companyFormData.heroDescription}
-                      onChange={(e) =>
-                        setCompanyFormData({ ...companyFormData, heroDescription: e.target.value })
-                      }
-                      placeholder="Enter the main hero introductory paragraph shown under the headline..."
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-xs focus:outline-none focus:border-brand-500 focus:bg-white leading-relaxed"
+                      onChange={(e) => setCompanyFormData({ ...companyFormData, heroDescription: e.target.value })}
+                      placeholder="Enter detailed company introduction and manufacturing summary..."
+                      className="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:outline-none focus:border-brand-500 focus:bg-white transition-all shadow-inner leading-relaxed"
                     />
                   </div>
                 </div>
-              </div>
 
-              {/* Commercial Contacts & Addresses */}
-              <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-4">
-                <div className="flex items-center gap-2">
-                  <FontAwesomeIcon icon={faBuilding} className="text-brand-600 text-base" />
-                  <h3 className="text-lg font-bold text-slate-900 font-serif">Commercial Export Desk &amp; Contacts</h3>
+                {/* Real-Time Preview Card */}
+                <div className="p-6 rounded-2xl bg-gradient-to-br from-[#071830] via-[#0e294d] to-[#071830] text-white shadow-lg border border-slate-800 space-y-3 relative overflow-hidden">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-full blur-2xl pointer-events-none"></div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-mono uppercase tracking-widest text-cyan-400 font-bold flex items-center gap-1.5">
+                      <FontAwesomeIcon icon={faEye} /> Live Homepage Preview
+                    </span>
+                    <span className="text-[10px] text-slate-400 font-mono">Hero Viewport</span>
+                  </div>
+
+                  <div className="pt-2 space-y-2">
+                    <span className="inline-block text-[11px] font-semibold text-cyan-300 tracking-wide">
+                      {companyFormData.eyebrow || 'Institutional Bedding • Hospitality Linens • Workwear Textiles'}
+                    </span>
+                    <p className="text-xs text-slate-300 leading-relaxed font-sans">
+                      {companyFormData.heroDescription || 'Vertically integrated spinning, weaving, eco-dyeing, and precision automated stitching mill delivering container-grade textile shipments to international markets.'}
+                    </p>
+                  </div>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              </div>
+
+              {/* Right Column (5 cols): Official Export Contacts & Save Card */}
+              <div className="lg:col-span-5 space-y-6 lg:sticky lg:top-24">
+                
+                {/* Official Contacts Card */}
+                <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-4">
+                  <div className="border-b border-slate-100 pb-3">
+                    <h3 className="text-base font-bold text-slate-900 font-serif">Export Commercial Contacts</h3>
+                    <p className="text-xs text-slate-500">Official contact points for international trade inquiries</p>
+                  </div>
+
                   <div>
-                    <label className="block text-xs font-semibold text-slate-700 mb-1">
-                      Corporate Inquiry Email
+                    <label className="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
+                      <FontAwesomeIcon icon={faEnvelope} className="text-blue-600 text-xs" />
+                      <span>Export Desk Email</span>
                     </label>
                     <input
                       type="email"
                       value={companyFormData.contact.email}
-                      onChange={(e) =>
-                        setCompanyFormData({
-                          ...companyFormData,
-                          contact: { ...companyFormData.contact, email: e.target.value }
-                        })
-                      }
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-xs focus:outline-none focus:border-brand-500 focus:bg-white"
+                      onChange={(e) => setCompanyFormData({
+                        ...companyFormData,
+                        contact: { ...companyFormData.contact, email: e.target.value }
+                      })}
+                      placeholder="info@ah-impex.com"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:outline-none focus:border-brand-500 focus:bg-white transition-all shadow-inner"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-slate-700 mb-1">
-                      WhatsApp Commercial Number (Formatted)
+                    <label className="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
+                      <FontAwesomeIcon icon={faWhatsapp} className="text-emerald-600 text-xs" />
+                      <span>Commercial WhatsApp Line</span>
                     </label>
                     <input
                       type="text"
                       value={companyFormData.contact.whatsapp}
-                      onChange={(e) =>
-                        setCompanyFormData({
-                          ...companyFormData,
-                          contact: { ...companyFormData.contact, whatsapp: e.target.value }
-                        })
-                      }
-                      placeholder="+92 300 8472483"
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-xs focus:outline-none focus:border-brand-500 focus:bg-white"
+                      onChange={(e) => setCompanyFormData({
+                        ...companyFormData,
+                        contact: { ...companyFormData.contact, whatsapp: e.target.value }
+                      })}
+                      placeholder="+92 300 8661234"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:outline-none focus:border-brand-500 focus:bg-white transition-all shadow-inner"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-slate-700 mb-1">
-                      WhatsApp Clean Number (No Spaces or +, for wa.me links)
+                    <label className="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
+                      <FontAwesomeIcon icon={faPhone} className="text-indigo-600 text-xs" />
+                      <span>Direct Export Phone / Hotline</span>
                     </label>
                     <input
                       type="text"
-                      value={companyFormData.contact.whatsappClean}
-                      onChange={(e) =>
-                        setCompanyFormData({
-                          ...companyFormData,
-                          contact: { ...companyFormData.contact, whatsappClean: e.target.value }
-                        })
-                      }
-                      placeholder="923008472483"
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-xs focus:outline-none focus:border-brand-500 focus:bg-white font-mono"
+                      value={companyFormData.contact.phone || ''}
+                      onChange={(e) => setCompanyFormData({
+                        ...companyFormData,
+                        contact: { ...companyFormData.contact, phone: e.target.value }
+                      })}
+                      placeholder="+92 41 8765432"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:outline-none focus:border-brand-500 focus:bg-white transition-all shadow-inner"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-slate-700 mb-1">
-                      Office Telephone
+                    <label className="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
+                      <FontAwesomeIcon icon={faLocationDot} className="text-rose-600 text-xs" />
+                      <span>Headquarters &amp; Mill Address</span>
                     </label>
                     <input
                       type="text"
-                      value={companyFormData.contact.phone}
-                      onChange={(e) =>
-                        setCompanyFormData({
-                          ...companyFormData,
-                          contact: { ...companyFormData.contact, phone: e.target.value }
-                        })
-                      }
-                      placeholder="+92 42 3575 8891"
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-xs focus:outline-none focus:border-brand-500 focus:bg-white"
-                    />
-                  </div>
-
-                  <div className="sm:col-span-2">
-                    <label className="block text-xs font-semibold text-slate-700 mb-1">
-                      Mill &amp; Head Office Address
-                    </label>
-                    <input
-                      type="text"
-                      value={companyFormData.contact.address}
-                      onChange={(e) =>
-                        setCompanyFormData({
-                          ...companyFormData,
-                          contact: { ...companyFormData.contact, address: e.target.value }
-                        })
-                      }
-                      placeholder="Ferozepur Road Industrial Area, Lahore 54000, Pakistan"
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-xs focus:outline-none focus:border-brand-500 focus:bg-white"
+                      value={companyFormData.contact.address || ''}
+                      onChange={(e) => setCompanyFormData({
+                        ...companyFormData,
+                        contact: { ...companyFormData.contact, address: e.target.value }
+                      })}
+                      placeholder="Textile Industrial Estate, Faisalabad, Pakistan"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:outline-none focus:border-brand-500 focus:bg-white transition-all shadow-inner"
                     />
                   </div>
                 </div>
-              </div>
 
-              {/* Save Button */}
-              <div className="flex justify-end">
-                <button
-                  type="submit"
-                  className="px-8 py-3 rounded-xl bg-gradient-to-r from-blue-600 via-brand-500 to-brand-600 hover:from-blue-500 hover:to-brand-500 text-white font-bold text-xs uppercase tracking-wider shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center gap-2 shimmer-sweep"
-                >
-                  <FontAwesomeIcon icon={faCheck} />
-                  <span>Save All Company Changes</span>
-                </button>
+                {/* Save & Publish Action Card */}
+                <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-3">
+                  <button
+                    type="submit"
+                    className="w-full py-3 px-6 rounded-xl bg-gradient-to-r from-blue-600 via-brand-500 to-brand-600 hover:from-blue-500 hover:to-brand-500 text-white font-bold text-xs uppercase tracking-wider shadow-md hover:shadow-cyan-500/25 transition-all shimmer-sweep active:scale-98 flex items-center justify-center gap-2"
+                  >
+                    <FontAwesomeIcon icon={faCheck} />
+                    <span>Save CMS Changes</span>
+                  </button>
+                  <p className="text-[11px] text-center text-slate-400">
+                    Saves directly to Django REST API and updates live website content.
+                  </p>
+                </div>
+
               </div>
 
             </form>
           </motion.div>
         )}
 
-        {/* TAB 5: BUYER INQUIRIES & RFQs */}
+        {/* TAB 5: RFQ INQUIRIES & BUYER LEADS */}
         {activeTab === 'inquiries' && (
           <motion.div
             initial={{ opacity: 0, y: 10 }}
@@ -980,286 +1177,206 @@ export default function AdminDashboard({ onExitAdmin }) {
             transition={{ duration: 0.3 }}
             className="space-y-6"
           >
-            <div className="flex items-center justify-between">
-              <div>
-                <h3 className="text-xl font-bold text-slate-900 font-serif">Submitted Buyer RFQs</h3>
-                <p className="text-xs text-slate-500 mt-0.5">
-                  Direct commercial inquiries submitted via the website's RFQ forms.
-                </p>
+            <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+              <div className="p-5 border-b border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div>
+                  <h3 className="text-base font-bold text-slate-900 font-serif">Commercial Buyer RFQs &amp; Inquiries</h3>
+                  <span className="text-xs text-slate-500">Every inquiry automatically triggers email dispatch to company &amp; buyer</span>
+                </div>
+                <span className="px-3 py-1 rounded-full bg-blue-50 text-blue-800 text-xs font-bold font-mono">
+                  {inquiries.length} Total Submissions
+                </span>
               </div>
-              <span className="px-3 py-1 rounded-full bg-brand-50 text-brand-700 border border-brand-200 text-xs font-mono font-bold">
-                {inquiries.length} Lead(s)
-              </span>
+
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-xs text-slate-600">
+                  <thead className="bg-slate-50 text-slate-700 font-mono text-[11px] uppercase tracking-wider border-b border-slate-200">
+                    <tr>
+                      <th className="py-3 px-4">Ref Code &amp; Date</th>
+                      <th className="py-3 px-4">Buyer &amp; Company</th>
+                      <th className="py-3 px-4">Inquired Product / Volume</th>
+                      <th className="py-3 px-4">Port / Requirements</th>
+                      <th className="py-3 px-4">Status</th>
+                      <th className="py-3 px-4 text-right">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100">
+                    {inquiries.length === 0 ? (
+                      <tr>
+                        <td colSpan="6" className="py-12 text-center text-slate-400 text-sm">
+                          No inquiries received yet. Submit an RFQ on the live site to test!
+                        </td>
+                      </tr>
+                    ) : (
+                      inquiries.map((inq) => (
+                        <tr key={inq.id} className="hover:bg-slate-50/70 transition-colors">
+                          <td className="py-3.5 px-4 font-mono">
+                            <span className="font-bold text-slate-900 block">{inq.id}</span>
+                            <span className="text-[10px] text-slate-400">{inq.date || inq.created_at?.slice(0, 10)}</span>
+                          </td>
+
+                          <td className="py-3.5 px-4">
+                            <span className="font-bold text-slate-900 block">{inq.name}</span>
+                            <span className="text-brand-700 font-medium text-[11px] block">{inq.company}</span>
+                            <span className="text-slate-400 text-[10px]">{inq.email} • {inq.phone}</span>
+                          </td>
+
+                          <td className="py-3.5 px-4">
+                            <span className="font-bold text-slate-800 block">{inq.productTitle || inq.product_title || inq.category}</span>
+                            <span className="text-slate-500 text-[11px]">{inq.volume}</span>
+                          </td>
+
+                          <td className="py-3.5 px-4 max-w-xs">
+                            <span className="font-medium text-slate-700 block">{inq.port || 'FOB Karachi'}</span>
+                            <span className="text-slate-400 text-[11px] line-clamp-1">{inq.notes}</span>
+                          </td>
+
+                          <td className="py-3.5 px-4">
+                            <select
+                              value={inq.status || 'New'}
+                              onChange={(e) => handleInquiryStatusChange(inq.id, e.target.value)}
+                              className={`px-2.5 py-1 rounded-lg text-xs font-bold border ${
+                                inq.status === 'Quoted'
+                                  ? 'bg-emerald-50 text-emerald-800 border-emerald-300'
+                                  : inq.status === 'Under Review'
+                                  ? 'bg-amber-50 text-amber-800 border-amber-300'
+                                  : inq.status === 'Closed'
+                                  ? 'bg-slate-100 text-slate-600 border-slate-300'
+                                  : 'bg-blue-50 text-blue-800 border-blue-300'
+                              }`}
+                            >
+                              <option value="New">New</option>
+                              <option value="Under Review">Under Review</option>
+                              <option value="Quoted">Quoted</option>
+                              <option value="In Production">In Production</option>
+                              <option value="Closed">Closed</option>
+                            </select>
+                          </td>
+
+                          <td className="py-3.5 px-4 text-right">
+                            <button
+                              onClick={() => {
+                                if (window.confirm(`Delete inquiry #${inq.id}?`)) {
+                                  deleteInquiry(inq.id);
+                                  showToast(`Inquiry #${inq.id} deleted`);
+                                }
+                              }}
+                              className="p-2 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50"
+                            >
+                              <FontAwesomeIcon icon={faTrash} />
+                            </button>
+                          </td>
+                        </tr>
+                      ))
+                    )}
+                  </tbody>
+                </table>
+              </div>
             </div>
+          </motion.div>
+        )}
 
-            <div className="space-y-4">
-              {inquiries.map((inq) => (
-                <div
-                  key={inq.id}
-                  className="p-5 sm:p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-4 relative overflow-hidden"
-                >
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-brand-50 text-brand-700 flex items-center justify-center font-bold text-sm font-serif shrink-0 border border-brand-200">
-                        {inq.name ? inq.name.charAt(0).toUpperCase() : 'B'}
-                      </div>
-                      <div>
-                        <h4 className="text-base font-bold text-slate-900">{inq.name}</h4>
-                        <p className="text-xs text-brand-700 font-semibold">{inq.company || 'Private Buyer'}</p>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center gap-3 text-xs text-slate-500 font-mono">
-                      <span className="flex items-center gap-1.5">
-                        <FontAwesomeIcon icon={faClock} className="text-xs text-slate-400" />
-                        {inq.date}
-                      </span>
-                      <span className="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-700 border border-emerald-200 text-[11px] font-bold">
-                        {inq.status || 'Active'}
-                      </span>
-                      <button
-                        onClick={() => {
-                          if (window.confirm('Delete this inquiry record?')) {
-                            deleteInquiry(inq.id);
-                            showToast('Inquiry record deleted');
-                          }
-                        }}
-                        className="p-1.5 text-slate-400 hover:text-rose-600 transition-colors"
-                        title="Delete inquiry"
-                      >
-                        <FontAwesomeIcon icon={faTrash} />
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Detail Grid */}
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
-                    <div className="space-y-1">
-                      <span className="text-slate-500 font-mono uppercase text-[10px] block">Contact Info</span>
-                      <p className="text-slate-800 flex items-center gap-2">
-                        <FontAwesomeIcon icon={faEnvelope} className="text-brand-600 text-xs" />
-                        <a href={`mailto:${inq.email}`} className="hover:text-brand-700 underline font-mono">
-                          {inq.email}
-                        </a>
-                      </p>
-                      {inq.phone && (
-                        <p className="text-slate-800 flex items-center gap-2">
-                          <FontAwesomeIcon icon={faPhone} className="text-emerald-600 text-xs" />
-                          <span className="font-mono">{inq.phone}</span>
-                        </p>
-                      )}
-                    </div>
-
-                    <div className="space-y-1">
-                      <span className="text-slate-500 font-mono uppercase text-[10px] block">Order Requirements</span>
-                      <p className="text-slate-800">
-                        <strong className="text-slate-500">Category:</strong> {inq.category || 'General'}
-                      </p>
-                      <p className="text-slate-800">
-                        <strong className="text-slate-500">Target Volume:</strong> {inq.volume || 'Not specified'}
-                      </p>
-                      {inq.port && (
-                        <p className="text-slate-800">
-                          <strong className="text-slate-500">Port:</strong> {inq.port}
-                        </p>
-                      )}
-                    </div>
-
-                    <div className="space-y-1 sm:col-span-1">
-                      <span className="text-slate-500 font-mono uppercase text-[10px] block">Direct Merchandising</span>
-                      <div className="flex items-center gap-2 pt-1">
-                        <a
-                          href={`mailto:${inq.email}?subject=A%26H%20Impex%20RFQ%20Quote%20Response&body=Dear%20${inq.name},%0D%0A%0D%0AThank%20you%20for%20inquiring%20about%20textile%20manufacturing...`}
-                          className="px-3 py-1.5 rounded-lg bg-brand-50 hover:bg-brand-600 hover:text-white text-brand-700 text-xs font-bold border border-brand-200 transition-colors inline-flex items-center gap-1.5 shadow-sm"
-                        >
-                          <FontAwesomeIcon icon={faEnvelope} />
-                          <span>Reply via Email</span>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-
-                  {inq.notes && (
-                    <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-700">
-                      <span className="text-slate-500 font-mono text-[10px] uppercase block mb-1 font-semibold">Buyer Notes &amp; Specs:</span>
-                      <p className="leading-relaxed font-normal">{inq.notes}</p>
-                    </div>
-                  )}
-                </div>
-              ))}
-
-              {inquiries.length === 0 && (
-                <div className="py-16 text-center bg-white rounded-2xl border border-slate-200 shadow-sm space-y-3">
-                  <FontAwesomeIcon icon={faInbox} className="text-4xl text-slate-300" />
-                  <h4 className="text-lg font-bold text-slate-900 font-serif">No Inquiries Yet</h4>
-                  <p className="text-xs text-slate-500 max-w-sm mx-auto">
-                    Commercial inquiries submitted through the website RFQ modal will show up here.
-                  </p>
-                </div>
-              )}
-            </div>
+        {/* TAB 6: SUPERADMIN USER & STAFF ROLES MANAGEMENT */}
+        {activeTab === 'users' && isSuperAdmin && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <UserManagerTab onToast={showToast} />
           </motion.div>
         )}
 
       </div>
 
-      {/* ADD / EDIT PRODUCT MODAL */}
+      {/* Product Add / Edit Modal */}
       <AnimatePresence>
         {isProductModalOpen && (
-          <div
-            role="dialog"
-            aria-modal="true"
-            className="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto"
-            onClick={() => setIsProductModalOpen(false)}
-          >
+          <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
             <motion.div
               initial={{ opacity: 0, scale: 0.96, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.96, y: 20 }}
-              className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 max-w-3xl w-full shadow-2xl relative my-8 text-slate-900"
-              onClick={(e) => e.stopPropagation()}
+              className="bg-white rounded-2xl p-6 sm:p-8 max-w-2xl w-full shadow-2xl relative my-8 text-slate-800"
             >
-              {/* Close Button */}
-              <button
-                onClick={() => setIsProductModalOpen(false)}
-                className="absolute top-5 right-5 p-2 rounded-lg bg-slate-100 text-slate-500 hover:text-slate-900 hover:bg-slate-200 transition-colors"
-              >
-                <FontAwesomeIcon icon={faXmark} className="text-base" />
-              </button>
-
-              <div className="flex items-center gap-2 mb-2">
-                <FontAwesomeIcon icon={editingProduct ? faPenToSquare : faPlus} className="text-brand-600 text-sm" />
-                <span className="text-xs font-bold text-brand-700 uppercase tracking-wider font-mono">
-                  {editingProduct ? 'Edit Existing Item' : 'New Catalog Product'}
-                </span>
+              <div className="flex items-center justify-between pb-4 border-b border-slate-200 mb-6">
+                <div>
+                  <h3 className="text-xl font-bold text-slate-900 font-serif">
+                    {editingProduct ? 'Edit Export Product' : 'Add New Export Product'}
+                  </h3>
+                  <span className="text-xs text-slate-500">Persisted in PostgreSQL database with image handling</span>
+                </div>
+                <button
+                  onClick={() => setIsProductModalOpen(false)}
+                  className="p-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-500"
+                >
+                  <FontAwesomeIcon icon={faXmark} />
+                </button>
               </div>
 
-              <h3 className="text-2xl font-bold text-slate-900 mb-6 font-serif">
-                {editingProduct ? `Edit "${editingProduct.title}"` : 'Add New Export Product Line'}
-              </h3>
-
               <form onSubmit={handleSaveProduct} className="space-y-4">
-                
-                {/* 1. Title & Category */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-semibold text-slate-700 mb-1">
-                      Product Title *
-                    </label>
+                    <label className="block text-xs font-bold text-slate-700 mb-1">Product Title *</label>
                     <input
                       type="text"
                       required
                       value={productFormData.title}
                       onChange={(e) => setProductFormData({ ...productFormData, title: e.target.value })}
-                      placeholder="e.g. 500TC Giza Cotton Sateen Sheet Set"
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 placeholder-slate-400 text-xs focus:outline-none focus:border-brand-500 focus:bg-white"
+                      placeholder="e.g. 400TC Egyptian Cotton Sateen"
+                      className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs focus:outline-none focus:border-brand-500"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-slate-700 mb-1">
-                      Catalog Category *
-                    </label>
+                    <label className="block text-xs font-bold text-slate-700 mb-1">Category *</label>
                     <select
                       value={productFormData.category}
                       onChange={(e) => setProductFormData({ ...productFormData, category: e.target.value })}
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-xs focus:outline-none focus:border-brand-500 focus:bg-white"
+                      className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs focus:outline-none focus:border-brand-500"
                     >
-                      {categories
-                        .filter((c) => c.id !== 'all')
-                        .map((c) => (
-                          <option key={c.id} value={c.id}>
-                            {c.label}
-                          </option>
-                        ))}
+                      {categories.map((c) => (
+                        <option key={c.id} value={c.id}>
+                          {c.label}
+                        </option>
+                      ))}
                     </select>
                   </div>
                 </div>
 
-                {/* 2. Tagline & Quality Badge */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-xs font-semibold text-slate-700 mb-1">
-                      Tagline / Highlights
-                    </label>
-                    <input
-                      type="text"
-                      value={productFormData.tagline}
-                      onChange={(e) => setProductFormData({ ...productFormData, tagline: e.target.value })}
-                      placeholder="e.g. High-Density Luxury Weave for 5-Star Hospitality"
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 placeholder-slate-400 text-xs focus:outline-none focus:border-brand-500 focus:bg-white"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-semibold text-slate-700 mb-1">
-                      Quality Badge Label
-                    </label>
-                    <input
-                      type="text"
-                      value={productFormData.badge}
-                      onChange={(e) => setProductFormData({ ...productFormData, badge: e.target.value })}
-                      placeholder="e.g. Luxury Grade / Best Seller"
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 placeholder-slate-400 text-xs focus:outline-none focus:border-brand-500 focus:bg-white"
-                    />
-                  </div>
-                </div>
-
-                {/* 3. Description */}
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">
-                    Export Product Description *
-                  </label>
-                  <textarea
-                    rows={3}
-                    required
-                    value={productFormData.description}
-                    onChange={(e) => setProductFormData({ ...productFormData, description: e.target.value })}
-                    placeholder="Enter thorough technical product description, finishing details, softness, export packaging..."
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 placeholder-slate-400 text-xs focus:outline-none focus:border-brand-500 focus:bg-white leading-relaxed"
+                  <label className="block text-xs font-bold text-slate-700 mb-1">Tagline</label>
+                  <input
+                    type="text"
+                    value={productFormData.tagline}
+                    onChange={(e) => setProductFormData({ ...productFormData, tagline: e.target.value })}
+                    placeholder="Short marketing headline"
+                    className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs focus:outline-none focus:border-brand-500"
                   />
                 </div>
 
-                {/* 4. Image Upload or URL with Live Preview */}
-                <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-3">
-                  <span className="block text-xs font-bold text-brand-700">
-                    Product Image (Local File Upload or Web URL)
-                  </span>
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">Description</label>
+                  <textarea
+                    rows={2}
+                    value={productFormData.description}
+                    onChange={(e) => setProductFormData({ ...productFormData, description: e.target.value })}
+                    className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs focus:outline-none focus:border-brand-500"
+                  />
+                </div>
 
-                  <div className="flex flex-col sm:flex-row gap-4 items-center">
-                    {/* Live Preview Thumbnail */}
-                    <div className="w-24 h-24 rounded-xl overflow-hidden bg-white border border-slate-200 shrink-0 relative shadow-sm">
-                      {productFormData.image ? (
-                        <img
-                          src={productFormData.image}
-                          alt="Preview"
-                          className="w-full h-full object-cover"
-                          onError={(e) => {
-                            e.target.src = 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=400&q=80';
-                          }}
-                        />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center text-slate-400 text-xs">
-                          No Image
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Inputs */}
-                    <div className="flex-1 space-y-2 w-full">
-                      {/* URL input */}
-                      <div className="relative">
-                        <FontAwesomeIcon icon={faLink} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs" />
-                        <input
-                          type="text"
-                          value={productFormData.image}
-                          onChange={(e) => setProductFormData({ ...productFormData, image: e.target.value })}
-                          placeholder="Paste image URL (https://...)"
-                          className="w-full pl-8 pr-3 py-2 rounded-lg bg-white border border-slate-200 text-slate-900 text-xs placeholder-slate-400 focus:outline-none focus:border-brand-500"
-                        />
+                {/* Image Upload / URL */}
+                <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+                  <label className="block text-xs font-bold text-slate-700">Product Image (File Upload or URL)</label>
+                  
+                  <div className="flex items-center gap-3">
+                    {productFormData.image && (
+                      <div className="w-16 h-16 rounded-lg overflow-hidden bg-slate-200 border border-slate-300 shrink-0">
+                        <img src={productFormData.image} alt="Preview" className="w-full h-full object-cover" />
                       </div>
+                    )}
 
-                      {/* File Upload Trigger */}
+                    <div className="flex-1 space-y-2">
                       <div className="flex items-center gap-2">
                         <input
                           ref={fileInputRef}
@@ -1271,108 +1388,99 @@ export default function AdminDashboard({ onExitAdmin }) {
                         <button
                           type="button"
                           onClick={() => fileInputRef.current?.click()}
-                          className="px-3.5 py-1.5 rounded-lg bg-white hover:bg-slate-100 text-slate-700 text-xs font-bold border border-slate-200 flex items-center gap-1.5 shadow-sm"
+                          className="px-3.5 py-2 rounded-xl bg-white hover:bg-slate-100 text-slate-700 text-xs font-bold border border-slate-200 flex items-center gap-1.5 shadow-sm"
                         >
                           <FontAwesomeIcon icon={faUpload} />
-                          <span>Upload From Computer</span>
+                          <span>Choose Image File</span>
                         </button>
-                        <span className="text-[11px] text-slate-500">JPG, PNG, WebP supported</span>
+                        <span className="text-[11px] text-slate-500">JPG, PNG, WebP</span>
                       </div>
+
+                      <input
+                        type="text"
+                        value={productFormData.image}
+                        onChange={(e) => setProductFormData({ ...productFormData, image: e.target.value })}
+                        placeholder="Or paste external image URL..."
+                        className="w-full px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-xs"
+                      />
                     </div>
                   </div>
                 </div>
 
-                {/* 5. Technical Specifications */}
-                <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-3">
-                  <span className="block text-xs font-bold text-slate-800 font-mono uppercase tracking-wider">
-                    Technical Specifications
-                  </span>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                {/* Specs */}
+                <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+                  <span className="text-xs font-bold text-slate-700 uppercase font-mono block">Technical Specifications</span>
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
                     <div>
-                      <label className="block text-[11px] text-slate-600 mb-1 font-medium">Yarn / Composition</label>
+                      <label className="text-[11px] text-slate-500 block">Composition</label>
                       <input
                         type="text"
                         value={productFormData.specs.composition}
-                        onChange={(e) =>
-                          setProductFormData({
-                            ...productFormData,
-                            specs: { ...productFormData.specs, composition: e.target.value }
-                          })
-                        }
-                        placeholder="100% Cotton / 300TC"
-                        className="w-full px-3 py-2 rounded-lg bg-white border border-slate-200 text-slate-900 text-xs"
+                        onChange={(e) => setProductFormData({
+                          ...productFormData,
+                          specs: { ...productFormData.specs, composition: e.target.value }
+                        })}
+                        placeholder="100% Cotton"
+                        className="w-full px-2.5 py-1.5 rounded-lg bg-white border border-slate-200 text-xs"
                       />
                     </div>
-
                     <div>
-                      <label className="block text-[11px] text-slate-600 mb-1 font-medium">GSM / Fabric Weight</label>
+                      <label className="text-[11px] text-slate-500 block">GSM</label>
                       <input
                         type="text"
                         value={productFormData.specs.gsm}
-                        onChange={(e) =>
-                          setProductFormData({
-                            ...productFormData,
-                            specs: { ...productFormData.specs, gsm: e.target.value }
-                          })
-                        }
-                        placeholder="140 GSM Sateen"
-                        className="w-full px-3 py-2 rounded-lg bg-white border border-slate-200 text-slate-900 text-xs"
+                        onChange={(e) => setProductFormData({
+                          ...productFormData,
+                          specs: { ...productFormData.specs, gsm: e.target.value }
+                        })}
+                        placeholder="140 GSM"
+                        className="w-full px-2.5 py-1.5 rounded-lg bg-white border border-slate-200 text-xs"
                       />
                     </div>
-
                     <div>
-                      <label className="block text-[11px] text-slate-600 mb-1 font-medium">MOQ</label>
+                      <label className="text-[11px] text-slate-500 block">MOQ</label>
                       <input
                         type="text"
                         value={productFormData.specs.moq}
-                        onChange={(e) =>
-                          setProductFormData({
-                            ...productFormData,
-                            specs: { ...productFormData.specs, moq: e.target.value }
-                          })
-                        }
-                        placeholder="500 Sets / Units"
-                        className="w-full px-3 py-2 rounded-lg bg-white border border-slate-200 text-slate-900 text-xs"
+                        onChange={(e) => setProductFormData({
+                          ...productFormData,
+                          specs: { ...productFormData.specs, moq: e.target.value }
+                        })}
+                        placeholder="500 Sets"
+                        className="w-full px-2.5 py-1.5 rounded-lg bg-white border border-slate-200 text-xs"
                       />
                     </div>
-
                     <div>
-                      <label className="block text-[11px] text-slate-600 mb-1 font-medium">Export Lead Time</label>
+                      <label className="text-[11px] text-slate-500 block">Lead Time</label>
                       <input
                         type="text"
                         value={productFormData.specs.leadTime}
-                        onChange={(e) =>
-                          setProductFormData({
-                            ...productFormData,
-                            specs: { ...productFormData.specs, leadTime: e.target.value }
-                          })
-                        }
+                        onChange={(e) => setProductFormData({
+                          ...productFormData,
+                          specs: { ...productFormData.specs, leadTime: e.target.value }
+                        })}
                         placeholder="30-45 Days"
-                        className="w-full px-3 py-2 rounded-lg bg-white border border-slate-200 text-slate-900 text-xs"
+                        className="w-full px-2.5 py-1.5 rounded-lg bg-white border border-slate-200 text-xs"
                       />
                     </div>
                   </div>
                 </div>
 
-                {/* Action Buttons */}
-                <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-100">
+                <div className="flex items-center justify-end gap-2 pt-3 border-t border-slate-200">
                   <button
                     type="button"
                     onClick={() => setIsProductModalOpen(false)}
-                    className="px-5 py-2.5 rounded-xl bg-slate-100 text-slate-700 text-xs font-semibold hover:bg-slate-200"
+                    className="px-4 py-2 rounded-xl bg-slate-100 text-slate-700 text-xs font-bold"
                   >
                     Cancel
                   </button>
-
                   <button
                     type="submit"
-                    className="px-7 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 via-brand-500 to-brand-600 hover:from-blue-500 hover:to-brand-500 text-white font-bold text-xs uppercase tracking-wider shadow-md shimmer-sweep"
+                    className="px-6 py-2 rounded-xl bg-gradient-to-r from-blue-600 via-brand-500 to-brand-600 hover:from-blue-500 hover:to-brand-500 text-white font-semibold text-xs tracking-wide shadow-md hover:shadow-cyan-500/25 transition-all shimmer-sweep active:scale-98"
                   >
-                    {editingProduct ? 'Save Product Changes' : 'Create & Publish Product'}
+                    {editingProduct ? 'Save Changes' : 'Create Product'}
                   </button>
                 </div>
-
               </form>
             </motion.div>
           </div>

@@ -156,10 +156,11 @@ export default function Footer({ onOpenQuoteModal, onOpenAdmin }) {
                 <li>
                   <button
                     onClick={onOpenAdmin}
-                    className="text-slate-400 hover:text-brand-300 transition-colors flex items-center gap-1.5"
+                    className="text-slate-500 hover:text-slate-300 transition-colors flex items-center gap-1.5 text-xs"
+                    title="Authorized Staff Portal"
                   >
-                    <FontAwesomeIcon icon={faGauge} className="text-[10px] text-brand-300" />
-                    <span>Admin Dashboard</span>
+                    <FontAwesomeIcon icon={faShieldHalved} className="text-[10px] text-slate-500" />
+                    <span>Staff Portal</span>
                   </button>
                 </li>
               )}

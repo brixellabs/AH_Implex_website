@@ -28,6 +28,8 @@ function MainApp() {
     const handleHashChange = () => {
       if (window.location.hash === '#admin') {
         setCurrentView('admin');
+      } else {
+        setCurrentView('site');
       }
     };
     window.addEventListener('hashchange', handleHashChange);
@@ -62,7 +64,10 @@ function MainApp() {
   return (
     <div className="min-h-screen bg-brand-900 text-slate-100 flex flex-col selection:bg-brand-500 selection:text-white">
       {/* Sticky Glassmorphic Navigation Bar */}
-      <Navbar onOpenQuoteModal={handleOpenQuoteModal} />
+      <Navbar
+        onOpenQuoteModal={handleOpenQuoteModal}
+        onOpenAdmin={handleOpenAdmin}
+      />
 
       {/* Main Page Landmark */}
       <main className="flex-1">

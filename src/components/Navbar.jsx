@@ -16,13 +16,14 @@ import {
   faArrowRight,
   faBars,
   faXmark,
-  faEnvelope
+  faEnvelope,
+  faGauge
 } from '@fortawesome/free-solid-svg-icons';
 import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import { COMPANY } from '../data/company';
 import logoImg from '../assets/logo.jpeg';
 
-export default function Navbar({ onOpenQuoteModal }) {
+export default function Navbar({ onOpenQuoteModal, onOpenAdmin }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [hoveredLink, setHoveredLink] = useState(null);
@@ -166,8 +167,9 @@ export default function Navbar({ onOpenQuoteModal }) {
               })}
             </nav>
 
-            {/* Desktop Right Action Bar: WhatsApp Export Desk + Compact Quote CTA */}
-            <div className="hidden lg:flex items-center gap-2 shrink-0">
+            {/* Desktop Right Action Bar: WhatsApp Export Desk + Quote CTA */}
+            <div className="hidden lg:flex items-center gap-2.5 shrink-0">
+
               {/* Instant WhatsApp Merchandiser desk (shown on xl+ screens so lg has abundant margin) */}
               <a
                 href={`https://wa.me/${COMPANY.contact.whatsappClean}?text=Hello%20A%26H%20Impex,%20I%20would%20like%20to%20inquire%20about%20fabric%20and%20linen%20manufacturing.`}
