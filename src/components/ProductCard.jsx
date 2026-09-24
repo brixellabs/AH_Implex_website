@@ -1,22 +1,18 @@
 /**
  * ==============================================================================
- * A&H IMPEX - PRODUCT CARD COMPONENT
- * ==============================================================================
- * Purpose: Highly visual export catalog card presenting high-res textile photography,
- *          technical yarn/weave specs, MOQ thresholds, and RFQ trigger.
- * 
- * Design Features:
- * - Large photography with subtle scale-up on hover (scale 1.00 -> 1.05).
- * - Category pill badge and flagship export tags.
- * - Technical specifications matrix (Composition, Thread Count/GSM, MOQ).
- * - CTA button initiating RFQ modal pre-filled with this product's data.
- * - Zero emojis; clean Lucide SVG icons exclusively.
+ * A&H IMPEX - PRODUCT CARD COMPONENT (FONTAWESOME ICONS)
  * ==============================================================================
  */
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Layers, Package, Sparkles } from 'lucide-react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faArrowRight,
+  faLayerGroup,
+  faBox,
+  faStar
+} from '@fortawesome/free-solid-svg-icons';
 import SafeImage from './SafeImage';
 
 export default function ProductCard({ product, onSelectProduct }) {
@@ -27,11 +23,11 @@ export default function ProductCard({ product, onSelectProduct }) {
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.95 }}
       transition={{ duration: 0.4 }}
-      className="group glass-card glass-card-hover rounded-2xl overflow-hidden border border-white/10 flex flex-col justify-between shadow-xl"
+      className="group bg-white rounded-2xl overflow-hidden border border-slate-200 flex flex-col justify-between shadow-sm hover:shadow-2xl hover:border-brand-500 transition-all duration-300"
     >
       <div>
         {/* Product Image Container with Badges */}
-        <div className="relative h-64 sm:h-72 w-full overflow-hidden bg-navy-900">
+        <div className="relative h-64 sm:h-72 w-full overflow-hidden bg-slate-100">
           <SafeImage
             src={product.image}
             fallbackSrc={product.fallbackImage}
@@ -40,32 +36,32 @@ export default function ProductCard({ product, onSelectProduct }) {
             zoomOnHover={true}
           />
 
-          {/* Gradient overlay for readability */}
-          <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-transparent to-transparent opacity-80" />
+          {/* Subtle gradient overlay for readability */}
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent" />
 
           {/* Category Pill Tag */}
-          <div className="absolute top-4 left-4 z-10">
-            <span className="px-3 py-1 rounded-full text-xs font-semibold tracking-wider uppercase bg-navy-950/80 backdrop-blur-md text-gold-300 border border-gold-500/30 shadow-md">
+          <div className="absolute top-3.5 left-3.5 z-10">
+            <span className="px-3 py-1 rounded-full text-xs font-bold tracking-wider uppercase bg-brand-900/90 backdrop-blur-md text-white border border-brand-500/30 shadow-md">
               {product.categoryName}
             </span>
           </div>
 
           {/* Product Badge */}
           {product.badge && (
-            <div className="absolute top-4 right-4 z-10">
-              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold tracking-wide uppercase bg-emerald-500/90 text-navy-950 shadow-md">
-                <Sparkles className="w-3 h-3" aria-hidden="true" />
+            <div className="absolute top-3.5 right-3.5 z-10">
+              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold tracking-wide uppercase bg-emerald-600 text-white shadow-md">
+                <FontAwesomeIcon icon={faStar} className="text-[10px]" aria-hidden="true" />
                 {product.badge}
               </span>
             </div>
           )}
 
           {/* Quick specs pill overlay at bottom of photo */}
-          <div className="absolute bottom-3 left-4 right-4 z-10 flex items-center justify-between text-[11px] text-slate-200 bg-navy-950/70 backdrop-blur-md px-3 py-1.5 rounded-lg border border-white/10">
-            <span className="font-medium text-gold-300 truncate">
+          <div className="absolute bottom-3 left-3.5 right-3.5 z-10 flex items-center justify-between text-[11px] text-slate-100 bg-brand-950/85 backdrop-blur-md px-3 py-1.5 rounded-lg border border-brand-700/60 shadow">
+            <span className="font-medium text-brand-200 truncate">
               {product.specs.composition || product.specs.capabilities}
             </span>
-            <span className="text-slate-400 shrink-0 ml-2 font-mono">
+            <span className="text-white shrink-0 ml-2 font-mono font-bold">
               {product.specs.gsm || product.specs.threadCount}
             </span>
           </div>
@@ -73,36 +69,36 @@ export default function ProductCard({ product, onSelectProduct }) {
 
         {/* Card Body */}
         <div className="p-6">
-          <h3 className="text-xl font-bold text-white tracking-tight group-hover:text-gold-300 transition-colors line-clamp-1 font-display">
+          <h3 className="text-lg sm:text-xl font-bold text-slate-900 tracking-tight group-hover:text-brand-700 transition-colors line-clamp-1 font-serif">
             {product.title}
           </h3>
 
-          <p className="text-xs uppercase tracking-wider text-gold-500/90 font-medium mt-1 mb-3 font-mono">
+          <p className="text-xs uppercase tracking-wider text-brand-700 font-bold mt-1 mb-3 font-mono">
             {product.tagline}
           </p>
 
-          <p className="text-slate-300 text-xs sm:text-sm leading-relaxed mb-5 line-clamp-2 font-light">
+          <p className="text-slate-600 text-xs sm:text-sm leading-relaxed mb-4 line-clamp-2 font-normal">
             {product.description}
           </p>
 
           {/* Technical Specifications Matrix */}
-          <div className="bg-navy-900/80 rounded-xl p-3.5 border border-white/5 space-y-2 mb-4 text-xs">
-            <div className="flex items-center justify-between text-slate-300">
-              <span className="text-slate-400 flex items-center gap-1.5">
-                <Layers className="w-3.5 h-3.5 text-gold-400" aria-hidden="true" />
+          <div className="bg-slate-50 rounded-xl p-3.5 border border-slate-200 space-y-2 mb-4 text-xs">
+            <div className="flex items-center justify-between text-slate-700">
+              <span className="text-slate-500 flex items-center gap-1.5">
+                <FontAwesomeIcon icon={faLayerGroup} className="text-brand-600 text-xs" aria-hidden="true" />
                 Material / Weave:
               </span>
-              <span className="font-medium text-right truncate max-w-[160px] text-white">
+              <span className="font-semibold text-right truncate max-w-[160px] text-slate-900">
                 {product.specs.composition || product.specs.weave || 'Custom Spec'}
               </span>
             </div>
 
-            <div className="flex items-center justify-between text-slate-300">
-              <span className="text-slate-400 flex items-center gap-1.5">
-                <Package className="w-3.5 h-3.5 text-gold-400" aria-hidden="true" />
+            <div className="flex items-center justify-between text-slate-700">
+              <span className="text-slate-500 flex items-center gap-1.5">
+                <FontAwesomeIcon icon={faBox} className="text-brand-600 text-xs" aria-hidden="true" />
                 MOQ / Lead Time:
               </span>
-              <span className="font-semibold text-emerald-400 text-right font-mono">
+              <span className="font-bold text-emerald-700 text-right font-mono">
                 {product.specs.moq}
               </span>
             </div>
@@ -113,7 +109,7 @@ export default function ProductCard({ product, onSelectProduct }) {
             {product.features.slice(0, 2).map((feat, idx) => (
               <span
                 key={idx}
-                className="text-[11px] px-2 py-0.5 rounded-md bg-white/5 text-slate-300 border border-white/5"
+                className="text-[11px] font-medium px-2.5 py-0.5 rounded-md bg-brand-50 text-brand-800 border border-brand-200/60"
               >
                 {feat}
               </span>
@@ -126,10 +122,10 @@ export default function ProductCard({ product, onSelectProduct }) {
       <div className="p-6 pt-0">
         <button
           onClick={() => onSelectProduct(product)}
-          className="w-full py-3 px-4 rounded-xl bg-navy-900 group-hover:bg-gradient-to-r group-hover:from-gold-500 group-hover:to-gold-600 text-slate-200 group-hover:text-navy-950 font-bold text-xs uppercase tracking-wider border border-white/10 group-hover:border-transparent transition-all duration-300 flex items-center justify-center gap-2 shadow-sm group-hover:shadow-lg"
+          className="w-full py-3 px-4 rounded-xl bg-brand-50 hover:bg-gradient-to-r hover:from-blue-600 hover:via-brand-500 hover:to-brand-600 text-brand-700 hover:text-white font-bold text-xs uppercase tracking-wider border border-brand-200 hover:border-transparent transition-all duration-300 flex items-center justify-center gap-2 shadow-sm hover:shadow-md"
         >
           <span>Request Specifications &amp; Pricing</span>
-          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
+          <FontAwesomeIcon icon={faArrowRight} className="text-xs group-hover:translate-x-1 transition-transform" aria-hidden="true" />
         </button>
       </div>
     </motion.div>

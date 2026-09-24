@@ -1,4 +1,12 @@
 // A&H IMPEX - 6-Stage Quality Control Pipeline Data
+// Incorporating user-supplied quality laboratory and inspection assets
+
+import rawMaterialImg from '../assets/raw material and yarn inspection.jpeg';
+import greyFabricImg from '../assets/grey fabric inspection.jfif';
+import labTestingImg from '../assets/dyeing and finishing.jfif';
+import inlineStitchingImg from '../assets/In-Line Stitching & Seam Inspection.jfif';
+import finalAQLImg from '../assets/Final AQL Inspection.jfif';
+import metalDetectionImg from '../assets/Metal Detection & Container Loading Check.jfif';
 
 export const QUALITY_STAGES = [
   {
@@ -12,7 +20,7 @@ export const QUALITY_STAGES = [
       'Yarn count verification (Ne)',
       'Tensile & elongation at break'
     ],
-    image: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80',
+    image: rawMaterialImg,
     tolerance: 'Tolerance ± 1.5%'
   },
   {
@@ -26,7 +34,7 @@ export const QUALITY_STAGES = [
       'EPI / PPI density verification',
       'Selvage consistency & usable width'
     ],
-    image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=800&q=80',
+    image: greyFabricImg,
     tolerance: '< 18 penalty points / 100 sq yds'
   },
   {
@@ -40,7 +48,7 @@ export const QUALITY_STAGES = [
       'Wash fastness (ISO 105-C06) Grade 4–5',
       'Dimensional stability (shrinkage < 2.5%)'
     ],
-    image: 'https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=800&q=80',
+    image: labTestingImg,
     tolerance: 'Zero hazardous heavy metals'
   },
   {
@@ -54,7 +62,7 @@ export const QUALITY_STAGES = [
       'Tension balance & thread trimming',
       'Measurement specs against tech packs'
     ],
-    image: 'https://images.unsplash.com/photo-1584992236310-6edddc08acff?auto=format&fit=crop&w=800&q=80',
+    image: inlineStitchingImg,
     tolerance: 'Zero skipped or broken stitches'
   },
   {
@@ -68,7 +76,7 @@ export const QUALITY_STAGES = [
       'Carton drop test & barcode scan',
       'Complete retail folding presentation'
     ],
-    image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=800&q=80',
+    image: finalAQLImg,
     tolerance: '100% Pass Required for Release'
   },
   {
@@ -82,7 +90,7 @@ export const QUALITY_STAGES = [
       'Container floor moisture < 12%',
       'Seaworthy packaging & tamper-evident seals'
     ],
-    image: 'https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=800&q=80',
+    image: metalDetectionImg,
     tolerance: '0.8mm Ferrous calibration sensitivity'
   }
 ];

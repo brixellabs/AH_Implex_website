@@ -4,9 +4,13 @@
 
 @layer base {
   :root {
-    --color-navy-dark: #060B18;
-    --color-navy-primary: #0A1224;
-    --color-gold-accent: #C5A880;
+    --color-brand-900: #071830;
+    --color-brand-800: #0e294d;
+    --color-brand-700: #163e6e;
+    --color-brand-600: #1c5393;
+    --color-brand-500: #2a72b8;
+    --color-gold-400: #c5a059;
+    --color-gold-500: #b48c36;
   }
 
   html {
@@ -18,25 +22,46 @@
     width: 8px;
   }
   ::-webkit-scrollbar-track {
-    background: #060B18;
+    background: #071830;
   }
   ::-webkit-scrollbar-thumb {
-    background: #1E3A68;
+    background: #163e6e;
     border-radius: 4px;
-    border: 2px solid #060B18;
+    border: 2px solid #071830;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #C5A880;
+    background: #2a72b8;
   }
 }
 
 @layer components {
+  /* Reference Design Glass Navigation */
+  .glass-nav {
+    background: rgba(14, 41, 77, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  /* Reference Design Hero Radial Dot Grid */
+  .hero-pattern {
+    background-color: #071830;
+    background-image: radial-gradient(#1c5393 0.75px, transparent 0.75px), radial-gradient(#163e6e 0.75px, #071830 0.75px);
+    background-size: 30px 30px;
+    background-position: 0 0, 15px 15px;
+  }
+
+  /* Reference Design Cotton Weave Pattern */
+  .cotton-weave-bg {
+    background-image: linear-gradient(rgba(240, 245, 250, 0.97), rgba(240, 245, 250, 0.97)), repeating-linear-gradient(45deg, #e1ecf6 0, #e1ecf6 1px, transparent 0, transparent 50%);
+    background-size: 20px 20px;
+  }
+
   /* Premium Glassmorphic Card */
   .glass-card {
-    background: rgba(14, 26, 51, 0.65);
+    background: rgba(14, 41, 77, 0.65);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(148, 191, 228, 0.15);
   }
 
   .glass-card-hover {
@@ -44,38 +69,59 @@
   }
   .glass-card-hover:hover {
     transform: translateY(-4px);
-    background: rgba(20, 37, 74, 0.85);
-    border-color: rgba(197, 168, 128, 0.35);
-    box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.6), 0 0 20px -5px rgba(197, 168, 128, 0.15);
+    background: rgba(22, 62, 110, 0.85);
+    border-color: rgba(42, 114, 184, 0.4);
+    box-shadow: 0 20px 35px -10px rgba(7, 24, 48, 0.7), 0 0 20px -5px rgba(42, 114, 184, 0.25);
   }
 
-  /* Sticky Navigation Glass */
-  .glass-nav {
-    background: rgba(6, 11, 24, 0.88);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
-  }
-
-  /* Gold Gradient Accent text */
+  /* Gold & Brand Gradient Accent text */
   .gold-gradient-text {
-    background: linear-gradient(135deg, #FFFFFF 0%, #DAC196 50%, #C5A880 100%);
+    background: linear-gradient(135deg, #FFFFFF 0%, #c3daf0 40%, #94bfe4 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .brand-gradient-text {
+    background: linear-gradient(135deg, #94bfe4 0%, #2a72b8 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
 
   /* Subtle fabric weave overlay */
   .bg-fabric-weave {
-    background-image: radial-gradient(rgba(197, 168, 128, 0.08) 1px, transparent 0);
+    background-image: radial-gradient(rgba(148, 191, 228, 0.12) 1px, transparent 0);
     background-size: 24px 24px;
   }
 
-  /* Section divider curve */
-  .curve-mask-top {
-    clip-path: ellipse(110% 100% at 50% 100%);
+  /* Shimmer light sweep effect for buttons & badges */
+  .shimmer-sweep {
+    position: relative;
+    overflow: hidden;
   }
-  .curve-mask-bottom {
-    clip-path: ellipse(110% 100% at 50% 0%);
+  .shimmer-sweep::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.25) 50%,
+      transparent 100%
+    );
+    transform: skewX(-20deg);
+    animation: shimmerSlide 3.5s infinite ease-in-out;
+  }
+
+  @keyframes shimmerSlide {
+    0%, 30% {
+      left: -100%;
+    }
+    60%, 100% {
+      left: 200%;
+    }
   }
 }
 

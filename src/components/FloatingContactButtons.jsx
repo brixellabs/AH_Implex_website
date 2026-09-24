@@ -1,90 +1,100 @@
 /**
  * ==============================================================================
- * A&H IMPEX - FLOATING CONTACT ACTIONS COMPONENT
+ * A&H IMPEX - FLOATING SOCIAL SPEED DIAL WIDGET (EXACT REFERENCE DESIGN)
  * ==============================================================================
- * Purpose: Non-intrusive floating contact trigger that expands smoothly on user
- *          interaction to offer instant WhatsApp chat, official email, or RFQ modal.
- * 
- * Features:
- * - Positioned in the bottom-right viewport corner with high z-index.
- * - Smooth Framer Motion spring expansion.
- * - Auto-closes when triggering modal to prevent obscuring form inputs.
- * - Zero emojis; clean Lucide SVG icons exclusively.
+ * Purpose: Interactive hover-expanding pill buttons for LinkedIn, Instagram,
+ *          Facebook, and Direct WhatsApp Trade Desk.
  * ==============================================================================
  */
 
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { MessageSquare, Phone, Mail, FileText, X } from 'lucide-react';
+import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faLinkedinIn,
+  faInstagram,
+  faFacebookF,
+  faWhatsapp
+} from '@fortawesome/free-brands-svg-icons';
+import { useData } from '../context/DataContext';
 import { COMPANY } from '../data/company';
 
-export default function FloatingContactButtons({ onOpenQuoteModal }) {
-  const [isOpen, setIsOpen] = useState(false);
+export default function FloatingContactButtons() {
+  const { companyInfo } = useData();
+  const info = companyInfo || COMPANY;
+  const whatsappNumber = info.contact?.whatsappClean || '923008661234';
 
   return (
-    <aside aria-label="Quick Commercial Actions" className="fixed bottom-6 right-6 z-40 flex flex-col items-end">
-      {/* Expanded Action Menu */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: 15, scale: 0.9 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 15, scale: 0.9 }}
-            transition={{ duration: 0.2 }}
-            className="flex flex-col items-end space-y-2.5 mb-3"
-          >
-            {/* Action 1: WhatsApp */}
-            <a
-              href={`https://wa.me/${COMPANY.contact.whatsappClean}?text=Hello%20A%26H%20Impex,%20I%20would%20like%20to%20inquire%20about%20textile%20export%20orders.`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2.5 px-4 py-2.5 rounded-full bg-emerald-600 text-white shadow-xl hover:bg-emerald-500 transition-all text-xs font-bold uppercase tracking-wider group"
-            >
-              <span className="text-[11px] font-semibold text-emerald-100 hidden sm:inline font-mono">WhatsApp Merchandiser</span>
-              <Phone className="w-4 h-4" aria-hidden="true" />
-            </a>
+    <aside
+      aria-label="Official Social Media & Direct Trade Desk"
+      className="fixed right-3 sm:right-4 bottom-6 z-40 flex flex-col items-end pointer-events-auto"
+    >
+      <div id="socialSpeedDial" className="flex flex-col space-y-2.5 items-end transition-all duration-300">
+        
+        {/* 1. LinkedIn */}
+        <a
+          href="https://www.linkedin.com/company/ah-impex"
+          target="_blank"
+          rel="noopener noreferrer"
+          title="Follow A&H Impex on LinkedIn"
+          className="group flex items-center bg-[#0077b5] text-white p-3 rounded-full shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300"
+        >
+          <span className="max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-xs transition-all duration-300 ease-in-out text-xs font-semibold px-0 group-hover:px-2">
+            LinkedIn Company Page
+          </span>
+          <div className="w-5 h-5 flex items-center justify-center">
+            <FontAwesomeIcon icon={faLinkedinIn} className="text-base" />
+          </div>
+        </a>
 
-            {/* Action 2: Email */}
-            <a
-              href={`mailto:${COMPANY.contact.email}?subject=Export%20Inquiry%20-%20A%26H%20Impex`}
-              className="flex items-center gap-2.5 px-4 py-2.5 rounded-full bg-navy-850 text-slate-100 border border-white/20 shadow-xl hover:bg-navy-800 hover:text-white transition-all text-xs font-bold uppercase tracking-wider group"
-            >
-              <span className="text-[11px] font-semibold text-slate-300 hidden sm:inline font-mono">Official Email Desk</span>
-              <Mail className="w-4 h-4 text-gold-400" aria-hidden="true" />
-            </a>
+        {/* 2. Instagram */}
+        <a
+          href="https://www.instagram.com/ahimpextextiles"
+          target="_blank"
+          rel="noopener noreferrer"
+          title="A&H Impex Instagram Showroom"
+          className="group flex items-center bg-gradient-to-tr from-[#f58529] via-[#dd2a7b] to-[#8134af] text-white p-3 rounded-full shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300"
+        >
+          <span className="max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-xs transition-all duration-300 ease-in-out text-xs font-semibold px-0 group-hover:px-2">
+            Instagram Showroom
+          </span>
+          <div className="w-5 h-5 flex items-center justify-center">
+            <FontAwesomeIcon icon={faInstagram} className="text-base" />
+          </div>
+        </a>
 
-            {/* Action 3: Request Quote */}
-            <button
-              onClick={() => {
-                setIsOpen(false);
-                onOpenQuoteModal();
-              }}
-              className="flex items-center gap-2.5 px-4 py-2.5 rounded-full bg-gradient-to-r from-gold-500 to-gold-600 text-navy-950 shadow-xl hover:from-gold-400 hover:to-gold-500 transition-all text-xs font-bold uppercase tracking-wider group"
-            >
-              <span className="text-[11px] font-semibold text-navy-950 hidden sm:inline font-mono">Technical RFQ Form</span>
-              <FileText className="w-4 h-4" aria-hidden="true" />
-            </button>
-          </motion.div>
-        )}
-      </AnimatePresence>
+        {/* 3. Facebook */}
+        <a
+          href="https://www.facebook.com/ahimpextextiles"
+          target="_blank"
+          rel="noopener noreferrer"
+          title="A&H Impex Facebook Updates"
+          className="group flex items-center bg-[#1877f2] text-white p-3 rounded-full shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300"
+        >
+          <span className="max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-xs transition-all duration-300 ease-in-out text-xs font-semibold px-0 group-hover:px-2">
+            Facebook Updates
+          </span>
+          <div className="w-5 h-5 flex items-center justify-center">
+            <FontAwesomeIcon icon={faFacebookF} className="text-base" />
+          </div>
+        </a>
 
-      {/* Main Floating Trigger Button */}
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        aria-label="Toggle Quick Contact Actions"
-        aria-expanded={isOpen}
-        className={`w-13 h-13 p-3.5 rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 ${
-          isOpen
-            ? 'bg-navy-800 text-white border border-white/20 rotate-90'
-            : 'bg-gradient-to-r from-gold-500 to-gold-600 text-navy-950 hover:scale-105 active:scale-95 shadow-gold-500/25 ring-4 ring-gold-500/20'
-        }`}
-      >
-        {isOpen ? (
-          <X className="w-6 h-6 text-white" aria-hidden="true" />
-        ) : (
-          <MessageSquare className="w-6 h-6 fill-navy-950" aria-hidden="true" />
-        )}
-      </button>
+        {/* 4. Direct WhatsApp Button */}
+        <a
+          href={`https://wa.me/${whatsappNumber}?text=Hello%20A%26H%20Impex,%20I%20would%20like%20to%20inquire%20about%20textile%20export%20orders.`}
+          target="_blank"
+          rel="noopener noreferrer"
+          title="Direct WhatsApp Live Trade Desk"
+          className="group flex items-center bg-[#25D366] text-white p-3.5 rounded-full shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 ring-2 ring-emerald-300"
+        >
+          <span className="max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-xs transition-all duration-300 ease-in-out text-xs font-bold px-0 group-hover:px-2 font-mono">
+            Live Trade Desk
+          </span>
+          <div className="w-6 h-6 flex items-center justify-center">
+            <FontAwesomeIcon icon={faWhatsapp} className="text-xl" />
+          </div>
+        </a>
+
+      </div>
     </aside>
   );
 }

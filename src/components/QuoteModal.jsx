@@ -1,26 +1,27 @@
 /**
  * ==============================================================================
- * A&H IMPEX - TECHNICAL B2B REQUEST FOR QUOTE (RFQ) MODAL
- * ==============================================================================
- * Purpose: Commercial procurement form allowing buyers to submit detailed purchase
- *          inquiries, including yarn counts, fabric compositions, target volumes,
- *          and destination seaports.
- * 
- * Features:
- * - Dynamic pre-population when launched from a specific product card.
- * - Multi-field validation (Category, Volume tier, Destination port, Technical notes).
- * - Interactive confetti celebration and confirmation card upon submission.
- * - Zero emojis; clean Lucide SVG icons exclusively.
+ * A&H IMPEX - TECHNICAL B2B REQUEST FOR QUOTE (RFQ) MODAL (FONTAWESOME ICONS)
  * ==============================================================================
  */
 
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { X, Send, CheckCircle2, ShieldCheck, FileSpreadsheet } from 'lucide-react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faXmark,
+  faPaperPlane,
+  faCircleCheck,
+  faShieldHalved,
+  faFileInvoice
+} from '@fortawesome/free-solid-svg-icons';
 import confetti from 'canvas-confetti';
 import { COMPANY } from '../data/company';
+import { useData } from '../context/DataContext';
 
 export default function QuoteModal({ isOpen, onClose, initialData = {} }) {
+  const { addInquiry, companyInfo } = useData();
+  const info = companyInfo || COMPANY;
+
   const [formData, setFormData] = useState({
     name: '',
     company: '',
@@ -53,6 +54,9 @@ export default function QuoteModal({ isOpen, onClose, initialData = {} }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (addInquiry) {
+      addInquiry(formData);
+    }
     setIsSubmitted(true);
     try {
       confetti({
@@ -81,53 +85,53 @@ export default function QuoteModal({ isOpen, onClose, initialData = {} }) {
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.96, y: 20 }}
         transition={{ duration: 0.25 }}
-        className="bg-navy-950 border border-white/20 rounded-2xl p-6 sm:p-8 max-w-2xl w-full shadow-2xl relative my-8"
+        className="bg-brand-900 border border-brand-700/80 rounded-2xl p-6 sm:p-8 max-w-2xl w-full shadow-2xl relative my-8"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-5 right-5 p-2 rounded-lg bg-navy-850 text-slate-400 hover:text-white hover:bg-navy-800 transition-colors"
+          className="absolute top-5 right-5 p-2 rounded-lg bg-brand-800 text-slate-400 hover:text-white hover:bg-brand-700 transition-colors"
           aria-label="Close modal"
         >
-          <X className="w-5 h-5" aria-hidden="true" />
+          <FontAwesomeIcon icon={faXmark} className="text-base" aria-hidden="true" />
         </button>
 
         {isSubmitted ? (
           <div className="py-12 text-center flex flex-col items-center">
             <div className="w-16 h-16 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center mb-5 border border-emerald-500/30">
-              <CheckCircle2 className="w-10 h-10" aria-hidden="true" />
+              <FontAwesomeIcon icon={faCircleCheck} className="text-4xl" aria-hidden="true" />
             </div>
 
-            <h3 id="rfq-modal-title" className="text-2xl font-bold text-white mb-2 font-display">
+            <h3 id="rfq-modal-title" className="text-2xl font-bold text-white mb-2 font-serif">
               Request for Quote Received
             </h3>
 
             <p className="text-sm text-slate-300 max-w-md mx-auto mb-6 leading-relaxed font-light">
               Thank you, <strong className="text-white">{formData.name || 'Valued Partner'}</strong>. Your commercial textile inquiry has been forwarded to our International Merchandising Desk at{' '}
-              <strong className="text-gold-400 font-mono">{COMPANY.contact.email}</strong>.
+              <strong className="text-brand-300 font-mono">{info.contact.email}</strong>.
             </p>
 
-            <div className="bg-navy-900/90 rounded-xl p-4 border border-white/10 text-xs text-slate-300 max-w-md w-full text-left mb-6 space-y-1.5 font-light">
+            <div className="bg-brand-950/90 rounded-xl p-4 border border-brand-700/60 text-xs text-slate-300 max-w-md w-full text-left mb-6 space-y-1.5 font-light">
               <p><strong className="text-slate-400 font-mono">Response Lead Time:</strong> Within 12-24 business hours</p>
-              <p><strong className="text-slate-400 font-mono">Fast Track:</strong> Contact directly on WhatsApp: {COMPANY.contact.whatsapp}</p>
+              <p><strong className="text-slate-400 font-mono">Fast Track:</strong> Contact directly on WhatsApp: {info.contact.whatsapp}</p>
             </div>
 
             <button
               onClick={onClose}
-              className="px-6 py-2.5 rounded-xl bg-gold-500 text-navy-950 font-bold text-xs uppercase tracking-wider shadow-md hover:bg-gold-400 transition-colors font-mono"
+              className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 via-brand-500 to-brand-600 text-white font-bold text-xs uppercase tracking-wider shadow-md hover:scale-[1.02] transition-all font-mono shimmer-sweep"
             >
               Close Window
             </button>
           </div>
         ) : (
           <div>
-            <div className="flex items-center gap-2 px-2.5 py-1 rounded-full bg-gold-500/10 text-gold-400 border border-gold-500/30 text-xs font-semibold w-fit mb-3">
-              <FileSpreadsheet className="w-3.5 h-3.5" aria-hidden="true" />
+            <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-brand-800 border border-brand-500/30 text-brand-300 text-xs font-semibold w-fit mb-3 font-mono">
+              <FontAwesomeIcon icon={faFileInvoice} className="text-xs" aria-hidden="true" />
               <span>International RFQ Desk</span>
             </div>
 
-            <h3 id="rfq-modal-title" className="text-2xl font-bold text-white mb-1 font-display">
+            <h3 id="rfq-modal-title" className="text-2xl font-bold text-white mb-1 font-serif">
               Request a Formal Commercial Quote
             </h3>
 
@@ -147,7 +151,7 @@ export default function QuoteModal({ isOpen, onClose, initialData = {} }) {
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     placeholder="e.g. Alexander Wright"
-                    className="w-full px-3.5 py-2.5 rounded-lg bg-navy-900 border border-white/10 text-white placeholder-slate-500 text-xs focus:outline-none focus:border-gold-500"
+                    className="w-full px-3.5 py-2.5 rounded-lg bg-brand-800 border border-brand-700/60 text-white placeholder-slate-400 text-xs focus:outline-none focus:border-brand-400"
                   />
                 </div>
 
@@ -161,7 +165,7 @@ export default function QuoteModal({ isOpen, onClose, initialData = {} }) {
                     value={formData.company}
                     onChange={(e) => setFormData({ ...formData, company: e.target.value })}
                     placeholder="e.g. Nordic Home Textiles Ltd"
-                    className="w-full px-3.5 py-2.5 rounded-lg bg-navy-900 border border-white/10 text-white placeholder-slate-500 text-xs focus:outline-none focus:border-gold-500"
+                    className="w-full px-3.5 py-2.5 rounded-lg bg-brand-800 border border-brand-700/60 text-white placeholder-slate-400 text-xs focus:outline-none focus:border-brand-400"
                   />
                 </div>
               </div>
@@ -177,7 +181,7 @@ export default function QuoteModal({ isOpen, onClose, initialData = {} }) {
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     placeholder="procurement@company.com"
-                    className="w-full px-3.5 py-2.5 rounded-lg bg-navy-900 border border-white/10 text-white placeholder-slate-500 text-xs focus:outline-none focus:border-gold-500"
+                    className="w-full px-3.5 py-2.5 rounded-lg bg-brand-800 border border-brand-700/60 text-white placeholder-slate-400 text-xs focus:outline-none focus:border-brand-400"
                   />
                 </div>
 
@@ -190,7 +194,7 @@ export default function QuoteModal({ isOpen, onClose, initialData = {} }) {
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     placeholder="+44 20 7946 0912"
-                    className="w-full px-3.5 py-2.5 rounded-lg bg-navy-900 border border-white/10 text-white placeholder-slate-500 text-xs focus:outline-none focus:border-gold-500"
+                    className="w-full px-3.5 py-2.5 rounded-lg bg-brand-800 border border-brand-700/60 text-white placeholder-slate-400 text-xs focus:outline-none focus:border-brand-400"
                   />
                 </div>
               </div>
@@ -203,7 +207,7 @@ export default function QuoteModal({ isOpen, onClose, initialData = {} }) {
                   <select
                     value={formData.category}
                     onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                    className="w-full px-3 py-2.5 rounded-lg bg-navy-900 border border-white/10 text-white text-xs focus:outline-none focus:border-gold-500"
+                    className="w-full px-3 py-2.5 rounded-lg bg-brand-800 border border-brand-700/60 text-white text-xs focus:outline-none focus:border-brand-400"
                   >
                     <option value="Home Textiles">Home Textiles</option>
                     <option value="Apparel & Garments">Apparel &amp; Garments</option>
@@ -219,7 +223,7 @@ export default function QuoteModal({ isOpen, onClose, initialData = {} }) {
                   <select
                     value={formData.volume}
                     onChange={(e) => setFormData({ ...formData, volume: e.target.value })}
-                    className="w-full px-3 py-2.5 rounded-lg bg-navy-900 border border-white/10 text-white text-xs focus:outline-none focus:border-gold-500"
+                    className="w-full px-3 py-2.5 rounded-lg bg-brand-800 border border-brand-700/60 text-white text-xs focus:outline-none focus:border-brand-400"
                   >
                     <option value="Sample Order (Trial)">Sample Order / Lab Dips</option>
                     <option value="500 to 1,000 Units">500 to 1,000 Units</option>
@@ -239,7 +243,7 @@ export default function QuoteModal({ isOpen, onClose, initialData = {} }) {
                     value={formData.port}
                     onChange={(e) => setFormData({ ...formData, port: e.target.value })}
                     placeholder="e.g. Port of Rotterdam / USA"
-                    className="w-full px-3.5 py-2.5 rounded-lg bg-navy-900 border border-white/10 text-white placeholder-slate-500 text-xs focus:outline-none focus:border-gold-500"
+                    className="w-full px-3.5 py-2.5 rounded-lg bg-brand-800 border border-brand-700/60 text-white placeholder-slate-400 text-xs focus:outline-none focus:border-brand-400"
                   />
                 </div>
               </div>
@@ -253,22 +257,22 @@ export default function QuoteModal({ isOpen, onClose, initialData = {} }) {
                   value={formData.notes}
                   onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
                   placeholder="Mention desired thread counts, GSM, cotton blends, Pantone colors, or custom private label requirements..."
-                  className="w-full px-3.5 py-2.5 rounded-lg bg-navy-900 border border-white/10 text-white placeholder-slate-500 text-xs focus:outline-none focus:border-gold-500"
+                  className="w-full px-3.5 py-2.5 rounded-lg bg-brand-800 border border-brand-700/60 text-white placeholder-slate-400 text-xs focus:outline-none focus:border-brand-400"
                 />
               </div>
 
               <div className="pt-2 flex items-center justify-between gap-4">
                 <span className="text-[11px] text-slate-400 flex items-center gap-1.5 font-light">
-                  <ShieldCheck className="w-4 h-4 text-emerald-400" aria-hidden="true" />
+                  <FontAwesomeIcon icon={faShieldHalved} className="text-emerald-400 text-xs" aria-hidden="true" />
                   <span>Strict NDA &amp; commercial confidentiality honored</span>
                 </span>
 
                 <button
                   type="submit"
-                  className="px-6 py-3 rounded-xl bg-gradient-to-r from-gold-500 to-gold-600 text-navy-950 font-bold text-xs uppercase tracking-wider shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center gap-2"
+                  className="px-6 py-3 rounded-xl bg-gradient-to-r from-blue-600 via-brand-500 to-brand-600 hover:from-blue-500 hover:to-brand-500 text-white font-bold text-xs uppercase tracking-wider shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center gap-2 shimmer-sweep"
                 >
-                  <Send className="w-3.5 h-3.5" aria-hidden="true" />
-                  Submit Technical RFQ
+                  <FontAwesomeIcon icon={faPaperPlane} className="text-xs" aria-hidden="true" />
+                  <span>Submit Technical RFQ</span>
                 </button>
               </div>
             </form>

@@ -1,22 +1,18 @@
 /**
  * ==============================================================================
- * A&H IMPEX - FACTORY PRODUCTION SCALE & VIDEO WALKTHROUGH SECTION
- * ==============================================================================
- * Purpose: Full-width industrial showcase demonstrating weaving volume,
- *          air-jet loom capacity, and offering a virtual facility walkthrough.
- * 
- * Features:
- * - Full-width background image of the weaving hall with subtle gradient overlay.
- * - Headline: "Built for Quality. Designed for Scale."
- * - Animated count-up metrics (18M+ meters, 180+ looms, 25+ countries, 99.6% pass).
- * - Interactive facility walkthrough modal with high-definition tour preview.
- * - Zero emojis; clean Lucide SVG icons exclusively.
+ * A&H IMPEX - FACTORY PRODUCTION SCALE & VIDEO WALKTHROUGH SECTION (FONTAWESOME ICONS)
  * ==============================================================================
  */
 
 import React, { useEffect, useState, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { Play, Factory, CheckCircle2, X } from 'lucide-react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faPlay,
+  faIndustry,
+  faCircleCheck,
+  faXmark
+} from '@fortawesome/free-solid-svg-icons';
 import SafeImage from './SafeImage';
 
 function CounterItem({ target, suffix = '', label, description, duration = 2 }) {
@@ -84,7 +80,7 @@ export default function FactorySection({ onOpenQuoteModal }) {
         {/* Main Title Overlay */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold-500/10 border border-gold-500/30 text-gold-400 text-xs font-semibold tracking-wider uppercase mb-3">
-            <Factory className="w-3.5 h-3.5" aria-hidden="true" />
+            <FontAwesomeIcon icon={faIndustry} className="text-xs" aria-hidden="true" />
             <span>Industrial Scale &amp; Reliability</span>
           </div>
 
@@ -143,7 +139,7 @@ export default function FactorySection({ onOpenQuoteModal }) {
               />
               <div className="absolute inset-0 bg-navy-950/40 group-hover:bg-navy-950/20 transition-all flex items-center justify-center">
                 <div className="w-16 h-16 rounded-full bg-gold-500/90 group-hover:bg-gold-400 text-navy-950 flex items-center justify-center shadow-2xl transform group-hover:scale-110 transition-all">
-                  <Play className="w-7 h-7 fill-navy-950 ml-1" aria-hidden="true" />
+                  <FontAwesomeIcon icon={faPlay} className="text-lg ml-0.5" aria-hidden="true" />
                 </div>
               </div>
 
@@ -169,15 +165,15 @@ export default function FactorySection({ onOpenQuoteModal }) {
 
               <div className="space-y-2.5 mb-6 text-xs text-slate-200">
                 <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" aria-hidden="true" />
+                  <FontAwesomeIcon icon={faCircleCheck} className="text-emerald-400 text-xs shrink-0" aria-hidden="true" />
                   <span className="font-light">340cm extra-wide weaving hall with computerized tension controls</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" aria-hidden="true" />
+                  <FontAwesomeIcon icon={faCircleCheck} className="text-emerald-400 text-xs shrink-0" aria-hidden="true" />
                   <span className="font-light">Automated chemical dispensing &amp; effluent treatment plant (ETP)</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" aria-hidden="true" />
+                  <FontAwesomeIcon icon={faCircleCheck} className="text-emerald-400 text-xs shrink-0" aria-hidden="true" />
                   <span className="font-light">C-TPAT compliant container loading dock with CCTV monitoring</span>
                 </div>
               </div>
@@ -219,13 +215,13 @@ export default function FactorySection({ onOpenQuoteModal }) {
                 onClick={() => setVideoModalOpen(false)}
                 className="text-slate-400 hover:text-white text-xs p-1 rounded-md hover:bg-navy-800 flex items-center gap-1"
               >
-                <X className="w-4 h-4" />
+                <FontAwesomeIcon icon={faXmark} className="text-sm" />
                 <span>Close</span>
               </button>
             </div>
             
             <div className="relative rounded-xl overflow-hidden aspect-video bg-navy-950 flex flex-col items-center justify-center p-8 text-center border border-white/10">
-              <Factory className="w-16 h-16 text-gold-400 mb-4 animate-bounce" />
+              <FontAwesomeIcon icon={faIndustry} className="text-5xl text-gold-400 mb-4 animate-bounce" />
               <h5 className="text-lg font-bold text-white mb-2 font-display">Virtual Mill Video Tour Ready</h5>
               <p className="text-xs text-slate-300 max-w-md mb-5 leading-relaxed font-light">
                 High-definition drone footage and technical machinery walkthrough video file ready for client streaming integration.

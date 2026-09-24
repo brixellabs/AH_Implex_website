@@ -1,23 +1,18 @@
 /**
  * ==============================================================================
- * A&H IMPEX - QUALITY CONTROL & LABORATORY PIPELINE SECTION
- * ==============================================================================
- * Purpose: Dedicated section showcasing the 6-stage international quality assurance
- *          protocol governing every meter of exported fabric and apparel.
- * 
- * Quality Stages:
- * 01. Raw Material & Yarn Inspection - Uster evenness & count testing.
- * 02. Grey Fabric Inspection - ASTM D5430 4-Point system for weaving flaws.
- * 03. Color Fastness & Shrinkage - In-house lab tests (ISO 105-C06, Delta-E < 0.8).
- * 04. In-Line Stitching - Automated tension balance & SPI verification.
- * 05. Final AQL Inspection - ANSI/ASQ Z1.4 (ISO 2859-1) Level II standard.
- * 06. Metal Detection & Container Check - 9-point calibrated needle detection.
+ * A&H IMPEX - QUALITY CONTROL & LABORATORY PIPELINE SECTION (FONTAWESOME ICONS)
  * ==============================================================================
  */
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ShieldCheck, CheckCircle2, FlaskConical, Check } from 'lucide-react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faShieldHalved,
+  faCircleCheck,
+  faFlask,
+  faCheck
+} from '@fortawesome/free-solid-svg-icons';
 import SafeImage from './SafeImage';
 import { QUALITY_STAGES } from '../data/quality';
 
@@ -26,32 +21,32 @@ export default function QualityControl({ onOpenQuoteModal }) {
   const activeStage = QUALITY_STAGES.find((s) => s.id === activeStageId) || QUALITY_STAGES[0];
 
   return (
-    <section id="quality" className="py-24 bg-navy-950 relative overflow-hidden">
+    <section id="quality" className="py-20 lg:py-24 bg-white relative overflow-hidden border-b border-slate-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
           <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold tracking-wider uppercase mb-3">
-              <ShieldCheck className="w-3.5 h-3.5" aria-hidden="true" />
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-50 border border-brand-200 text-brand-700 text-xs font-bold tracking-wider uppercase mb-3 font-mono">
+              <FontAwesomeIcon icon={faShieldHalved} className="text-xs text-brand-600" aria-hidden="true" />
               <span>International Quality Assurance</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-tight font-display">
-              Six-Stage <span className="gold-gradient-text">Quality Control</span> Pipeline
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 tracking-tight leading-tight font-serif">
+              Six-Stage <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-700 via-brand-600 to-blue-600">Quality Control</span> Pipeline
             </h2>
-            <p className="text-slate-300 text-sm sm:text-base mt-3 font-light">
+            <p className="text-slate-600 text-sm sm:text-base mt-3 font-normal">
               We eliminate export defects before packaging. Every meter is systematically audited against ASTM, ISO, and AQL 1.5 international acceptance benchmarks.
             </p>
           </div>
 
-          <div className="bg-navy-900/80 p-4 rounded-xl border border-white/10 shrink-0">
+          <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 shrink-0 shadow-sm">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
-                <FlaskConical className="w-5 h-5" aria-hidden="true" />
+              <div className="w-10 h-10 rounded-lg bg-brand-100 border border-brand-200 text-brand-700 flex items-center justify-center">
+                <FontAwesomeIcon icon={faFlask} className="text-base" aria-hidden="true" />
               </div>
               <div>
-                <p className="text-xs text-slate-400">Testing Standard</p>
-                <p className="text-sm font-bold text-white font-mono">ANSI/ASQ Z1.4 Level II</p>
+                <p className="text-xs text-slate-500 font-medium">Testing Standard</p>
+                <p className="text-sm font-bold text-slate-900 font-mono">ANSI/ASQ Z1.4 Level II</p>
               </div>
             </div>
           </div>
@@ -67,22 +62,24 @@ export default function QualityControl({ onOpenQuoteModal }) {
                 onClick={() => setActiveStageId(stage.id)}
                 className={`p-3.5 rounded-xl border text-left transition-all duration-300 flex flex-col justify-between ${
                   isActive
-                    ? 'bg-navy-800 border-gold-400/80 shadow-lg shadow-gold-500/10 ring-2 ring-gold-500/20'
-                    : 'bg-navy-900/70 border-white/10 hover:border-white/20 hover:bg-navy-850'
+                    ? 'bg-brand-700 border-brand-600 text-white shadow-lg shadow-brand-700/20 ring-2 ring-brand-500/30'
+                    : 'bg-slate-50 border-slate-200 hover:border-brand-500 hover:bg-white text-slate-700 shadow-sm'
                 }`}
               >
                 <div className="flex items-center justify-between mb-2">
                   <span className={`text-[11px] font-extrabold px-1.5 py-0.5 rounded font-mono ${
-                    isActive ? 'bg-gold-500 text-navy-950' : 'bg-white/10 text-slate-300'
+                    isActive ? 'bg-white text-brand-800' : 'bg-slate-200 text-slate-800'
                   }`}>
                     {stage.step}
                   </span>
-                  <span className="text-[10px] text-slate-400 uppercase font-medium truncate ml-1 font-mono">
+                  <span className={`text-[10px] uppercase font-medium truncate ml-1 font-mono ${
+                    isActive ? 'text-brand-200' : 'text-slate-500'
+                  }`}>
                     {stage.tag}
                   </span>
                 </div>
                 <span className={`text-xs font-bold line-clamp-2 ${
-                  isActive ? 'text-white' : 'text-slate-300'
+                  isActive ? 'text-white' : 'text-slate-800'
                 }`}>
                   {stage.name}
                 </span>
@@ -99,74 +96,74 @@ export default function QualityControl({ onOpenQuoteModal }) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -15 }}
             transition={{ duration: 0.35 }}
-            className="glass-card rounded-2xl p-6 sm:p-10 border border-white/10 shadow-2xl"
+            className="bg-slate-50 rounded-2xl p-6 sm:p-10 border border-slate-200 shadow-xl"
           >
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
               
               {/* Left Column: Stage Details */}
               <div className="lg:col-span-7">
                 <div className="flex items-center gap-3 mb-2">
-                  <span className="px-2.5 py-1 rounded bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-xs font-bold uppercase tracking-wider font-mono">
+                  <span className="px-2.5 py-1 rounded bg-brand-100 border border-brand-200 text-brand-800 text-xs font-bold uppercase tracking-wider font-mono">
                     Stage {activeStage.step} • {activeStage.tag}
                   </span>
-                  <span className="text-xs text-gold-400 font-semibold font-mono">
+                  <span className="text-xs text-brand-700 font-bold font-mono">
                     {activeStage.tolerance}
                   </span>
                 </div>
 
-                <h3 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight mb-4 font-display">
+                <h3 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight mb-4 font-serif">
                   {activeStage.name}
                 </h3>
 
-                <p className="text-slate-300 text-sm sm:text-base leading-relaxed mb-6 font-light">
+                <p className="text-slate-600 text-sm sm:text-base leading-relaxed mb-6">
                   {activeStage.description}
                 </p>
 
                 {/* Audit Checkpoints */}
                 <div className="space-y-3 mb-8">
-                  <h4 className="text-xs uppercase tracking-wider text-slate-400 font-bold font-mono">
+                  <h4 className="text-xs uppercase tracking-wider text-slate-500 font-bold font-mono">
                     Primary Quality Verification Checkpoints:
                   </h4>
                   {activeStage.checkpoints.map((cp, idx) => (
-                    <div key={idx} className="flex items-start gap-3 text-sm text-slate-200">
-                      <div className="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0 mt-0.5">
-                        <Check className="w-3.5 h-3.5" aria-hidden="true" />
+                    <div key={idx} className="flex items-start gap-3 text-sm text-slate-700 font-medium">
+                      <div className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0 mt-0.5">
+                        <FontAwesomeIcon icon={faCheck} className="text-xs" aria-hidden="true" />
                       </div>
-                      <span className="font-light">{cp}</span>
+                      <span>{cp}</span>
                     </div>
                   ))}
                 </div>
 
-                <div className="flex items-center gap-4">
+                <div className="flex flex-wrap items-center gap-4">
                   <button
                     onClick={() => onOpenQuoteModal({ subject: `Inquiry: ${activeStage.name} Testing Specs` })}
-                    className="px-6 py-2.5 rounded-lg bg-navy-800 hover:bg-navy-750 text-slate-200 hover:text-white border border-white/15 text-xs font-semibold transition-all"
+                    className="px-6 py-2.5 rounded-lg bg-brand-700 hover:bg-brand-600 text-white text-xs font-bold shadow-md transition-all"
                   >
                     Request Lab Testing Protocol
                   </button>
-                  <span className="text-xs text-slate-400 font-light">
+                  <span className="text-xs text-slate-500">
                     Third-party lab certificates available (SGS / Intertek on request)
                   </span>
                 </div>
               </div>
 
               {/* Right Column: Inspection Photograph */}
-              <div className="lg:col-span-5 relative rounded-2xl overflow-hidden shadow-2xl border border-white/15 group">
+              <div className="lg:col-span-5 relative rounded-2xl overflow-hidden shadow-2xl border border-slate-300 group">
                 <SafeImage
                   src={activeStage.image}
                   alt={activeStage.name}
                   className="w-full h-80 sm:h-96"
                   zoomOnHover={true}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-navy-950/80 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
                 
-                <div className="absolute bottom-4 left-4 right-4 bg-navy-950/85 backdrop-blur-md p-3.5 rounded-xl border border-white/10 flex items-center justify-between">
+                <div className="absolute bottom-4 left-4 right-4 bg-brand-950/90 backdrop-blur-md p-3.5 rounded-xl border border-brand-700/60 flex items-center justify-between shadow">
                   <div>
-                    <p className="text-[11px] text-slate-400 uppercase tracking-wider font-mono">Pass Standard</p>
+                    <p className="text-[11px] text-slate-300 uppercase tracking-wider font-mono">Pass Standard</p>
                     <p className="text-xs font-bold text-white font-mono">{activeStage.tolerance}</p>
                   </div>
                   <div className="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
-                    <CheckCircle2 className="w-5 h-5" aria-hidden="true" />
+                    <FontAwesomeIcon icon={faCircleCheck} className="text-lg" aria-hidden="true" />
                   </div>
                 </div>
               </div>

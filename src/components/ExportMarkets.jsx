@@ -1,40 +1,37 @@
 /**
  * ==============================================================================
- * A&H IMPEX - EXPORT MARKETS & GLOBAL LOGISTICS SECTION
- * ==============================================================================
- * Purpose: Visualizes worldwide export routes, regional delivery corridors
- *          (EU, North America, UK, Middle East, Oceania), and Incoterms support.
- * 
- * Features:
- * - Interactive regional selector updating port lists, transit times, and market shares.
- * - Stylized global logistics coordinate map with animated route paths.
- * - Supported Incoterms bar (FOB, CIF, CFR, DDP, EXW).
- * - 4 shipping capability cards (FCL/LCL, Air freight, Seaworthy packing, Customs).
- * - Zero emojis; clean Lucide SVG icons exclusively.
+ * A&H IMPEX - EXPORT MARKETS & GLOBAL LOGISTICS SECTION (FONTAWESOME ICONS)
  * ==============================================================================
  */
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Globe2, Ship, Anchor, Clock, ArrowRight } from 'lucide-react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faGlobe,
+  faShip,
+  faAnchor,
+  faClock,
+  faArrowRight
+} from '@fortawesome/free-solid-svg-icons';
 import { EXPORT_REGIONS, SHIPPING_CAPABILITIES } from '../data/export';
 
 export default function ExportMarkets({ onOpenQuoteModal }) {
   const [activeRegion, setActiveRegion] = useState(EXPORT_REGIONS[0]);
 
   return (
-    <section id="export" className="py-24 bg-navy-950 relative overflow-hidden border-t border-white/5">
+    <section id="export" className="py-24 bg-brand-900 relative overflow-hidden border-t border-brand-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold-500/10 border border-gold-500/30 text-gold-400 text-xs font-semibold tracking-wider uppercase mb-3">
-            <Globe2 className="w-3.5 h-3.5" aria-hidden="true" />
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-800/90 border border-brand-500/30 text-brand-300 text-xs font-semibold tracking-wider uppercase mb-3 font-mono">
+            <FontAwesomeIcon icon={faGlobe} className="text-xs" aria-hidden="true" />
             <span>Worldwide Supply Chain</span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-tight font-display">
-            Global Logistics &amp; <span className="gold-gradient-text">Export Corridors</span>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight font-serif">
+            Global Logistics &amp; <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-300 via-blue-200 to-white">Export Corridors</span>
           </h2>
 
           <p className="text-slate-300 text-sm sm:text-base mt-4 font-light">
@@ -56,21 +53,21 @@ export default function ExportMarkets({ onOpenQuoteModal }) {
                     onClick={() => setActiveRegion(region)}
                     className={`p-5 rounded-2xl border transition-all duration-300 cursor-pointer ${
                       isActive
-                        ? 'bg-navy-850/90 border-gold-400/80 shadow-xl ring-2 ring-gold-500/20'
-                        : 'glass-card border-white/5 hover:border-white/15'
+                        ? 'bg-brand-800/95 border-brand-400/80 shadow-xl ring-2 ring-brand-500/30'
+                        : 'glass-card border-brand-700/60 hover:border-brand-500/50'
                     }`}
                   >
                     <div className="flex items-center justify-between mb-2">
                       <div className="flex items-center gap-3">
-                        <span className="w-8 h-8 rounded-lg bg-navy-800 border border-gold-500/30 text-gold-400 flex items-center justify-center text-xs font-bold font-mono">
+                        <span className="w-8 h-8 rounded-lg bg-brand-700 border border-brand-500/40 text-brand-200 flex items-center justify-center text-xs font-bold font-mono">
                           {region.share}
                         </span>
-                        <h4 className="text-base font-bold text-white font-display">
+                        <h4 className="text-base font-bold text-white font-serif">
                           {region.name}
                         </h4>
                       </div>
-                      <span className="text-xs text-slate-400 flex items-center gap-1 font-medium font-mono">
-                        <Clock className="w-3.5 h-3.5 text-gold-400" aria-hidden="true" />
+                      <span className="text-xs text-brand-300 flex items-center gap-1.5 font-medium font-mono">
+                        <FontAwesomeIcon icon={faClock} className="text-brand-300 text-xs" aria-hidden="true" />
                         {region.transitDays}
                       </span>
                     </div>
@@ -84,7 +81,7 @@ export default function ExportMarkets({ onOpenQuoteModal }) {
                       {region.ports.map((port, pIdx) => (
                         <span
                           key={pIdx}
-                          className="px-2 py-0.5 rounded bg-white/5 text-slate-300 border border-white/5 font-mono"
+                          className="px-2 py-0.5 rounded bg-brand-900/80 text-brand-200 border border-brand-700/50 font-mono"
                         >
                           {port}
                         </span>
@@ -98,78 +95,78 @@ export default function ExportMarkets({ onOpenQuoteModal }) {
             <div className="pt-2">
               <button
                 onClick={() => onOpenQuoteModal({ subject: `Inquiry: Shipping Rates to ${activeRegion.name}` })}
-                className="w-full py-3 rounded-xl bg-gradient-to-r from-gold-500 to-gold-600 text-navy-950 font-bold text-xs uppercase tracking-wider shadow-lg hover:scale-[1.01] transition-all flex items-center justify-center gap-2"
+                className="w-full py-3 rounded-xl bg-gradient-to-r from-blue-600 via-brand-500 to-brand-600 text-white font-bold text-xs uppercase tracking-wider shadow-lg hover:scale-[1.01] transition-all flex items-center justify-center gap-2 shimmer-sweep"
               >
                 <span>Calculate Freight &amp; Lead Times for {activeRegion.name}</span>
-                <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                <FontAwesomeIcon icon={faArrowRight} className="text-xs" aria-hidden="true" />
               </button>
             </div>
           </div>
 
           {/* Right Column: Stylized Global Logistics Visual with Animated Port Dots */}
           <div className="lg:col-span-6">
-            <div className="glass-card rounded-2xl p-6 sm:p-8 border border-white/10 relative overflow-hidden shadow-2xl">
-              <div className="flex items-center justify-between pb-4 border-b border-white/10 mb-6">
+            <div className="glass-card rounded-2xl p-6 sm:p-8 border border-brand-700/60 relative overflow-hidden shadow-2xl">
+              <div className="flex items-center justify-between pb-4 border-b border-brand-700/60 mb-6">
                 <div className="flex items-center gap-2.5">
-                  <Anchor className="w-4 h-4 text-gold-400" aria-hidden="true" />
+                  <FontAwesomeIcon icon={faAnchor} className="text-brand-300 text-xs" aria-hidden="true" />
                   <span className="text-xs font-bold text-white uppercase tracking-wider font-mono">
                     Ocean &amp; Air Freight Hubs
                   </span>
                 </div>
-                <span className="text-[11px] px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-medium">
+                <span className="text-[11px] px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-medium font-mono">
                   24/7 Container Tracking
                 </span>
               </div>
 
               {/* Stylized World Map Graphic Canvas */}
-              <div className="relative aspect-[16/10] bg-navy-900/90 rounded-xl overflow-hidden border border-white/5 p-4 flex flex-col justify-between">
-                {/* Background dot grid representing global coordinates */}
+              <div className="relative aspect-[16/10] bg-brand-950 rounded-xl overflow-hidden border border-brand-700/50 p-4 flex flex-col justify-between">
+                {/* Background dot grid */}
                 <div className="absolute inset-0 bg-fabric-weave opacity-40 pointer-events-none" />
 
                 {/* Animated trade lines representation */}
                 <svg className="absolute inset-0 w-full h-full pointer-events-none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                   {/* Origin to Europe */}
-                  <path d="M 320 180 Q 220 100 160 90" fill="none" stroke="rgba(197,168,128,0.4)" strokeWidth="1.5" strokeDasharray="4 4" />
+                  <path d="M 320 180 Q 220 100 160 90" fill="none" stroke="rgba(148,191,228,0.5)" strokeWidth="1.5" strokeDasharray="4 4" />
                   {/* Origin to North America */}
-                  <path d="M 320 180 Q 180 60 70 110" fill="none" stroke="rgba(197,168,128,0.4)" strokeWidth="1.5" strokeDasharray="4 4" />
+                  <path d="M 320 180 Q 180 60 70 110" fill="none" stroke="rgba(148,191,228,0.5)" strokeWidth="1.5" strokeDasharray="4 4" />
                   {/* Origin to Middle East */}
-                  <path d="M 320 180 Q 280 150 250 160" fill="none" stroke="rgba(197,168,128,0.4)" strokeWidth="1.5" strokeDasharray="4 4" />
+                  <path d="M 320 180 Q 280 150 250 160" fill="none" stroke="rgba(148,191,228,0.5)" strokeWidth="1.5" strokeDasharray="4 4" />
                   {/* Origin to Australia */}
-                  <path d="M 320 180 Q 360 220 380 250" fill="none" stroke="rgba(197,168,128,0.4)" strokeWidth="1.5" strokeDasharray="4 4" />
+                  <path d="M 320 180 Q 360 220 380 250" fill="none" stroke="rgba(148,191,228,0.5)" strokeWidth="1.5" strokeDasharray="4 4" />
                 </svg>
 
                 {/* Port Markers */}
                 <div className="relative z-10 flex flex-col justify-between h-full text-xs">
                   <div className="flex justify-between items-start">
                     {/* US Port */}
-                    <div className="bg-navy-950/90 border border-white/10 p-2 rounded-lg backdrop-blur-md">
-                      <p className="font-bold text-white text-[11px] font-display">North America</p>
-                      <p className="text-[10px] text-gold-400 font-mono">LA / New York Ports</p>
+                    <div className="bg-brand-900/90 border border-brand-700/60 p-2 rounded-lg backdrop-blur-md">
+                      <p className="font-bold text-white text-[11px] font-serif">North America</p>
+                      <p className="text-[10px] text-brand-300 font-mono">LA / New York Ports</p>
                     </div>
 
                     {/* Europe Port */}
-                    <div className="bg-navy-950/90 border border-white/10 p-2 rounded-lg backdrop-blur-md">
-                      <p className="font-bold text-white text-[11px] font-display">European Gateway</p>
+                    <div className="bg-brand-900/90 border border-brand-700/60 p-2 rounded-lg backdrop-blur-md">
+                      <p className="font-bold text-white text-[11px] font-serif">European Gateway</p>
                       <p className="text-[10px] text-emerald-400 font-mono">Rotterdam / Hamburg</p>
                     </div>
                   </div>
 
                   {/* Mill Center Origin Pin */}
-                  <div className="self-center bg-gold-500 text-navy-950 px-3 py-1.5 rounded-lg shadow-xl font-extrabold text-[11px] flex items-center gap-1.5 border border-white">
-                    <span className="w-2 h-2 rounded-full bg-navy-950 animate-ping" />
+                  <div className="self-center bg-gradient-to-r from-blue-600 to-brand-600 text-white px-3 py-1.5 rounded-lg shadow-xl font-extrabold text-[11px] flex items-center gap-1.5 border border-white/40">
+                    <span className="w-2 h-2 rounded-full bg-white animate-ping" />
                     <span className="font-display">A&amp;H IMPEX MILL HUB</span>
                   </div>
 
                   <div className="flex justify-between items-end">
                     {/* Middle East */}
-                    <div className="bg-navy-950/90 border border-white/10 p-2 rounded-lg backdrop-blur-md">
-                      <p className="font-bold text-white text-[11px] font-display">Middle East Hub</p>
-                      <p className="text-[10px] text-gold-400 font-mono">Jebel Ali (Dubai)</p>
+                    <div className="bg-brand-900/90 border border-brand-700/60 p-2 rounded-lg backdrop-blur-md">
+                      <p className="font-bold text-white text-[11px] font-serif">Middle East Hub</p>
+                      <p className="text-[10px] text-brand-300 font-mono">Jebel Ali (Dubai)</p>
                     </div>
 
                     {/* Oceania Port */}
-                    <div className="bg-navy-950/90 border border-white/10 p-2 rounded-lg backdrop-blur-md">
-                      <p className="font-bold text-white text-[11px] font-display">Oceania</p>
+                    <div className="bg-brand-900/90 border border-brand-700/60 p-2 rounded-lg backdrop-blur-md">
+                      <p className="font-bold text-white text-[11px] font-serif">Oceania</p>
                       <p className="text-[10px] text-slate-300 font-mono">Sydney / Melbourne</p>
                     </div>
                   </div>
@@ -177,11 +174,11 @@ export default function ExportMarkets({ onOpenQuoteModal }) {
               </div>
 
               {/* Incoterms Bar */}
-              <div className="mt-4 pt-4 border-t border-white/10 flex flex-wrap items-center justify-between text-xs text-slate-300 gap-2">
+              <div className="mt-4 pt-4 border-t border-brand-700/60 flex flex-wrap items-center justify-between text-xs text-slate-300 gap-2">
                 <span className="text-slate-400 font-medium">Supported Incoterms:</span>
-                <div className="flex items-center gap-1.5 font-bold text-gold-300 text-[11px] font-mono">
+                <div className="flex items-center gap-1.5 font-bold text-brand-200 text-[11px] font-mono">
                   {['FOB', 'CIF', 'CFR', 'DDP', 'EXW'].map((term) => (
-                    <span key={term} className="px-2 py-0.5 rounded bg-white/5 border border-white/10">
+                    <span key={term} className="px-2 py-0.5 rounded bg-brand-800 border border-brand-700/60">
                       {term}
                     </span>
                   ))}
@@ -197,13 +194,13 @@ export default function ExportMarkets({ onOpenQuoteModal }) {
           {SHIPPING_CAPABILITIES.map((cap, idx) => (
             <div
               key={idx}
-              className="glass-card rounded-xl p-5 border border-white/5 flex flex-col justify-between"
+              className="glass-card rounded-xl p-5 border border-brand-700/60 flex flex-col justify-between"
             >
               <div>
-                <div className="w-9 h-9 rounded-lg bg-navy-800 border border-gold-500/25 flex items-center justify-center text-gold-400 mb-3">
-                  <Ship className="w-4 h-4" aria-hidden="true" />
+                <div className="w-9 h-9 rounded-lg bg-brand-800 border border-brand-500/30 flex items-center justify-center text-brand-300 mb-3">
+                  <FontAwesomeIcon icon={faShip} className="text-sm" aria-hidden="true" />
                 </div>
-                <h4 className="text-sm font-bold text-white mb-1.5 font-display">
+                <h4 className="text-sm font-bold text-white mb-1.5 font-serif">
                   {cap.title}
                 </h4>
                 <p className="text-xs text-slate-300 leading-relaxed font-light">

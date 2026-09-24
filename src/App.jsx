@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { DataProvider } from './context/DataContext';
 import Navbar from './components/Navbar';
 import HeroSection from './components/HeroSection';
 import CompanyPillars from './components/CompanyPillars';
@@ -6,7 +7,6 @@ import AboutSection from './components/AboutSection';
 import ProductSection from './components/ProductSection';
 import ManufacturingSection from './components/ManufacturingSection';
 import QualityControl from './components/QualityControl';
-import FactorySection from './components/FactorySection';
 import CertificationSection from './components/CertificationSection';
 import ExportMarkets from './components/ExportMarkets';
 import SocialSection from './components/SocialSection';
@@ -14,10 +14,25 @@ import ContactCTA from './components/ContactCTA';
 import Footer from './components/Footer';
 import FloatingContactButtons from './components/FloatingContactButtons';
 import QuoteModal from './components/QuoteModal';
+import AdminDashboard from './components/admin/AdminDashboard';
 
-export default function App() {
+function MainApp() {
+  const [currentView, setCurrentView] = useState(() => {
+    return window.location.hash === '#admin' ? 'admin' : 'site';
+  });
+
   const [quoteModalOpen, setQuoteModalOpen] = useState(false);
   const [quoteModalInitialData, setQuoteModalInitialData] = useState({});
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      if (window.location.hash === '#admin') {
+        setCurrentView('admin');
+      }
+    };
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
 
   const handleOpenQuoteModal = (initialData = {}) => {
     setQuoteModalInitialData(initialData);
@@ -28,8 +43,24 @@ export default function App() {
     setQuoteModalOpen(false);
   };
 
+  const handleOpenAdmin = () => {
+    window.location.hash = '#admin';
+    setCurrentView('admin');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleExitAdmin = () => {
+    window.location.hash = '';
+    setCurrentView('site');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  if (currentView === 'admin') {
+    return <AdminDashboard onExitAdmin={handleExitAdmin} />;
+  }
+
   return (
-    <div className="min-h-screen bg-navy-950 text-slate-100 flex flex-col selection:bg-gold-500 selection:text-navy-950">
+    <div className="min-h-screen bg-brand-900 text-slate-100 flex flex-col selection:bg-brand-500 selection:text-white">
       {/* Sticky Glassmorphic Navigation Bar */}
       <Navbar onOpenQuoteModal={handleOpenQuoteModal} />
 
@@ -56,10 +87,7 @@ export default function App() {
         {/* 8. 6-Stage International Quality Control Pipeline */}
         <QualityControl onOpenQuoteModal={handleOpenQuoteModal} />
 
-        {/* 9. Immersive Factory & Production Scale Section with Count-Up Metrics */}
-        <FactorySection onOpenQuoteModal={handleOpenQuoteModal} />
-
-        {/* 10. Certifications & International Standards Showcase with Lightbox */}
+        {/* 9. Certifications & International Standards Showcase with Lightbox */}
         <CertificationSection onOpenQuoteModal={handleOpenQuoteModal} />
 
         {/* 11. Worldwide Logistics & Export Markets Visual */}
@@ -73,7 +101,10 @@ export default function App() {
       </main>
 
       {/* 14. Luxury Multi-Column Corporate Footer */}
-      <Footer onOpenQuoteModal={handleOpenQuoteModal} />
+      <Footer
+        onOpenQuoteModal={handleOpenQuoteModal}
+        onOpenAdmin={handleOpenAdmin}
+      />
 
       {/* 15. Single Elegant Floating Contact Action Button */}
       <FloatingContactButtons onOpenQuoteModal={handleOpenQuoteModal} />
@@ -85,5 +116,13 @@ export default function App() {
         initialData={quoteModalInitialData}
       />
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <DataProvider>
+      <MainApp />
+    </DataProvider>
   );
 }

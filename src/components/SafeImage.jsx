@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { Layers } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLayerGroup } from '@fortawesome/free-solid-svg-icons';
 
 /**
  * SafeImage Component
@@ -13,11 +14,25 @@ export default function SafeImage({
   className = '',
   aspectRatio = '',
   zoomOnHover = false,
+  loading = 'eager',
   ...props
 }) {
   const [imgSrc, setImgSrc] = useState(src);
   const [hasError, setHasError] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
+  const imgRef = useRef(null);
+
+  useEffect(() => {
+    setImgSrc(src);
+    setHasError(false);
+    
+    // Check if image is already loaded in browser cache
+    if (imgRef.current && imgRef.current.complete && imgRef.current.naturalWidth > 0) {
+      setIsLoaded(true);
+    } else {
+      setIsLoaded(false);
+    }
+  }, [src]);
 
   const handleError = () => {
     if (fallbackSrc && imgSrc !== fallbackSrc) {
@@ -27,17 +42,20 @@ export default function SafeImage({
     }
   };
 
+  const handleLoad = () => {
+    setIsLoaded(true);
+  };
+
   if (hasError) {
     return (
       <div
-        className={`bg-gradient-to-br from-navy-900 via-navy-850 to-navy-800 flex flex-col items-center justify-center p-6 text-center border border-white/5 relative overflow-hidden ${className}`}
+        className={`bg-brand-900 flex flex-col items-center justify-center p-6 text-center border border-white/5 relative overflow-hidden ${className}`}
         style={aspectRatio ? { aspectRatio } : undefined}
       >
-        <div className="absolute inset-0 bg-fabric-weave opacity-20 pointer-events-none" />
-        <div className="w-12 h-12 rounded-full bg-navy-750 flex items-center justify-center mb-3 text-gold-400 border border-gold-500/20">
-          <Layers className="w-6 h-6" />
+        <div className="w-12 h-12 rounded-full bg-brand-800 flex items-center justify-center mb-3 text-brand-300 border border-brand-500/20">
+          <FontAwesomeIcon icon={faLayerGroup} className="text-xl" />
         </div>
-        <p className="text-xs uppercase tracking-wider text-gold-400/80 font-medium">A&H IMPEX</p>
+        <p className="text-xs uppercase tracking-wider text-brand-300 font-medium font-mono">A&amp;H IMPEX</p>
         <p className="text-xs text-slate-400 mt-1 line-clamp-1">{alt}</p>
       </div>
     );
@@ -45,23 +63,24 @@ export default function SafeImage({
 
   return (
     <div
-      className={`relative overflow-hidden bg-navy-900 ${className}`}
+      className={`relative overflow-hidden bg-brand-950 ${className}`}
       style={aspectRatio ? { aspectRatio } : undefined}
     >
-      {/* Background skeleton loader while image loads */}
+      {/* Background placeholder while image loads */}
       {!isLoaded && (
-        <div className="absolute inset-0 bg-gradient-to-r from-navy-900 via-navy-800 to-navy-900 animate-pulse" />
+        <div className="absolute inset-0 bg-brand-900/60 animate-pulse z-0" />
       )}
       <img
+        ref={imgRef}
         src={imgSrc}
         alt={alt}
-        loading="lazy"
+        loading={loading}
         decoding="async"
-        onLoad={() => setIsLoaded(true)}
+        onLoad={handleLoad}
         onError={handleError}
-        className={`w-full h-full object-cover transition-all duration-700 ${
-          isLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
-        } ${zoomOnHover ? 'group-hover:scale-105 duration-500' : ''}`}
+        className={`w-full h-full object-cover transition-transform duration-500 relative z-10 ${
+          zoomOnHover ? 'group-hover:scale-105' : ''
+        }`}
         {...props}
       />
     </div>

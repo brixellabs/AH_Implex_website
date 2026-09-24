@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A&H IMPEX | Global Textile & Apparel Export Manufacturer</title>
+    <!-- Google Fonts: Playfair Display for high-end serif titles & Inter for ultra-clean readability -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f5fa',
+                            100: '#e1ecf6',
+                            200: '#c3daf0',
+                            300: '#94bfe4',
+                            500: '#2a72b8',
+                            600: '#1c5393',
+                            700: '#163e6e', // Primary deep logo navy
+                            800: '#0e294d', // Dark logo shade
+                            900: '#071830', // Ultra dark background
+                        },
+                        gold: {
+                            400: '#c5a059',
+                            500: '#b48c36',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'Georgia', 'serif'],
+                        display: ['Cinzel', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-nav {
+            background: rgba(14, 41, 77, 0.95);
+            backdrop-filter: blur(12px);
+        }
+        .hero-pattern {
+            background-color: #071830;
+            background-image: radial-gradient(#1c5393 0.75px, transparent 0.75px), radial-gradient(#163e6e 0.75px, #071830 0.75px);
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+        }
+        .cotton-weave-bg {
+            background-image: linear-gradient(rgba(240, 245, 250, 0.97), rgba(240, 245, 250, 0.97)), repeating-linear-gradient(45deg, #e1ecf6 0, #e1ecf6 1px, transparent 0, transparent 50%);
+            background-size: 20px 20px;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased">
+
+    <aside class="bg-brand-900 text-slate-300 text-xs py-2 px-4 border-b border-brand-800 tracking-wide">
+        <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
+            <div class="flex items-center space-x-4">
+                <span class="inline-flex items-center text-emerald-400 font-medium">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse mr-2"></span>
+                    OEM / ODM Export Capacity Available: Q3 & Q4
+                </span>
+                <span class="hidden md:inline text-slate-500">|</span>
+                <span class="hidden md:inline text-slate-300">
+                    <svg class="w-3.5 h-3.5 inline mr-1 text-gold-400" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm1 11H9v-2h2v2zm0-4H9V5h2v4z"/></svg>
+                    ISO 9001:2015 &amp; OEKO-TEX Standard 100 Certified
+                </span>
+            </div>
+            <div class="flex items-center space-x-4 sm:space-x-5 text-slate-300">
+                <!-- Social Media Quick Links in Top Bar -->
+                <div class="flex items-center space-x-3 border-r border-brand-800 pr-4">
+                    <span class="hidden sm:inline text-[11px] text-slate-400 uppercase tracking-wider font-semibold">Official Channels:</span>
+                    <a href="https://www.linkedin.com/company/ah-impex" target="_blank" rel="noopener noreferrer" title="Follow A&H Impex on LinkedIn" class="text-slate-300 hover:text-white transition flex items-center hover:scale-110">
+                        <svg class="w-3.5 h-3.5 text-[#0077b5]" fill="currentColor" viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.45 1.45 0 0 0 0-2.9 1.45 1.45 0 0 0 0 2.9m1.39 9.74v-8.37H5.07v8.37h2.78z"/></svg>
+                    </a>
+                    <a href="https://www.instagram.com/ahimpextextiles" target="_blank" rel="noopener noreferrer" title="A&H Impex Instagram Catalog" class="text-slate-300 hover:text-white transition flex items-center hover:scale-110">
+                        <svg class="w-3.5 h-3.5 text-[#E1306C]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+                    </a>
+                    <a href="https://www.facebook.com/ahimpextextiles" target="_blank" rel="noopener noreferrer" title="A&H Impex Facebook Page" class="text-slate-300 hover:text-white transition flex items-center hover:scale-110">
+                        <svg class="w-3.5 h-3.5 text-[#1877f2]" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                    </a>
+                </div>
+
+                <a href="mailto:export@ahimpextextiles.com" class="hover:text-white transition flex items-center">
+                    <svg class="w-3.5 h-3.5 mr-1.5 text-brand-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                    <span class="hidden sm:inline">export@ahimpextextiles.com</span>
+                    <span class="sm:hidden">Email</span>
+                </a>
+                <span class="hidden sm:inline text-slate-500">|</span>
+                <a href="https://wa.me/923008661234" target="_blank" class="hover:text-white transition flex items-center text-emerald-400 font-semibold">
+                    <svg class="w-3.5 h-3.5 mr-1.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2z"/></svg>
+                    <span class="hidden sm:inline">Export Desk: +92 300 8661234</span>
+                    <span class="sm:hidden">WhatsApp</span>
+                </a>
+            </div>
+        </div>
+    </aside>
+
+    <header class="sticky top-0 z-50 glass-nav border-b border-brand-700/60 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo with exact cotton petal emblem -->
+                <a href="#" class="flex items-center space-x-3 group">
+                    <div class="w-12 h-12 bg-white rounded-lg p-1.5 flex items-center justify-center shadow-md group-hover:ring-2 group-hover:ring-brand-300 transition">
+                        <!-- Precise SVG Cotton Flower Emblem matching logo -->
+                        <svg class="w-full h-full text-brand-700" viewBox="0 0 120 120" fill="currentColor">
+                            <!-- Outer 3 cotton pods -->
+                            <path d="M60,18 C78,18 90,32 88,48 C85,38 74,27 60,27 C46,27 35,38 32,48 C30,32 42,18 60,18 Z" />
+                            <path d="M22,50 C12,56 9,72 17,84 C27,94 40,92 48,88 C38,88 24,84 20,74 C16,63 20,54 22,50 Z" />
+                            <path d="M98,50 C108,56 111,72 103,84 C93,94 80,92 72,88 C82,88 96,84 100,74 C104,63 100,54 98,50 Z" />
+                            <!-- Bottom 3-calyx leaf base -->
+                            <path d="M60,54 C63,68 66,78 60,88 C54,78 57,68 60,54 Z" />
+                            <path d="M38,72 C48,72 55,78 56,86 C48,84 41,78 38,72 Z" />
+                            <path d="M82,72 C72,72 65,78 64,86 C72,84 79,78 82,72 Z" />
+                            <path d="M50,86 C55,94 60,98 60,98 C60,98 65,94 70,86 C65,89 55,89 50,86 Z" />
+                        </svg>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-2xl font-bold tracking-wider text-white font-display uppercase leading-tight">
+                            A&amp;H <span class="text-brand-300 font-light">IMPEX</span>
+                        </span>
+                        <span class="text-[9px] tracking-[0.3em] uppercase text-slate-300 font-semibold">
+                            Textile Manufacturer &amp; Exporter
+                        </span>
+                    </div>
+                </a>
+
+                <!-- Navigation Links -->
+                <nav class="hidden lg:flex items-center space-x-7 text-sm font-medium text-slate-200">
+                    <a href="#about" class="hover:text-white transition">About Us</a>
+                    <a href="#products" class="hover:text-white transition">Product Catalog</a>
+                    <a href="#hometextiles" class="hover:text-white transition">Home Textiles</a>
+                    <a href="#apparel" class="hover:text-white transition">Apparel &amp; Garments</a>
+                    <a href="#social-hub" class="hover:text-white text-emerald-300 font-semibold transition flex items-center gap-1">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span> Social Channels
+                    </a>
+                    <a href="#manufacturing" class="hover:text-white transition">Factory Specs</a>
+                    <a href="#compliance" class="hover:text-white transition">Compliance</a>
+                </nav>
+
+                <!-- Action CTA -->
+                <div class="hidden sm:flex items-center space-x-3">
+                    <a href="#rfq" class="bg-gradient-to-r from-blue-600 to-brand-600 hover:from-blue-500 hover:to-brand-500 text-white font-semibold text-xs uppercase tracking-wider px-5 py-3 rounded-md shadow-md hover:shadow-cyan-500/20 transition-all">
+                        Request Bulk Quote
+                    </a>
+                </div>
+
+                <!-- Mobile menu toggle -->
+                <div class="lg:hidden flex items-center">
+                    <button onclick="toggleMobileMenu()" class="text-slate-200 hover:text-white p-2" aria-label="Toggle Navigation Menu">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile dropdown -->
+        <div id="mobileMenu" class="hidden lg:hidden bg-brand-900 border-b border-brand-800 px-6 py-4 space-y-3 text-slate-200">
+            <a href="#about" onclick="toggleMobileMenu()" class="block hover:text-white py-1">About Us</a>
+            <a href="#products" onclick="toggleMobileMenu()" class="block hover:text-white py-1">Product Catalog</a>
+            <a href="#hometextiles" onclick="toggleMobileMenu()" class="block hover:text-white py-1">Home Textiles (Sheets, Napkins, Cloths)</a>
+            <a href="#apparel" onclick="toggleMobileMenu()" class="block hover:text-white py-1">Apparel (Trousers, Track Suits)</a>
+            <a href="#social-hub" onclick="toggleMobileMenu()" class="block text-emerald-300 font-semibold py-1">Follow Social Pages (IG / FB / LI)</a>
+            <a href="#manufacturing" onclick="toggleMobileMenu()" class="block hover:text-white py-1">Factory Infrastructure</a>
+            <a href="#rfq" onclick="toggleMobileMenu()" class="block text-emerald-400 font-semibold py-1">Instant RFQ Generator</a>
+        </div>
+    </header>
+
+    <!-- Sticky Quick Contact Side Widget (Desktop & Mobile) -->
+    <div class="fixed right-3 bottom-6 z-40 flex flex-col items-end space-y-2.5">
+        <div id="socialSpeedDial" class="flex flex-col space-y-2.5 items-end transition-all duration-300">
+            <!-- LinkedIn -->
+            <a href="https://www.linkedin.com/company/ah-impex" target="_blank" rel="noopener noreferrer" class="group flex items-center bg-[#0077b5] text-white p-3 rounded-full shadow-lg hover:shadow-2xl hover:scale-105 transition-all">
+                <span class="max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-xs transition-all duration-300 ease-in-out text-xs font-semibold px-0 group-hover:px-2">LinkedIn Company Page</span>
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.45 1.45 0 0 0 0-2.9 1.45 1.45 0 0 0 0 2.9m1.39 9.74v-8.37H5.07v8.37h2.78z"/></svg>
+            </a>
+            <!-- Instagram -->
+            <a href="https://www.instagram.com/ahimpextextiles" target="_blank" rel="noopener noreferrer" class="group flex items-center bg-gradient-to-tr from-[#f58529] via-[#dd2a7b] to-[#8134af] text-white p-3 rounded-full shadow-lg hover:shadow-2xl hover:scale-105 transition-all">
+                <span class="max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-xs transition-all duration-300 ease-in-out text-xs font-semibold px-0 group-hover:px-2">Instagram Showroom</span>
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+            </a>
+            <!-- Facebook -->
+            <a href="https://www.facebook.com/ahimpextextiles" target="_blank" rel="noopener noreferrer" class="group flex items-center bg-[#1877f2] text-white p-3 rounded-full shadow-lg hover:shadow-2xl hover:scale-105 transition-all">
+                <span class="max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-xs transition-all duration-300 ease-in-out text-xs font-semibold px-0 group-hover:px-2">Facebook Updates</span>
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            </a>
+            <!-- Direct WhatsApp Button -->
+            <a href="https://wa.me/923008661234" target="_blank" rel="noopener noreferrer" class="group flex items-center bg-[#25D366] text-white p-3.5 rounded-full shadow-xl hover:shadow-2xl hover:scale-105 transition-all ring-2 ring-emerald-300">
+                <span class="max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-xs transition-all duration-300 ease-in-out text-xs font-bold px-0 group-hover:px-2">Live Trade Desk</span>
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2z"/></svg>
+            </a>
+        </div>
+    </div>
+
+    <section class="hero-pattern relative text-white py-20 lg:py-28 overflow-hidden">
+        <!-- Subtle gradient overlay -->
+        <div class="absolute inset-0 bg-gradient-to-r from-brand-900 via-brand-800/90 to-brand-900/80 pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <!-- Left Content -->
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-700/80 border border-brand-500/40 text-xs font-semibold uppercase tracking-wider text-brand-200">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                        Direct From Manufacturer &bull; 100% Export Oriented
+                    </div>
+                    
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold tracking-tight text-white leading-tight">
+                        Precision Textile Engineering &amp; Global Export
+                    </h1>
+                    
+                    <p class="text-base sm:text-lg text-slate-300 max-w-2xl font-light leading-relaxed">
+                        <strong class="text-white font-medium">A&amp;H IMPEX</strong> supplies international retailers, hospitality chains, and fashion brands with certified luxury Bed Sheets, Table Linen, Napkins, Performance Track Suits, and Casual Trousers.
+                    </p>
+
+                    <!-- CTAs -->
+                    <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2">
+                        <a href="#products" class="bg-brand-600 hover:bg-brand-500 text-white font-medium px-7 py-3.5 rounded-lg shadow-lg hover:shadow-brand-500/30 transition transform hover:-translate-y-0.5 flex items-center">
+                            Browse Export Catalog
+                            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                        </a>
+                        <a href="#rfq" class="border border-slate-400 hover:border-white text-white hover:bg-white/10 font-medium px-6 py-3.5 rounded-lg transition">
+                            Instant RFQ / Sample Request
+                        </a>
+                    </div>
+
+                    <div class="pt-2 flex flex-wrap items-center justify-center lg:justify-start gap-3 text-xs text-slate-300">
+                        <span class="text-slate-400 font-semibold uppercase tracking-wider text-[11px]">Connect With Us:</span>
+                        <a href="https://www.linkedin.com/company/ah-impex" target="_blank" class="inline-flex items-center px-2.5 py-1 rounded bg-brand-800/80 border border-brand-700 hover:border-brand-400 hover:text-white transition">
+                            <span class="w-2 h-2 rounded-full bg-[#0077b5] mr-1.5"></span> LinkedIn B2B
+                        </a>
+                        <a href="https://www.instagram.com/ahimpextextiles" target="_blank" class="inline-flex items-center px-2.5 py-1 rounded bg-brand-800/80 border border-brand-700 hover:border-brand-400 hover:text-white transition">
+                            <span class="w-2 h-2 rounded-full bg-[#E1306C] mr-1.5"></span> Instagram @ahimpextextiles
+                        </a>
+                        <a href="https://www.facebook.com/ahimpextextiles" target="_blank" class="inline-flex items-center px-2.5 py-1 rounded bg-brand-800/80 border border-brand-700 hover:border-brand-400 hover:text-white transition">
+                            <span class="w-2 h-2 rounded-full bg-[#1877f2] mr-1.5"></span> Facebook Page
+                        </a>
+                    </div>
+
+                    <!-- Trust indicators -->
+                    <div class="pt-6 border-t border-brand-700/60 flex flex-wrap justify-center lg:justify-start gap-6 text-xs text-slate-400 uppercase tracking-widest">
+                        <span class="flex items-center"><svg class="w-4 h-4 text-emerald-400 mr-1.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg> OEKO-TEX 100</span>
+                        <span class="flex items-center"><svg class="w-4 h-4 text-emerald-400 mr-1.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg> BSCI Audited</span>
+                        <span class="flex items-center"><svg class="w-4 h-4 text-emerald-400 mr-1.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg> AQL 2.5 Inspection</span>
+                        <span class="flex items-center"><svg class="w-4 h-4 text-emerald-400 mr-1.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg> GOTS Organic Available</span>
+                    </div>
+                </div>
+
+                <!-- Right Visual: Verified Production Badge Card -->
+                <div class="lg:col-span-5">
+                    <div class="relative mx-auto max-w-md bg-brand-800/90 rounded-2xl border border-brand-600/40 p-8 shadow-2xl backdrop-blur-sm">
+                        <div class="absolute -top-4 -right-4 bg-brand-600 text-white text-xs uppercase px-3 py-1 rounded-md font-semibold tracking-wider shadow">
+                            Export Standard
+                        </div>
+                        
+                        <div class="text-center pb-6 border-b border-brand-700/80">
+                            <!-- Large Cotton Emblem in Single Tone Navy Brand Hue -->
+                            <div class="w-24 h-24 mx-auto bg-white rounded-2xl p-3 shadow-inner flex items-center justify-center mb-3">
+                                <svg class="w-full h-full text-brand-700" viewBox="0 0 120 120" fill="currentColor">
+                                    <path d="M60,18 C78,18 90,32 88,48 C85,38 74,27 60,27 C46,27 35,38 32,48 C30,32 42,18 60,18 Z" />
+                                    <path d="M22,50 C12,56 9,72 17,84 C27,94 40,92 48,88 C38,88 24,84 20,74 C16,63 20,54 22,50 Z" />
+                                    <path d="M98,50 C108,56 111,72 103,84 C93,94 80,92 72,88 C82,88 96,84 100,74 C104,63 100,54 98,50 Z" />
+                                    <path d="M60,54 C63,68 66,78 60,88 C54,78 57,68 60,54 Z" />
+                                    <path d="M38,72 C48,72 55,78 56,86 C48,84 41,78 38,72 Z" />
+                                    <path d="M82,72 C72,72 65,78 64,86 C72,84 79,78 82,72 Z" />
+                                    <path d="M50,86 C55,94 60,98 60,98 C60,98 65,94 70,86 C65,89 55,89 50,86 Z" />
+                                </svg>
+                            </div>
+                            <h2 class="text-2xl font-display font-bold tracking-widest text-white">A&amp;H IMPEX</h2>
+                            <p class="text-xs text-brand-300 uppercase tracking-widest mt-1">Certified Mills &amp; Stitching Units</p>
+                        </div>
+
+                        <!-- Highlights grid -->
+                        <div class="grid grid-cols-2 gap-4 py-6 text-center">
+                            <div class="bg-brand-900/60 p-3 rounded-lg border border-brand-700/40">
+                                <span class="block text-2xl font-bold text-white">2.5M+</span>
+                                <span class="text-[11px] text-slate-400 uppercase tracking-wider">Meters / Mo Weaving</span>
+                            </div>
+                            <div class="bg-brand-900/60 p-3 rounded-lg border border-brand-700/40">
+                                <span class="block text-2xl font-bold text-white">180K+</span>
+                                <span class="text-[11px] text-slate-400 uppercase tracking-wider">Pcs / Mo Stitching</span>
+                            </div>
+                            <div class="bg-brand-900/60 p-3 rounded-lg border border-brand-700/40">
+                                <span class="block text-2xl font-bold text-emerald-400">100%</span>
+                                <span class="text-[11px] text-slate-400 uppercase tracking-wider">Pre-Shipment Audit</span>
+                            </div>
+                            <div class="bg-brand-900/60 p-3 rounded-lg border border-brand-700/40">
+                                <span class="block text-2xl font-bold text-white">25+</span>
+                                <span class="text-[11px] text-slate-400 uppercase tracking-wider">Export Countries</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-brand-900/80 rounded-lg p-3 text-xs text-slate-300 flex items-center justify-between border border-brand-700">
+                            <span>Direct Port Logistics:</span>
+                            <span class="text-brand-300 font-semibold">FOB Karachi / CIF Worldwide</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="py-16 bg-white border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <span class="text-brand-700 font-bold text-xs uppercase tracking-widest bg-brand-50 px-3 py-1 rounded-full border border-brand-200">Industrial Manufacturing Prowess</span>
+                <h2 class="text-3xl font-serif font-bold text-slate-900 mt-3">Vertically Integrated From Yarn to Final Carton</h2>
+                <p class="text-slate-600 text-sm mt-3">From raw cotton procurement and state-of-the-art air-jet weaving to high-precision garment sewing lines, A&amp;H IMPEX ensures strict thread counts, dye fastness, and international export standards.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div class="bg-slate-50 p-7 rounded-xl border border-slate-200 hover:border-brand-600 hover:shadow-lg transition">
+                    <div class="w-12 h-12 rounded-lg bg-brand-100 flex items-center justify-center text-brand-700 mb-5">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">Home Textiles Division</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        High thread-count Bed Sheets (T144 up to T800), Percale, Sateen stripes, hemstitched hotel napkins, banquet table cloths, and stain-resistant restaurant linen.
+                    </p>
+                    <div class="mt-4 text-xs font-semibold text-brand-700">Egyptian Cotton &bull; CVC &bull; Poly-Cotton</div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bg-slate-50 p-7 rounded-xl border border-slate-200 hover:border-brand-600 hover:shadow-lg transition">
+                    <div class="w-12 h-12 rounded-lg bg-brand-100 flex items-center justify-center text-brand-700 mb-5">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/></svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">Apparel &amp; Garment Division</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        Structured casual and work trousers, chinos, fleece joggers, complete zipped track suits, gym athletic-wear, and institutional uniform manufacturing.
+                    </p>
+                    <div class="mt-4 text-xs font-semibold text-brand-700">Fleece &bull; French Terry &bull; Twill &bull; Dry-Fit</div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="bg-slate-50 p-7 rounded-xl border border-slate-200 hover:border-brand-600 hover:shadow-lg transition">
+                    <div class="w-12 h-12 rounded-lg bg-brand-100 flex items-center justify-center text-brand-700 mb-5">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">OEM Private Label &amp; Packaging</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        Complete retail packaging solutions: branded barcode stickers, hangtags, custom inserts, PVC zippered bags, eco-friendly master cartons, and palletization.
+                    </p>
+                    <div class="mt-4 text-xs font-semibold text-brand-700">Amazon FBA &bull; Retail Ready &bull; EDI Compliant</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="products" class="py-20 cotton-weave-bg border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-10">
+                <div>
+                    <span class="text-brand-700 font-bold text-xs uppercase tracking-widest">Our Core Export Lines</span>
+                    <h2 class="text-3xl sm:text-4xl font-serif font-bold text-slate-900 mt-2">Export Product Catalog</h2>
+                    <p class="text-slate-600 text-sm mt-1">Tested for dimensional stability, tear strength, rub fastness, and lint resistance.</p>
+                </div>
+
+                <!-- Category Tab Filters -->
+                <div class="mt-6 md:mt-0 flex flex-wrap gap-2">
+                    <button onclick="filterProducts('all')" class="catalog-tab active px-4 py-2 rounded-md text-xs font-semibold uppercase tracking-wider bg-brand-700 text-white shadow-sm transition">All Lines</button>
+                    <button onclick="filterProducts('hometextiles')" class="catalog-tab px-4 py-2 rounded-md text-xs font-semibold uppercase tracking-wider bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 transition">Home Textiles</button>
+                    <button onclick="filterProducts('apparel')" class="catalog-tab px-4 py-2 rounded-md text-xs font-semibold uppercase tracking-wider bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 transition">Apparel &amp; Trousers</button>
+                    <button onclick="filterProducts('institutional')" class="catalog-tab px-4 py-2 rounded-md text-xs font-semibold uppercase tracking-wider bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 transition">Hospitality &amp; Dining</button>
+                </div>
+            </div>
+
+            <!-- Product Grid -->
+            <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Product 1: Bed Sheets -->
+                <div class="product-item hometextiles bg-white rounded-xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl transition duration-300 flex flex-col justify-between">
+                    <div>
+                        <div class="relative h-56 bg-slate-100 overflow-hidden group">
+                            <!-- Visual Pattern for Egyptian Cotton Bed Sheets -->
+                            <div class="w-full h-full bg-gradient-to-br from-brand-800 via-brand-700 to-slate-800 flex items-center justify-center p-6 text-center text-white relative">
+                                <div class="absolute inset-0 opacity-20" style="background-image: repeating-linear-gradient(0deg, #fff 0, #fff 1px, transparent 0, transparent 8px);"></div>
+                                <div class="relative z-10">
+                                    <span class="inline-block p-2 rounded-full bg-white/10 mb-2">
+                                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                                    </span>
+                                    <h4 class="font-serif text-xl font-bold">Luxury Bed Sheets &amp; Sets</h4>
+                                    <p class="text-xs text-brand-200">Fitted, Flat &amp; Pillowcases (200 - 800 TC)</p>
+                                </div>
+                            </div>
+                            <span class="absolute top-3 left-3 bg-brand-700 text-white text-[10px] font-bold uppercase px-2.5 py-1 rounded">Best Exporter Pick</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-lg font-bold text-slate-900 mb-1">Luxury Satin Stripe &amp; Percale Bed Sets</h3>
+                            <p class="text-xs text-slate-600 mb-4">Manufactured with combed Egyptian long-staple cotton and fine micro-modal yarns. Ultra-soft touch, pilling resistance, and double-needle hemmed edges.</p>
+                            <div class="space-y-1.5 text-xs text-slate-600 border-t border-slate-100 pt-3">
+                                <div class="flex justify-between"><span class="text-slate-400">Available Counts:</span> <strong class="text-slate-800">T200, T300, T400, T600, T800</strong></div>
+                                <div class="flex justify-between"><span class="text-slate-400">Composition:</span> <strong class="text-slate-800">100% Cotton / Poly-Cotton 60:40</strong></div>
+                                <div class="flex justify-between"><span class="text-slate-400">Export MOQ:</span> <strong class="text-slate-800">500 Sets / Color</strong></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0">
+                        <button onclick="openSpecModal('Luxury Bed Sheet Sets', 'Bedding', 'T200 - T800 Long Staple Cotton', 'Twin, Full, Queen, King, Super King', '500 Sets')" class="w-full bg-brand-50 hover:bg-brand-700 text-brand-700 hover:text-white border border-brand-200 text-xs font-semibold py-2.5 rounded-lg transition text-center">
+                            Inspect Full Export Specs &amp; Request Sample
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 2: Table Cloths -->
+                <div class="product-item hometextiles institutional bg-white rounded-xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl transition duration-300 flex flex-col justify-between">
+                    <div>
+                        <div class="relative h-56 bg-slate-100 overflow-hidden">
+                            <div class="w-full h-full bg-gradient-to-br from-brand-700 via-slate-800 to-brand-900 flex items-center justify-center p-6 text-center text-white relative">
+                                <div class="absolute inset-0 opacity-15" style="background-image: radial-gradient(#fff 1px, transparent 1px); background-size: 10px 10px;"></div>
+                                <div class="relative z-10">
+                                    <span class="inline-block p-2 rounded-full bg-white/10 mb-2">
+                                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
+                                    </span>
+                                    <h4 class="font-serif text-xl font-bold">Premium Table Cloths</h4>
+                                    <p class="text-xs text-brand-200">Jacquard, Damask &amp; Plain Plain-Weave</p>
+                                </div>
+                            </div>
+                            <span class="absolute top-3 left-3 bg-slate-800 text-white text-[10px] font-bold uppercase px-2.5 py-1 rounded">Hospitality Grade</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-lg font-bold text-slate-900 mb-1">Hotel &amp; Banquet Table Covers</h3>
+                            <p class="text-xs text-slate-600 mb-4">Engineered with liquid-repellent and soil-release finishes. Retains crisp texture and pristine white shade over 100+ commercial wash cycles.</p>
+                            <div class="space-y-1.5 text-xs text-slate-600 border-t border-slate-100 pt-3">
+                                <div class="flex justify-between"><span class="text-slate-400">GSM:</span> <strong class="text-slate-800">180 - 280 GSM Heavyweight</strong></div>
+                                <div class="flex justify-between"><span class="text-slate-400">Dimensions:</span> <strong class="text-slate-800">Round, Rectangle, Custom Drops</strong></div>
+                                <div class="flex justify-between"><span class="text-slate-400">Export MOQ:</span> <strong class="text-slate-800">1,000 Pieces</strong></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0">
+                        <button onclick="openSpecModal('Banquet Table Cloths', 'Dining Textiles', '100% Spun Polyester / 100% Damask Cotton', '70x70 to 90x156 inches', '1,000 Pcs')" class="w-full bg-brand-50 hover:bg-brand-700 text-brand-700 hover:text-white border border-brand-200 text-xs font-semibold py-2.5 rounded-lg transition text-center">
+                            Inspect Full Export Specs &amp; Request Sample
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 3: Napkins -->
+                <div class="product-item hometextiles institutional bg-white rounded-xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl transition duration-300 flex flex-col justify-between">
+                    <div>
+                        <div class="relative h-56 bg-slate-100 overflow-hidden">
+                            <div class="w-full h-full bg-gradient-to-br from-brand-900 via-brand-800 to-slate-900 flex items-center justify-center p-6 text-center text-white relative">
+                                <div class="relative z-10">
+                                    <span class="inline-block p-2 rounded-full bg-white/10 mb-2">
+                                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2zM10 8.5a.5.5 0 11-1 0 .5.5 0 011 0zm5 5a.5.5 0 11-1 0 .5.5 0 011 0z"/></svg>
+                                    </span>
+                                    <h4 class="font-serif text-xl font-bold">Restaurant Cloth Napkins</h4>
+                                    <p class="text-xs text-brand-200">Mitered Corners &amp; Hemstitched Finish</p>
+                                </div>
+                            </div>
+                            <span class="absolute top-3 left-3 bg-brand-700 text-white text-[10px] font-bold uppercase px-2.5 py-1 rounded">High Absorbency</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-lg font-bold text-slate-900 mb-1">Luxury Dinner &amp; Cocktail Napkins</h3>
+                            <p class="text-xs text-slate-600 mb-4">Lint-free dinner napkins customized with monogram embroidery or reactive dyed solid colorways. Superior absorbency and formal drape.</p>
+                            <div class="space-y-1.5 text-xs text-slate-600 border-t border-slate-100 pt-3">
+                                <div class="flex justify-between"><span class="text-slate-400">Standard Sizes:</span> <strong class="text-slate-800">18"x18", 20"x20", 22"x22"</strong></div>
+                                <div class="flex justify-between"><span class="text-slate-400">Fabric:</span> <strong class="text-slate-800">Cotton Rich Satin / Linen Look</strong></div>
+                                <div class="flex justify-between"><span class="text-slate-400">Export MOQ:</span> <strong class="text-slate-800">2,500 Pieces</strong></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0">
+                        <button onclick="openSpecModal('Luxury Cloth Napkins', 'Hospitality Linen', 'Pure Ringspun Cotton & Heavy Spun Poly', '20 x 20 inch standard', '2,500 Pcs')" class="w-full bg-brand-50 hover:bg-brand-700 text-brand-700 hover:text-white border border-brand-200 text-xs font-semibold py-2.5 rounded-lg transition text-center">
+                            Inspect Full Export Specs &amp; Request Sample
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 4: Trousers & Chinos -->
+                <div class="product-item apparel bg-white rounded-xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl transition duration-300 flex flex-col justify-between">
+                    <div>
+                        <div class="relative h-56 bg-slate-100 overflow-hidden">
+                            <div class="w-full h-full bg-gradient-to-br from-slate-900 via-brand-800 to-brand-700 flex items-center justify-center p-6 text-center text-white relative">
+                                <div class="relative z-10">
+                                    <span class="inline-block p-2 rounded-full bg-white/10 mb-2">
+                                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                                    </span>
+                                    <h4 class="font-serif text-xl font-bold">Mens &amp; Womens Trousers</h4>
+                                    <p class="text-xs text-brand-200">Stretch Chinos, Cargo &amp; Formal Slacks</p>
+                                </div>
+                            </div>
+                            <span class="absolute top-3 left-3 bg-slate-800 text-white text-[10px] font-bold uppercase px-2.5 py-1 rounded">Garment Line</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-lg font-bold text-slate-900 mb-1">Casual Chinos &amp; Tailored Trousers</h3>
+                            <p class="text-xs text-slate-600 mb-4">High-tensile stretch twill fabric with enzyme wash finish. Features reinforced belt loops, YKK brand zips, and bespoke waistband construction.</p>
+                            <div class="space-y-1.5 text-xs text-slate-600 border-t border-slate-100 pt-3">
+                                <div class="flex justify-between"><span class="text-slate-400">Fabric:</span> <strong class="text-slate-800">98% Cotton 2% Spandex Twill</strong></div>
+                                <div class="flex justify-between"><span class="text-slate-400">Weight:</span> <strong class="text-slate-800">240 - 280 GSM</strong></div>
+                                <div class="flex justify-between"><span class="text-slate-400">Export MOQ:</span> <strong class="text-slate-800">800 Pcs / Colorway</strong></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0">
+                        <button onclick="openSpecModal('Chino Trousers & Slacks', 'Garments', 'Cotton Spandex Twill / Peached Cotton', 'Waist 28 to 44 / Inseam 30 to 36', '800 Pcs')" class="w-full bg-brand-50 hover:bg-brand-700 text-brand-700 hover:text-white border border-brand-200 text-xs font-semibold py-2.5 rounded-lg transition text-center">
+                            Inspect Full Export Specs &amp; Request Sample
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 5: Track Suits -->
+                <div class="product-item apparel bg-white rounded-xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl transition duration-300 flex flex-col justify-between">
+                    <div>
+                        <div class="relative h-56 bg-slate-100 overflow-hidden">
+                            <div class="w-full h-full bg-gradient-to-br from-brand-800 via-brand-700 to-blue-900 flex items-center justify-center p-6 text-center text-white relative">
+                                <div class="relative z-10">
+                                    <span class="inline-block p-2 rounded-full bg-white/10 mb-2">
+                                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                                    </span>
+                                    <h4 class="font-serif text-xl font-bold">Athleisure Track Suits</h4>
+                                    <p class="text-xs text-brand-200">Brushed Fleece &amp; Dry-Fit Performance</p>
+                                </div>
+                            </div>
+                            <span class="absolute top-3 left-3 bg-brand-700 text-white text-[10px] font-bold uppercase px-2.5 py-1 rounded">Top Export Seller</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-lg font-bold text-slate-900 mb-1">Heavy Fleece &amp; Poly-Tricot Track Suits</h3>
+                            <p class="text-xs text-slate-600 mb-4">Complete top and bottom sets with kangaroo pockets or zipped bombers. Available in 3-end brushed fleece, French Terry, and moisture-wicking interlock.</p>
+                            <div class="space-y-1.5 text-xs text-slate-600 border-t border-slate-100 pt-3">
+                                <div class="flex justify-between"><span class="text-slate-400">Weight Options:</span> <strong class="text-slate-800">280 - 380 GSM Heavy Fleece</strong></div>
+                                <div class="flex justify-between"><span class="text-slate-400">Customization:</span> <strong class="text-slate-800">Silicone Print / 3D Embroidery</strong></div>
+                                <div class="flex justify-between"><span class="text-slate-400">Export MOQ:</span> <strong class="text-slate-800">600 Sets</strong></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0">
+                        <button onclick="openSpecModal('Activewear Track Suits', 'Apparel', '80% Cotton 20% Polyester Heavy Fleece', 'XS to 4XL International Sizing', '600 Sets')" class="w-full bg-brand-50 hover:bg-brand-700 text-brand-700 hover:text-white border border-brand-200 text-xs font-semibold py-2.5 rounded-lg transition text-center">
+                            Inspect Full Export Specs &amp; Request Sample
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 6: Institutional & Kitchen Linens -->
+                <div class="product-item hometextiles institutional bg-white rounded-xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl transition duration-300 flex flex-col justify-between">
+                    <div>
+                        <div class="relative h-56 bg-slate-100 overflow-hidden">
+                            <div class="w-full h-full bg-gradient-to-br from-brand-900 via-slate-800 to-brand-700 flex items-center justify-center p-6 text-center text-white relative">
+                                <div class="relative z-10">
+                                    <span class="inline-block p-2 rounded-full bg-white/10 mb-2">
+                                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                                    </span>
+                                    <h4 class="font-serif text-xl font-bold">Hospitality &amp; Kitchen Linens</h4>
+                                    <p class="text-xs text-brand-200">Tea Towels, Aprons &amp; Duvet Protectors</p>
+                                </div>
+                            </div>
+                            <span class="absolute top-3 left-3 bg-slate-800 text-white text-[10px] font-bold uppercase px-2.5 py-1 rounded">Commercial Heavy</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-lg font-bold text-slate-900 mb-1">Duvet Covers, Aprons &amp; Kitchen Towels</h3>
+                            <p class="text-xs text-slate-600 mb-4">High-absorbency waffle weave, herringbone tea towels, and waterproof mattress encasements designed for hotel chains and bulk distributors.</p>
+                            <div class="space-y-1.5 text-xs text-slate-600 border-t border-slate-100 pt-3">
+                                <div class="flex justify-between"><span class="text-slate-400">Finishes:</span> <strong class="text-slate-800">Sanforized, Anti-Microbial</strong></div>
+                                <div class="flex justify-between"><span class="text-slate-400">Weave:</span> <strong class="text-slate-800">Waffle, Twill &amp; Dobby Stripes</strong></div>
+                                <div class="flex justify-between"><span class="text-slate-400">Export MOQ:</span> <strong class="text-slate-800">3,000 Units</strong></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0">
+                        <button onclick="openSpecModal('Hospitality Linen & Towels', 'Kitchen & Bedding', '100% Combed Cotton / Hydrophilic Weave', 'Multiple Standard Hotel Dimensions', '3,000 Units')" class="w-full bg-brand-50 hover:bg-brand-700 text-brand-700 hover:text-white border border-brand-200 text-xs font-semibold py-2.5 rounded-lg transition text-center">
+                            Inspect Full Export Specs &amp; Request Sample
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="social-hub" class="py-16 bg-gradient-to-b from-white to-slate-100 border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <span class="text-brand-700 font-bold text-xs uppercase tracking-widest bg-brand-50 px-3.5 py-1 rounded-full border border-brand-200">Real-Time Factory &amp; Trade Updates</span>
+                <h2 class="text-3xl sm:text-4xl font-serif font-bold text-slate-900 mt-3">Connect With A&amp;H IMPEX On Social Media</h2>
+                <p class="text-slate-600 text-sm mt-3">Stay updated with our latest weaving videos, newly stitched fabric collections, trade show attendances, and direct buyer testimonials.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- LinkedIn Card -->
+                <div class="bg-white rounded-2xl p-7 border border-slate-200 shadow-sm hover:shadow-xl hover:border-[#0077b5] transition-all flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-5">
+                            <div class="w-12 h-12 rounded-xl bg-[#0077b5]/10 text-[#0077b5] flex items-center justify-center">
+                                <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.45 1.45 0 0 0 0-2.9 1.45 1.45 0 0 0 0 2.9m1.39 9.74v-8.37H5.07v8.37h2.78z"/></svg>
+                            </div>
+                            <span class="text-[11px] font-bold uppercase tracking-wider text-[#0077b5] bg-blue-50 px-2.5 py-1 rounded-full">B2B Trade Network</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-900 mb-1">LinkedIn Corporate Page</h3>
+                        <p class="text-xs text-brand-700 font-medium mb-3">@ah-impex &bull; Textile Manufacturing &amp; Global Sourcing</p>
+                        <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                            Connect with our Director of Export, supply chain merchandisers, and procurement team. Get official corporate updates, mill compliance audits, and container shipping bulletins.
+                        </p>
+                        <div class="space-y-1 text-xs text-slate-500 mb-4 bg-slate-50 p-3 rounded-lg border border-slate-100">
+                            <div>&bull; Monthly Export Dispatch Reports</div>
+                            <div>&bull; OEKO-TEX &amp; BSCI Certification Updates</div>
+                            <div>&bull; Direct InMail to Trade Officers</div>
+                        </div>
+                    </div>
+                    <a href="https://www.linkedin.com/company/ah-impex" target="_blank" rel="noopener noreferrer" class="w-full bg-[#0077b5] hover:bg-[#006097] text-white text-xs font-bold uppercase tracking-wider py-3 rounded-lg transition text-center shadow-md flex items-center justify-center gap-2">
+                        <span>Follow on LinkedIn</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                    </a>
+                </div>
+
+                <!-- Instagram Card -->
+                <div class="bg-white rounded-2xl p-7 border border-slate-200 shadow-sm hover:shadow-xl hover:border-[#E1306C] transition-all flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-5">
+                            <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-[#f58529]/15 via-[#dd2a7b]/15 to-[#8134af]/15 text-[#E1306C] flex items-center justify-center">
+                                <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+                            </div>
+                            <span class="text-[11px] font-bold uppercase tracking-wider text-[#E1306C] bg-pink-50 px-2.5 py-1 rounded-full">Visual Catalog</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-900 mb-1">Instagram Official Gallery</h3>
+                        <p class="text-xs text-brand-700 font-medium mb-3">@ahimpextextiles &bull; Mill Reels, Fabrics &amp; Behind-the-Scenes</p>
+                        <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                            Explore high-definition reels showing our airjet looms, continuous dyeing processes, custom embroidery detailing, and close-up fabric texture swatches.
+                        </p>
+                        <div class="space-y-1 text-xs text-slate-500 mb-4 bg-slate-50 p-3 rounded-lg border border-slate-100">
+                            <div>&bull; Close-up Bed Sheet TC Weave Textures</div>
+                            <div>&bull; Track Suit &amp; Chino Fitting Reels</div>
+                            <div>&bull; Fast DM Response for Sample Kits</div>
+                        </div>
+                    </div>
+                    <a href="https://www.instagram.com/ahimpextextiles" target="_blank" rel="noopener noreferrer" class="w-full bg-gradient-to-r from-[#f58529] via-[#dd2a7b] to-[#8134af] hover:opacity-95 text-white text-xs font-bold uppercase tracking-wider py-3 rounded-lg transition text-center shadow-md flex items-center justify-center gap-2">
+                        <span>Follow on Instagram</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                    </a>
+                </div>
+
+                <!-- Facebook Card -->
+                <div class="bg-white rounded-2xl p-7 border border-slate-200 shadow-sm hover:shadow-xl hover:border-[#1877f2] transition-all flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-5">
+                            <div class="w-12 h-12 rounded-xl bg-[#1877f2]/10 text-[#1877f2] flex items-center justify-center">
+                                <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                            </div>
+                            <span class="text-[11px] font-bold uppercase tracking-wider text-[#1877f2] bg-blue-50 px-2.5 py-1 rounded-full">Community &amp; Reviews</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-900 mb-1">Facebook Verified Page</h3>
+                        <p class="text-xs text-brand-700 font-medium mb-3">@ahimpextextiles &bull; Customer Reviews &amp; Catalog Albums</p>
+                        <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                            Review buyer feedback, view photo albums of our finished consignments for American &amp; European retailers, and message our trade representatives directly via Messenger.
+                        </p>
+                        <div class="space-y-1 text-xs text-slate-500 mb-4 bg-slate-50 p-3 rounded-lg border border-slate-100">
+                            <div>&bull; Live Messenger Chat Support</div>
+                            <div>&bull; Verified Client Feedback &amp; Ratings</div>
+                            <div>&bull; New Season Color Palettes &amp; Catalogs</div>
+                        </div>
+                    </div>
+                    <a href="https://www.facebook.com/ahimpextextiles" target="_blank" rel="noopener noreferrer" class="w-full bg-[#1877f2] hover:bg-[#1464cc] text-white text-xs font-bold uppercase tracking-wider py-3 rounded-lg transition text-center shadow-md flex items-center justify-center gap-2">
+                        <span>Visit Facebook Page</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="manufacturing" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-brand-700 font-bold text-xs uppercase tracking-widest bg-brand-50 px-3 py-1 rounded-full border border-brand-200">Industrial Facility</span>
+                <h2 class="text-3xl sm:text-4xl font-serif font-bold text-slate-900 mt-3">From Fiber to Finished Container</h2>
+                <p class="text-slate-600 text-sm mt-3">Our production floor integrates high-speed airjet weaving, continuous dyeing ranges, and computerized automated cutting and stitching lines.</p>
+            </div>
+
+            <!-- 5-Step Process Timeline -->
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-4 relative">
+                <!-- Step 1 -->
+                <div class="bg-brand-50/70 border border-brand-200 rounded-xl p-5 text-center relative group hover:border-brand-600 transition">
+                    <span class="w-9 h-9 mx-auto rounded-full bg-brand-700 text-white font-bold flex items-center justify-center text-sm mb-3">01</span>
+                    <h4 class="font-bold text-slate-900 text-sm mb-1">Yarn Selection &amp; Warping</h4>
+                    <p class="text-[11px] text-slate-600">Sourcing premium long staple cotton, modal and combed synthetic polymers.</p>
+                </div>
+                <!-- Step 2 -->
+                <div class="bg-brand-50/70 border border-brand-200 rounded-xl p-5 text-center relative group hover:border-brand-600 transition">
+                    <span class="w-9 h-9 mx-auto rounded-full bg-brand-700 text-white font-bold flex items-center justify-center text-sm mb-3">02</span>
+                    <h4 class="font-bold text-slate-900 text-sm mb-1">Air-Jet Weaving</h4>
+                    <p class="text-[11px] text-slate-600">High-speed shuttle-less looms producing flawless greige cloth up to 135" widths.</p>
+                </div>
+                <!-- Step 3 -->
+                <div class="bg-brand-50/70 border border-brand-200 rounded-xl p-5 text-center relative group hover:border-brand-600 transition">
+                    <span class="w-9 h-9 mx-auto rounded-full bg-brand-700 text-white font-bold flex items-center justify-center text-sm mb-3">03</span>
+                    <h4 class="font-bold text-slate-900 text-sm mb-1">Dyeing &amp; Finishing</h4>
+                    <p class="text-[11px] text-slate-600">Eco-friendly reactive and vat dyeing with sanforization and softening baths.</p>
+                </div>
+                <!-- Step 4 -->
+                <div class="bg-brand-50/70 border border-brand-200 rounded-xl p-5 text-center relative group hover:border-brand-600 transition">
+                    <span class="w-9 h-9 mx-auto rounded-full bg-brand-700 text-white font-bold flex items-center justify-center text-sm mb-3">04</span>
+                    <h4 class="font-bold text-slate-900 text-sm mb-1">Stitching &amp; Detailing</h4>
+                    <p class="text-[11px] text-slate-600">Automated multi-needle stitching for bed sets, overlock and lockstitch garment lines.</p>
+                </div>
+                <!-- Step 5 -->
+                <div class="bg-brand-50/70 border border-brand-200 rounded-xl p-5 text-center relative group hover:border-brand-600 transition">
+                    <span class="w-9 h-9 mx-auto rounded-full bg-brand-700 text-white font-bold flex items-center justify-center text-sm mb-3">05</span>
+                    <h4 class="font-bold text-slate-900 text-sm mb-1">AQL 2.5 &amp; Dispatch</h4>
+                    <p class="text-[11px] text-slate-600">Strict metal detection, carton drop testing, barcode scans, and sea container loading.</p>
+                </div>
+            </div>
+
+            <!-- Factory Metrics Bar -->
+            <div class="mt-12 bg-brand-900 text-white rounded-2xl p-8 shadow-xl grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                <div>
+                    <div class="text-3xl font-serif font-bold text-brand-300">120+</div>
+                    <div class="text-xs text-slate-300 mt-1 uppercase tracking-wider">Airjet &amp; Sulzer Looms</div>
+                </div>
+                <div>
+                    <div class="text-3xl font-serif font-bold text-brand-300">450+</div>
+                    <div class="text-xs text-slate-300 mt-1 uppercase tracking-wider">Skilled Stitching Technicians</div>
+                </div>
+                <div>
+                    <div class="text-3xl font-serif font-bold text-brand-300">100,000 sq.ft</div>
+                    <div class="text-xs text-slate-300 mt-1 uppercase tracking-wider">Covered Production Area</div>
+                </div>
+                <div>
+                    <div class="text-3xl font-serif font-bold text-emerald-400">4.8 / 5.0</div>
+                    <div class="text-xs text-slate-300 mt-1 uppercase tracking-wider">Global Buyer Audit Rating</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="compliance" class="py-16 bg-slate-100 border-t border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <span class="text-brand-700 font-bold text-xs uppercase tracking-widest">Global Standards</span>
+                    <h2 class="text-3xl font-serif font-bold text-slate-900 mt-2">Export Standards &amp; Ethical Auditing</h2>
+                    <p class="text-slate-600 text-sm mt-3 leading-relaxed">
+                        A&amp;H IMPEX operates with full adherence to international labor standards, environmental protocols, and product safety. Every consignment is traceable from raw fiber to final carton.
+                    </p>
+
+                    <div class="mt-6 space-y-3">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 w-6 h-6 rounded-full bg-brand-700 text-white flex items-center justify-center text-xs mt-0.5">&check;</div>
+                            <div class="ml-3">
+                                <h4 class="text-sm font-bold text-slate-900">OEKO-TEX Standard 100 Certified</h4>
+                                <p class="text-xs text-slate-600">Zero hazardous azo-dyes, formaldehyde, or heavy chemicals safe for infant contact.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 w-6 h-6 rounded-full bg-brand-700 text-white flex items-center justify-center text-xs mt-0.5">&check;</div>
+                            <div class="ml-3">
+                                <h4 class="text-sm font-bold text-slate-900">BSCI &amp; Sedex SMETA Audited</h4>
+                                <p class="text-xs text-slate-600">Fair living wages, zero child labor, safe air circulation, and comprehensive worker welfare.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 w-6 h-6 rounded-full bg-brand-700 text-white flex items-center justify-center text-xs mt-0.5">&check;</div>
+                            <div class="ml-3">
+                                <h4 class="text-sm font-bold text-slate-900">In-House Quality Testing Lab</h4>
+                                <p class="text-xs text-slate-600">Martindale rub testers, tear strength machines, color spectrophotometers, and shrinkage ovens.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Export Markets Card -->
+                <div class="bg-white p-8 rounded-2xl border border-slate-200 shadow-md">
+                    <h3 class="text-lg font-bold text-slate-900 mb-1">Serving Major Export Markets</h3>
+                    <p class="text-xs text-slate-500 mb-6">Regular full container load (FCL) and consolidated (LCL) shipments.</p>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between text-xs font-semibold mb-1">
+                                <span class="text-slate-700">North America (USA &amp; Canada)</span>
+                                <span class="text-brand-700">38% Share</span>
+                            </div>
+                            <div class="w-full bg-slate-100 rounded-full h-2">
+                                <div class="bg-brand-700 h-2 rounded-full" style="width: 38%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-xs font-semibold mb-1">
+                                <span class="text-slate-700">European Union (Germany, France, Spain, Poland)</span>
+                                <span class="text-brand-700">32% Share</span>
+                            </div>
+                            <div class="w-full bg-slate-100 rounded-full h-2">
+                                <div class="bg-brand-700 h-2 rounded-full" style="width: 32%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-xs font-semibold mb-1">
+                                <span class="text-slate-700">United Kingdom</span>
+                                <span class="text-brand-700">18% Share</span>
+                            </div>
+                            <div class="w-full bg-slate-100 rounded-full h-2">
+                                <div class="bg-brand-700 h-2 rounded-full" style="width: 18%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-xs font-semibold mb-1">
+                                <span class="text-slate-700">GCC &amp; Middle East (UAE, Saudi Arabia, Qatar)</span>
+                                <span class="text-brand-700">12% Share</span>
+                            </div>
+                            <div class="w-full bg-slate-100 rounded-full h-2">
+                                <div class="bg-brand-700 h-2 rounded-full" style="width: 12%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 pt-5 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+                        <span>Lead Times: <strong>35 - 50 Days</strong></span>
+                        <span>Incoterms: <strong>FOB, CIF, DDP, DAP</strong></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="rfq" class="py-20 bg-brand-900 text-white relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl mx-auto text-center mb-12">
+                <span class="text-brand-300 font-bold text-xs uppercase tracking-widest">Immediate Factory Connection</span>
+                <h2 class="text-3xl sm:text-4xl font-serif font-bold text-white mt-2">Request an Export Quotation &amp; Swatches</h2>
+                <p class="text-slate-300 text-sm mt-3">Submit your technical specifications or target product lines. Our merchandisers calculate preliminary costing within 24 business hours.</p>
+            </div>
+
+            <div class="max-w-4xl mx-auto bg-white text-slate-900 rounded-2xl shadow-2xl p-8 sm:p-10 border border-brand-700">
+                <form id="rfqForm" onsubmit="handleRfqSubmit(event)" class="space-y-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <!-- Company Name -->
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Company / Brand Name *</label>
+                            <input type="text" required placeholder="e.g. Royal Linen Imports LLC" class="w-full px-4 py-3 text-sm rounded-lg border border-slate-300 focus:outline-none focus:border-brand-700 focus:ring-1 focus:ring-brand-700">
+                        </div>
+
+                        <!-- Buyer Name & Title -->
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Contact Person &amp; Role *</label>
+                            <input type="text" required placeholder="e.g. David Miller (Sourcing Director)" class="w-full px-4 py-3 text-sm rounded-lg border border-slate-300 focus:outline-none focus:border-brand-700 focus:ring-1 focus:ring-brand-700">
+                        </div>
+
+                        <!-- Email -->
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Corporate Email Address *</label>
+                            <input type="email" required placeholder="buyer@company.com" class="w-full px-4 py-3 text-sm rounded-lg border border-slate-300 focus:outline-none focus:border-brand-700 focus:ring-1 focus:ring-brand-700">
+                        </div>
+
+                        <!-- Phone / WhatsApp -->
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Direct Phone / WhatsApp *</label>
+                            <input type="tel" required placeholder="+1 (555) 019-2834" class="w-full px-4 py-3 text-sm rounded-lg border border-slate-300 focus:outline-none focus:border-brand-700 focus:ring-1 focus:ring-brand-700">
+                        </div>
+
+                        <!-- Product Division -->
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Primary Product Interest *</label>
+                            <select id="rfqCategory" class="w-full px-4 py-3 text-sm rounded-lg border border-slate-300 focus:outline-none focus:border-brand-700 focus:ring-1 focus:ring-brand-700 bg-white">
+                                <option value="Bed Sheets & Linen">Bed Sheets &amp; Sets (T200 - T800)</option>
+                                <option value="Table Cloths & Napkins">Napkins &amp; Table Cloths (Hospitality)</option>
+                                <option value="Trousers & Chinos">Trousers, Chinos &amp; Slacks</option>
+                                <option value="Track Suits & Athleisure">Track Suits &amp; Fleece Joggers</option>
+                                <option value="Kitchen & Institutional">Kitchen Linens &amp; Towels</option>
+                                <option value="Full Custom Order">Full Custom Mixed Container</option>
+                            </select>
+                        </div>
+
+                        <!-- Estimated Volume -->
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Estimated Order Volume *</label>
+                            <select class="w-full px-4 py-3 text-sm rounded-lg border border-slate-300 focus:outline-none focus:border-brand-700 focus:ring-1 focus:ring-brand-700 bg-white">
+                                <option value="Trial MOQ (500 - 1,000 pcs)">Trial Order (500 - 1,000 pcs)</option>
+                                <option value="2,000 - 5,000 pcs">2,000 - 5,000 pcs</option>
+                                <option value="1x 20ft FCL Container">1x 20ft FCL Container (~15,000 pcs)</option>
+                                <option value="1x 40ft HQ Container">1x 40ft HQ Container (~32,000 pcs)</option>
+                                <option value="Ongoing Annual Contract">Ongoing Annual Supply Contract</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Destination Country & Incoterm -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Destination Port / Country *</label>
+                            <input type="text" required placeholder="e.g. Port of Los Angeles, USA or Hamburg, Germany" class="w-full px-4 py-3 text-sm rounded-lg border border-slate-300 focus:outline-none focus:border-brand-700 focus:ring-1 focus:ring-brand-700">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Target Preferred Incoterm</label>
+                            <select class="w-full px-4 py-3 text-sm rounded-lg border border-slate-300 focus:outline-none focus:border-brand-700 focus:ring-1 focus:ring-brand-700 bg-white">
+                                <option>FOB (Port of Karachi)</option>
+                                <option>CIF (Delivered to Destination Port)</option>
+                                <option>DDP (Delivered Duty Paid to Warehouse)</option>
+                                <option>EXW (Factory Pickup)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Technical Specs / Notes -->
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Specific Requirements (GSM, Thread Count, Sizes, Packaging)</label>
+                        <textarea rows="4" placeholder="Please mention your required fabric blend (e.g. 100% cotton satin stripe 300TC), Pantone colors, label needs, or sample dispatch address..." class="w-full px-4 py-3 text-sm rounded-lg border border-slate-300 focus:outline-none focus:border-brand-700 focus:ring-1 focus:ring-brand-700"></textarea>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
+                        <div class="text-xs text-slate-500 flex items-center">
+                            <svg class="w-4 h-4 text-emerald-600 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                            Direct Factory Non-Disclosure Agreement (NDA) Protected
+                        </div>
+                        <button type="submit" class="w-full sm:w-auto bg-brand-700 hover:bg-brand-600 text-white font-bold text-xs uppercase tracking-widest px-8 py-4 rounded-lg shadow-lg hover:shadow-brand-700/40 transition">
+                            Submit Export Inquiry
+                        </button>
+                    </div>
+                </form>
+
+                <div class="mt-8 pt-6 border-t border-slate-200">
+                    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <div>
+                            <h4 class="text-xs font-bold text-slate-900 uppercase tracking-wider">Need Immediate Technical Clarifications?</h4>
+                            <p class="text-xs text-slate-500">Reach our merchandisers directly via WhatsApp or company social channels:</p>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <a href="https://wa.me/923008661234" target="_blank" title="Chat on WhatsApp" class="p-2.5 rounded-lg bg-emerald-600 text-white hover:bg-emerald-500 transition shadow">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2z"/></svg>
+                            </a>
+                            <a href="https://www.linkedin.com/company/ah-impex" target="_blank" title="Connect on LinkedIn" class="p-2.5 rounded-lg bg-[#0077b5] text-white hover:opacity-90 transition shadow">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.45 1.45 0 0 0 0-2.9 1.45 1.45 0 0 0 0 2.9m1.39 9.74v-8.37H5.07v8.37h2.78z"/></svg>
+                            </a>
+                            <a href="https://www.instagram.com/ahimpextextiles" target="_blank" title="Message on Instagram" class="p-2.5 rounded-lg bg-gradient-to-tr from-[#f58529] via-[#dd2a7b] to-[#8134af] text-white hover:opacity-90 transition shadow">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+                            </a>
+                            <a href="https://www.facebook.com/ahimpextextiles" target="_blank" title="Message on Facebook" class="p-2.5 rounded-lg bg-[#1877f2] text-white hover:opacity-90 transition shadow">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feedback banner after submission -->
+                <div id="rfqSuccessMsg" class="hidden mt-6 p-4 rounded-lg bg-emerald-50 border border-emerald-300 text-emerald-900 text-sm">
+                    <strong>Thank you for your RFQ submission!</strong> Your export inquiry has been logged with Reference ID: <span class="font-mono font-bold" id="rfqRefId">AH-EXP-2026</span>. Our International Trade Desk will email you the initial tech pack confirmation and FOB costing sheet.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="specModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-lg rounded-2xl shadow-2xl border border-slate-200 overflow-hidden transform transition-all">
+            <div class="bg-brand-900 text-white p-6 flex justify-between items-center">
+                <div>
+                    <span class="text-xs uppercase tracking-wider text-brand-300 font-semibold" id="modalCategory">Product Specs</span>
+                    <h3 class="text-xl font-bold font-serif" id="modalTitle">Technical Specification</h3>
+                </div>
+                <button onclick="closeSpecModal()" class="text-slate-300 hover:text-white text-2xl font-bold">&times;</button>
+            </div>
+            
+            <div class="p-6 space-y-4 text-sm text-slate-700">
+                <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 space-y-2">
+                    <div class="flex justify-between border-b border-slate-200 pb-1.5">
+                        <span class="text-slate-500">Fabric Composition:</span>
+                        <strong id="modalFabric" class="text-slate-900 text-right">-</strong>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-200 pb-1.5">
+                        <span class="text-slate-500">Available Sizes:</span>
+                        <strong id="modalSizes" class="text-slate-900 text-right">-</strong>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-slate-500">Standard Export MOQ:</span>
+                        <strong id="modalMoq" class="text-slate-900 text-right">-</strong>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-slate-900 text-xs uppercase tracking-wider mb-2">Export Packaging Available:</h4>
+                    <ul class="text-xs text-slate-600 list-disc list-inside space-y-1">
+                        <li>Retail PVC Zipper Bag with high-gloss 350 GSM color insert card</li>
+                        <li>Eco-friendly self-fabric pouch with ribbon closure</li>
+                        <li>Export grade 5-ply and 7-ply master corrugated cartons with strap banding</li>
+                        <li>Barcode labeling, Amazon FBA prep, &amp; palletization</li>
+                    </ul>
+                </div>
+
+                <div class="pt-2 flex gap-3">
+                    <button onclick="closeSpecModal(); document.getElementById('rfq').scrollIntoView();" class="w-full bg-brand-700 hover:bg-brand-600 text-white text-xs font-bold uppercase tracking-wider py-3 rounded-lg transition text-center">
+                        Request Sample Swatches
+                    </button>
+                    <button onclick="closeSpecModal()" class="px-5 py-3 border border-slate-300 text-slate-700 text-xs font-semibold rounded-lg hover:bg-slate-50 transition">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-brand-900 text-slate-300 pt-16 pb-12 border-t border-brand-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-brand-800">
+                
+                <!-- Brand Info -->
+                <div class="lg:col-span-2 space-y-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-white rounded-lg p-1.5 flex items-center justify-center shadow">
+                            <svg class="w-full h-full text-brand-700" viewBox="0 0 120 120" fill="currentColor">
+                                <path d="M60,18 C78,18 90,32 88,48 C85,38 74,27 60,27 C46,27 35,38 32,48 C30,32 42,18 60,18 Z" />
+                                <path d="M22,50 C12,56 9,72 17,84 C27,94 40,92 48,88 C38,88 24,84 20,74 C16,63 20,54 22,50 Z" />
+                                <path d="M98,50 C108,56 111,72 103,84 C93,94 80,92 72,88 C82,88 96,84 100,74 C104,63 100,54 98,50 Z" />
+                                <path d="M60,54 C63,68 66,78 60,88 C54,78 57,68 60,54 Z" />
+                                <path d="M38,72 C48,72 55,78 56,86 C48,84 41,78 38,72 Z" />
+                                <path d="M82,72 C72,72 65,78 64,86 C72,84 79,78 82,72 Z" />
+                                <path d="M50,86 C55,94 60,98 60,98 C60,98 65,94 70,86 C65,89 55,89 50,86 Z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <span class="text-xl font-bold tracking-wider text-white font-display uppercase">A&amp;H IMPEX</span>
+                            <span class="block text-[9px] uppercase tracking-widest text-slate-400">Textile Manufacturer &amp; Exporter</span>
+                        </div>
+                    </div>
+                    <p class="text-xs text-slate-400 leading-relaxed max-w-sm">
+                        Premier manufacturer and exporter of luxury bed sets, hotel table linens, napkins, casual workwear trousers, and fleece track suits. Committed to timely delivery and certified export quality.
+                    </p>
+
+                    <div class="pt-2">
+                        <span class="block text-[11px] uppercase tracking-wider text-slate-300 font-bold mb-2">Connect Across Platforms:</span>
+                        <div class="flex items-center space-x-3">
+                            <a href="https://www.linkedin.com/company/ah-impex" target="_blank" rel="noopener noreferrer" class="w-9 h-9 rounded-lg bg-brand-800 hover:bg-[#0077b5] text-slate-300 hover:text-white flex items-center justify-center transition border border-brand-700" title="LinkedIn Company Page">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.45 1.45 0 0 0 0-2.9 1.45 1.45 0 0 0 0 2.9m1.39 9.74v-8.37H5.07v8.37h2.78z"/></svg>
+                            </a>
+                            <a href="https://www.instagram.com/ahimpextextiles" target="_blank" rel="noopener noreferrer" class="w-9 h-9 rounded-lg bg-brand-800 hover:bg-[#E1306C] text-slate-300 hover:text-white flex items-center justify-center transition border border-brand-700" title="Instagram Official Gallery">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+                            </a>
+                            <a href="https://www.facebook.com/ahimpextextiles" target="_blank" rel="noopener noreferrer" class="w-9 h-9 rounded-lg bg-brand-800 hover:bg-[#1877f2] text-slate-300 hover:text-white flex items-center justify-center transition border border-brand-700" title="Facebook Page">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                            </a>
+                            <a href="https://wa.me/923008661234" target="_blank" rel="noopener noreferrer" class="w-9 h-9 rounded-lg bg-brand-800 hover:bg-[#25D366] text-slate-300 hover:text-white flex items-center justify-center transition border border-brand-700" title="Direct WhatsApp Trade Desk">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2z"/></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="text-xs text-slate-400 space-y-1">
+                        <div><strong>Export Registration:</strong> NTN / STRN Verified Exporter</div>
+                        <div><strong>HS Codes:</strong> 6302.xx (Bedding/Table), 6203.xx (Trousers), 6112.xx (Track Suits)</div>
+                    </div>
+                </div>
+
+                <!-- Products column -->
+                <div class="space-y-3 text-xs">
+                    <h4 class="text-white font-bold uppercase tracking-wider text-sm">Home Textiles</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#products" class="hover:text-white transition">Egyptian Cotton Bed Sheets</a></li>
+                        <li><a href="#products" class="hover:text-white transition">Satin Stripe Hotel Bedding</a></li>
+                        <li><a href="#products" class="hover:text-white transition">Banquet Table Cloths</a></li>
+                        <li><a href="#products" class="hover:text-white transition">Restaurant Hemstitched Napkins</a></li>
+                        <li><a href="#products" class="hover:text-white transition">Waffle Tea &amp; Kitchen Linens</a></li>
+                    </ul>
+                </div>
+
+                <!-- Garments column -->
+                <div class="space-y-3 text-xs">
+                    <h4 class="text-white font-bold uppercase tracking-wider text-sm">Apparel Division</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#products" class="hover:text-white transition">Stretch Cotton Chinos</a></li>
+                        <li><a href="#products" class="hover:text-white transition">Formal &amp; Cargo Trousers</a></li>
+                        <li><a href="#products" class="hover:text-white transition">Fleece Active Track Suits</a></li>
+                        <li><a href="#products" class="hover:text-white transition">French Terry Jogger Pants</a></li>
+                        <li><a href="#products" class="hover:text-white transition">Custom Brand OEM Workwear</a></li>
+                    </ul>
+                </div>
+
+                <!-- Factory & Contact -->
+                <div class="space-y-3 text-xs">
+                    <h4 class="text-white font-bold uppercase tracking-wider text-sm">Factory Desk</h4>
+                    <div class="space-y-2 text-slate-400">
+                        <p class="flex items-start">
+                            <svg class="w-4 h-4 mr-2 text-brand-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            Mill Site: Textile Industrial Estate, Faisalabad / Karachi Ports corridor, Pakistan.
+                        </p>
+                        <p class="flex items-center">
+                            <svg class="w-4 h-4 mr-2 text-brand-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                            export@ahimpextextiles.com
+                        </p>
+                        <p class="flex items-center">
+                            <svg class="w-4 h-4 mr-2 text-brand-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                            Direct: +92 300 8661234 / +92 41 8554321
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+                <div>
+                    &copy; <span id="currentYear">2026</span> A&amp;H IMPEX. All International Trade Rights Reserved.
+                </div>
+                <div class="flex space-x-6 text-slate-400">
+                    <a href="#" class="hover:text-white transition">Export Terms of Sale</a>
+                    <a href="#" class="hover:text-white transition">Quality Policy (AQL 2.5)</a>
+                    <a href="#" class="hover:text-white transition">Social Compliance</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Set dynamic current year
+        document.getElementById('currentYear').innerText = new Date().getFullYear();
+
+        // Toggle mobile navigation menu
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Product category filter function
+        function filterProducts(category) {
+            const tabs = document.querySelectorAll('.catalog-tab');
+            tabs.forEach(tab => {
+                tab.classList.remove('bg-brand-700', 'text-white');
+                tab.classList.add('bg-white', 'text-slate-700');
+            });
+            event.currentTarget.classList.remove('bg-white', 'text-slate-700');
+            event.currentTarget.classList.add('bg-brand-700', 'text-white');
+
+            const items = document.querySelectorAll('.product-item');
+            items.forEach(item => {
+                if (category === 'all' || item.classList.contains(category)) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // Specification Modal Handlers
+        function openSpecModal(title, category, fabric, sizes, moq) {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalCategory').innerText = category;
+            document.getElementById('modalFabric').innerText = fabric;
+            document.getElementById('modalSizes').innerText = sizes;
+            document.getElementById('modalMoq').innerText = moq;
+
+            // Pre-select category in the RFQ form
+            const rfqCat = document.getElementById('rfqCategory');
+            if (rfqCat) {
+                for (let i = 0; i < rfqCat.options.length; i++) {
+                    if (rfqCat.options[i].text.toLowerCase().includes(category.toLowerCase().slice(0, 4))) {
+                        rfqCat.selectedIndex = i;
+                        break;
+                    }
+                }
+            }
+
+            const modal = document.getElementById('specModal');
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSpecModal() {
+            const modal = document.getElementById('specModal');
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        // RFQ Form Submission Handler
+        function handleRfqSubmit(e) {
+            e.preventDefault();
+            const successBox = document.getElementById('rfqSuccessMsg');
+            const refNumber = 'AH-' + Math.floor(100000 + Math.random() * 900000);
+            document.getElementById('rfqRefId').innerText = refNumber;
+            
+            successBox.classList.remove('hidden');
+            successBox.scrollIntoView({ behavior: 'smooth' });
+            
+            // Optionally reset form
+            document.getElementById('rfqForm').reset();
+        }
+
+        // Close modal on escape key press
+        window.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') {
+                closeSpecModal();
+            }
+        });
+    </script>
+</body>
+</html>

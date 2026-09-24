@@ -1,5 +1,11 @@
 // A&H IMPEX - Manufacturing Process Data
-// Interactive 5-step timeline data with technical specifications and photography
+// Interactive 5-step timeline data with user-provided mill assets and technical specifications
+
+import yarnWarpingImg from '../assets/yarn selection and weaving.jfif';
+import airJetWeavingImg from '../assets/air jet weaving.jpg';
+import dyeingFinishingImg from '../assets/dyeing and finishing.jfif';
+import stitchingDetailingImg from '../assets/stitching and detailing.jfif';
+import qualityInspectionImg from '../assets/quality inspection.jfif';
 
 export const MANUFACTURING_STEPS = [
   {
@@ -7,7 +13,7 @@ export const MANUFACTURING_STEPS = [
     title: 'Yarn Selection & Warping',
     tagline: 'Precision Fiber Sourcing & High-Tension Creeling',
     description: 'We procure ring-spun, combed, and compact yarns from ISO-accredited spinning mills. Yarns undergo testing for Uster CV%, count uniformity, and tensile strength before high-speed computerized direct warping.',
-    image: 'https://images.unsplash.com/photo-1596178065887-1198b6148b2b?auto=format&fit=crop&w=900&q=80',
+    image: yarnWarpingImg,
     fallbackImage: 'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=900&q=80',
     specs: [
       { label: 'Yarn Counts', value: '10s Ne to 100s Ne Combed' },
@@ -21,7 +27,7 @@ export const MANUFACTURING_STEPS = [
     title: 'Air-Jet Weaving',
     tagline: 'High-Speed Shuttleless Weaving Looms',
     description: 'Our weaving facility runs modern high-speed air-jet looms capable of producing tight, flawless plain weaves, sateens, percales, twills, and dobby textures with uniform selvages up to 340cm width.',
-    image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=900&q=80',
+    image: airJetWeavingImg,
     fallbackImage: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=900&q=80',
     specs: [
       { label: 'Loom Type', value: 'European & Japanese Air-Jet Looms' },
@@ -35,7 +41,7 @@ export const MANUFACTURING_STEPS = [
     title: 'Dyeing & Finishing',
     tagline: 'Continuous Bleaching & Eco-Friendly Reactive Dyeing',
     description: 'Fabrics are processed using continuous pad-steam and thermofix dyeing lines. We utilize low-salt, OEKO-TEX Standard 100 compliant reactive dyestuffs followed by mercerizing, stenter heat-setting, and calendaring.',
-    image: 'https://images.unsplash.com/photo-1509783236416-c9ad59bae472?auto=format&fit=crop&w=900&q=80',
+    image: dyeingFinishingImg,
     fallbackImage: 'https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?auto=format&fit=crop&w=900&q=80',
     specs: [
       { label: 'Dye Chemistry', value: 'Low-Impact Reactive & Vat Dyes' },
@@ -49,7 +55,7 @@ export const MANUFACTURING_STEPS = [
     title: 'Stitching & Detailing',
     tagline: 'Automated Hemming & Precision Unit Assembly',
     description: 'Equipped with computerized lockstitch, overlock, and automatic multi-needle flatbed machines. Our skilled operators assemble fitted sheets, duvet covers, pillowcases, and garments with reinforced stress seams.',
-    image: 'https://images.unsplash.com/photo-1584992236310-6edddc08acff?auto=format&fit=crop&w=900&q=80',
+    image: stitchingDetailingImg,
     fallbackImage: 'https://images.unsplash.com/photo-1558769132-cb1aea458c5e?auto=format&fit=crop&w=900&q=80',
     specs: [
       { label: 'Stitch Density', value: '10–12 Stitches Per Inch (SPI)' },
@@ -63,7 +69,7 @@ export const MANUFACTURING_STEPS = [
     title: 'Quality Inspection & Dispatch',
     tagline: '100% Light-Table Review, Metal Detection & Packing',
     description: 'Every finished unit passes through illuminated light tables for optical grading, needle detection, and barcode verification before being sealed in export-grade cartons with moisture barrier lining.',
-    image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=900&q=80',
+    image: qualityInspectionImg,
     fallbackImage: 'https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=900&q=80',
     specs: [
       { label: 'AQL Standard', value: 'MIL-STD-105E / AQL 1.5 & 2.5' },
