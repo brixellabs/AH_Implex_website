@@ -19,8 +19,8 @@ import { COMPANY } from '../data/company';
 export default function TopBar() {
   const { companyInfo } = useData();
   const info = companyInfo || COMPANY;
-  const whatsappNumber = info.contact?.whatsappClean || '923008661234';
-  const phoneFormatted = info.contact?.phone || '+92 300 8661234';
+  const whatsappNumber = info.contact?.whatsappClean || '923008660309';
+  const phoneFormatted = info.contact?.phone || '+92 300 8660309';
 
   return (
     <aside
@@ -50,7 +50,7 @@ export default function TopBar() {
               Official Channels:
             </span>
             <a
-              href="https://www.linkedin.com/company/ah-impex"
+              href="https://www.linkedin.com/company/a-h-impex/"
               target="_blank"
               rel="noopener noreferrer"
               title="Follow A&H Impex on LinkedIn"
@@ -59,7 +59,7 @@ export default function TopBar() {
               <FontAwesomeIcon icon={faLinkedinIn} className="text-xs text-[#0077b5]" />
             </a>
             <a
-              href="https://www.instagram.com/ahimpextextiles"
+              href="https://www.instagram.com/a_h_impex/"
               target="_blank"
               rel="noopener noreferrer"
               title="A&H Impex Instagram Catalog"

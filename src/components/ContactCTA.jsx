@@ -26,8 +26,8 @@ import { COMPANY } from '../data/company';
 export default function ContactCTA({ onOpenQuoteModal }) {
   const { companyInfo } = useData();
   const info = companyInfo || COMPANY;
-  const whatsappNumber = info.contact?.whatsappClean || '923008661234';
-  const whatsappFormatted = info.contact?.whatsapp || '+92 300 8661234';
+  const whatsappNumber = info.contact?.whatsappClean || '923008660309';
+  const whatsappFormatted = info.contact?.whatsapp || '+92 300 8660309';
 
   return (
     <section id="contact" className="py-24 bg-brand-900 relative overflow-hidden border-t border-brand-800">
@@ -169,7 +169,7 @@ export default function ContactCTA({ onOpenQuoteModal }) {
                       <FontAwesomeIcon icon={faWhatsapp} className="text-sm" />
                     </a>
                     <a
-                      href="https://www.linkedin.com/company/ah-impex"
+                      href="https://www.linkedin.com/company/a-h-impex/"
                       target="_blank"
                       rel="noopener noreferrer"
                       title="Connect on LinkedIn"
@@ -178,7 +178,7 @@ export default function ContactCTA({ onOpenQuoteModal }) {
                       <FontAwesomeIcon icon={faLinkedinIn} className="text-sm" />
                     </a>
                     <a
-                      href="https://www.instagram.com/ahimpextextiles"
+                      href="https://www.instagram.com/a_h_impex/"
                       target="_blank"
                       rel="noopener noreferrer"
                       title="Message on Instagram"

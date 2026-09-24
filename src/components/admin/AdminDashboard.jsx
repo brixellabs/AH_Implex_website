@@ -1109,7 +1109,7 @@ export default function AdminDashboard({ onExitAdmin }) {
                         ...companyFormData,
                         contact: { ...companyFormData.contact, whatsapp: e.target.value }
                       })}
-                      placeholder="+92 300 8661234"
+                      placeholder="+92 300 8660309"
                       className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:outline-none focus:border-brand-500 focus:bg-white transition-all shadow-inner"
                     />
                   </div>

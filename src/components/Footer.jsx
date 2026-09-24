@@ -67,7 +67,7 @@ export default function Footer({ onOpenQuoteModal, onOpenAdmin }) {
               </span>
               <div className="flex items-center space-x-3">
                 <a
-                  href="https://www.linkedin.com/company/ah-impex"
+                  href="https://www.linkedin.com/company/a-h-impex/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-9 h-9 rounded-lg bg-brand-800 hover:bg-[#0077b5] text-slate-300 hover:text-white flex items-center justify-center transition-all border border-brand-700 hover:border-[#0077b5] hover:scale-105 shadow-sm"
@@ -76,7 +76,7 @@ export default function Footer({ onOpenQuoteModal, onOpenAdmin }) {
                   <FontAwesomeIcon icon={faLinkedinIn} className="text-sm" />
                 </a>
                 <a
-                  href="https://www.instagram.com/ahimpextextiles"
+                  href="https://www.instagram.com/a_h_impex/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-9 h-9 rounded-lg bg-brand-800 hover:bg-[#E1306C] text-slate-300 hover:text-white flex items-center justify-center transition-all border border-brand-700 hover:border-[#E1306C] hover:scale-105 shadow-sm"
@@ -94,7 +94,7 @@ export default function Footer({ onOpenQuoteModal, onOpenAdmin }) {
                   <FontAwesomeIcon icon={faFacebookF} className="text-sm" />
                 </a>
                 <a
-                  href={`https://wa.me/${info.contact?.whatsappClean || '923008661234'}`}
+                  href={`https://wa.me/${info.contact?.whatsappClean || '923008660309'}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-9 h-9 rounded-lg bg-brand-800 hover:bg-[#25D366] text-slate-300 hover:text-white flex items-center justify-center transition-all border border-brand-700 hover:border-[#25D366] hover:scale-105 shadow-sm"

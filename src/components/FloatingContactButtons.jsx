@@ -21,7 +21,7 @@ import { COMPANY } from '../data/company';
 export default function FloatingContactButtons() {
   const { companyInfo } = useData();
   const info = companyInfo || COMPANY;
-  const whatsappNumber = info.contact?.whatsappClean || '923008661234';
+  const whatsappNumber = info.contact?.whatsappClean || '923008660309';
 
   return (
     <aside
@@ -32,7 +32,7 @@ export default function FloatingContactButtons() {
         
         {/* 1. LinkedIn */}
         <a
-          href="https://www.linkedin.com/company/ah-impex"
+          href="https://www.linkedin.com/company/a-h-impex/"
           target="_blank"
           rel="noopener noreferrer"
           title="Follow A&H Impex on LinkedIn"
@@ -48,7 +48,7 @@ export default function FloatingContactButtons() {
 
         {/* 2. Instagram */}
         <a
-          href="https://www.instagram.com/ahimpextextiles"
+          href="https://www.instagram.com/a_h_impex/"
           target="_blank"
           rel="noopener noreferrer"
           title="A&H Impex Instagram Showroom"

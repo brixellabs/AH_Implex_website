@@ -25,8 +25,8 @@ import { COMPANY } from '../data/company';
 export default function SocialSection() {
   const { companyInfo } = useData();
   const info = companyInfo || COMPANY;
-  const whatsappNumber = info.contact?.whatsappClean || '923008661234';
-  const whatsappFormatted = info.contact?.whatsapp || '+92 300 8661234';
+  const whatsappNumber = info.contact?.whatsappClean || '923008660309';
+  const whatsappFormatted = info.contact?.whatsapp || '+92 300 8660309';
 
   const socialCards = [
     {
@@ -45,14 +45,14 @@ export default function SocialSection() {
       iconContainer: 'bg-[#0077b5]/10 text-[#0077b5]',
       badgeClass: 'text-[#0077b5] bg-blue-50 border-blue-200',
       borderHover: 'hover:border-[#0077b5]',
-      url: 'https://www.linkedin.com/company/ah-impex',
+      url: 'https://www.linkedin.com/company/a-h-impex/',
       icon: faLinkedinIn
     },
     {
       id: 'instagram',
       name: 'Instagram Official Gallery',
       platform: 'Visual Catalog',
-      handle: '@ahimpextextiles • Mill Reels, Fabrics & Behind-the-Scenes',
+      handle: '@a_h_impex • Mill Reels, Fabrics & Behind-the-Scenes',
       description: 'Explore high-definition reels showing our airjet looms, continuous dyeing processes, custom embroidery detailing, and close-up fabric texture swatches.',
       bullets: [
         'Close-up Bed Sheet TC Weave Textures',
@@ -64,7 +64,7 @@ export default function SocialSection() {
       iconContainer: 'bg-gradient-to-tr from-[#f58529]/15 via-[#dd2a7b]/15 to-[#8134af]/15 text-[#E1306C]',
       badgeClass: 'text-[#E1306C] bg-pink-50 border-pink-200',
       borderHover: 'hover:border-[#E1306C]',
-      url: 'https://www.instagram.com/ahimpextextiles',
+      url: 'https://www.instagram.com/a_h_impex/',
       icon: faInstagram
     },
     {
