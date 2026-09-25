@@ -39,22 +39,21 @@ export default function ProductCard({ product, onSelectProduct }) {
           {/* Subtle gradient overlay for readability */}
           <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent" />
 
-          {/* Category Pill Tag */}
-          <div className="absolute top-3.5 left-3.5 z-10">
-            <span className="px-3 py-1 rounded-full text-xs font-bold tracking-wider uppercase bg-brand-900/90 backdrop-blur-md text-white border border-brand-500/30 shadow-md">
+          {/* Top Badges Bar (Flex container preventing overlap) */}
+          <div className="absolute top-3 left-3 right-3 z-10 flex items-center justify-between gap-2 pointer-events-none">
+            {/* Category Pill Tag */}
+            <span className="px-2.5 py-1 rounded-full text-[10px] sm:text-[11px] font-bold tracking-wider uppercase bg-brand-900/90 backdrop-blur-md text-white border border-brand-500/30 shadow-md truncate max-w-[55%]">
               {product.categoryName}
             </span>
-          </div>
 
-          {/* Product Badge */}
-          {product.badge && (
-            <div className="absolute top-3.5 right-3.5 z-10">
-              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold tracking-wide uppercase bg-emerald-600 text-white shadow-md">
-                <FontAwesomeIcon icon={faStar} className="text-[10px]" aria-hidden="true" />
-                {product.badge}
+            {/* Product Badge */}
+            {product.badge && (
+              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] sm:text-[11px] font-bold tracking-wide uppercase bg-emerald-600 text-white shadow-md shrink-0">
+                <FontAwesomeIcon icon={faStar} className="text-[9px]" aria-hidden="true" />
+                <span>{product.badge}</span>
               </span>
-            </div>
-          )}
+            )}
+          </div>
 
           {/* Quick specs pill overlay at bottom of photo */}
           <div className="absolute bottom-3 left-3.5 right-3.5 z-10 flex items-center justify-between text-[11px] text-slate-100 bg-brand-950/85 backdrop-blur-md px-3 py-1.5 rounded-lg border border-brand-700/60 shadow">

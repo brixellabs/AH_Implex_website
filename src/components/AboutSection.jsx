@@ -75,11 +75,20 @@ export default function AboutSection({ onOpenQuoteModal }) {
               {/* Subtle dark gradient overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-brand-900/90 via-brand-900/20 to-transparent" />
 
+              {/* Floating Experience Stamp Badge (Top Left with High Z-Index & No Cutoff) */}
+              <div className="absolute top-4 left-4 z-20 bg-gradient-to-br from-blue-600 via-brand-500 to-brand-600 text-white px-3.5 py-2 rounded-xl shadow-xl border border-white/30 flex items-center gap-2.5 backdrop-blur-md">
+                <span className="text-xl font-extrabold leading-none font-serif">15+</span>
+                <div className="flex flex-col">
+                  <span className="text-[10px] uppercase tracking-wider font-bold text-white leading-tight">Years Heritage</span>
+                  <span className="text-[9px] text-blue-100 font-mono">1980s - Present</span>
+                </div>
+              </div>
+
               {/* Floating Badge at Bottom */}
-              <div className="absolute bottom-6 left-6 right-6 p-5 rounded-xl bg-brand-900/90 border border-brand-700/80 backdrop-blur-md shadow-xl">
+              <div className="absolute bottom-6 left-6 right-6 p-4 sm:p-5 rounded-xl bg-brand-900/90 border border-brand-700/80 backdrop-blur-md shadow-xl z-20">
                 <div className="flex items-center gap-3.5">
-                  <div className="w-12 h-12 rounded-lg bg-brand-800 border border-brand-500/40 flex items-center justify-center text-brand-300 shrink-0">
-                    <FontAwesomeIcon icon={faIndustry} className="text-xl" aria-hidden="true" />
+                  <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-lg bg-brand-800 border border-brand-500/40 flex items-center justify-center text-brand-300 shrink-0">
+                    <FontAwesomeIcon icon={faIndustry} className="text-lg sm:text-xl" aria-hidden="true" />
                   </div>
                   <div>
                     <h4 className="text-sm font-bold text-white tracking-wide font-serif">Vertical Manufacturing Facility</h4>
@@ -87,12 +96,6 @@ export default function AboutSection({ onOpenQuoteModal }) {
                   </div>
                 </div>
               </div>
-            </div>
-
-            {/* Floating Experience Stamp Badge */}
-            <div className="absolute -top-5 -left-5 bg-gradient-to-br from-blue-600 via-brand-500 to-brand-600 text-white font-extrabold px-4 py-3 rounded-xl shadow-xl border border-white/20 hidden sm:flex flex-col items-center">
-              <span className="text-2xl leading-none font-serif">15+</span>
-              <span className="text-[10px] uppercase tracking-wider mt-1 text-white font-bold">Years Heritage</span>
             </div>
           </motion.div>
 

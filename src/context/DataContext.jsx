@@ -43,7 +43,14 @@ export function DataProvider({ children }) {
   const [products, setProducts] = useState(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEYS.PRODUCTS);
-      return saved ? JSON.parse(saved) : DEFAULT_PRODUCTS;
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        const hasUnsplash = Array.isArray(parsed) && parsed.some(p => typeof p.image === 'string' && p.image.includes('unsplash.com'));
+        if (!hasUnsplash && Array.isArray(parsed) && parsed.length === DEFAULT_PRODUCTS.length) {
+          return parsed;
+        }
+      }
+      return DEFAULT_PRODUCTS;
     } catch {
       return DEFAULT_PRODUCTS;
     }
@@ -53,7 +60,13 @@ export function DataProvider({ children }) {
   const [categories, setCategories] = useState(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEYS.CATEGORIES);
-      return saved ? JSON.parse(saved) : DEFAULT_CATEGORIES;
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length === DEFAULT_CATEGORIES.length) {
+          return parsed;
+        }
+      }
+      return DEFAULT_CATEGORIES;
     } catch {
       return DEFAULT_CATEGORIES;
     }
