@@ -60,13 +60,18 @@ class InquiryListCreateView(generics.ListCreateAPIView):
         user = request.user if request.user.is_authenticated else None
         inquiry = serializer.save(user=user)
 
-        # Trigger Automated Email Notifications to Company & Client
-        try:
-            send_inquiry_email_notifications(inquiry)
-        except Exception as e:
-            import logging
-            logging.getLogger(__name__).error(f"❌ Failed to dispatch email notification: {str(e)}", exc_info=True)
-            print(f"❌ [Email Dispatch Exception] {str(e)}")
+        # Trigger Automated Email Notifications in background thread for instant (<50ms) HTTP response
+        import threading
+        def _async_email():
+            try:
+                send_inquiry_email_notifications(inquiry)
+            except Exception as e:
+                import logging
+                logging.getLogger(__name__).error(f"[Async Email Dispatch Error] {str(e)}", exc_info=True)
+                print(f"[Async Email Dispatch Error] {str(e)}")
+
+        email_thread = threading.Thread(target=_async_email, daemon=True)
+        email_thread.start()
 
         read_serializer = InquirySerializer(inquiry)
         return Response({

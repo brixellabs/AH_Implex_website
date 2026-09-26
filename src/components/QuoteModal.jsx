@@ -59,8 +59,13 @@ export default function QuoteModal({ isOpen, onClose, initialData = {} }) {
     setIsSubmitting(true);
     try {
       if (addInquiry) {
-        await addInquiry(formData);
+        const timeoutPromise = new Promise((resolve) => setTimeout(resolve, 3500));
+        await Promise.race([addInquiry(formData), timeoutPromise]);
       }
+    } catch (err) {
+      console.error("[QuoteModal Submission Error]", err);
+    } finally {
+      setIsSubmitting(false);
       setIsSubmitted(true);
       try {
         confetti({
@@ -72,11 +77,6 @@ export default function QuoteModal({ isOpen, onClose, initialData = {} }) {
       } catch {
         // confetti fallback
       }
-    } catch (err) {
-      console.error("[QuoteModal Submission Error]", err);
-      setIsSubmitted(true);
-    } finally {
-      setIsSubmitting(false);
     }
   };
 
