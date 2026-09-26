@@ -43,9 +43,14 @@ def _send_via_brevo(api_key, from_email, to_email, subject, html_content, reply_
 
 def _send_via_resend(api_key, from_email, to_email, subject, html_content, reply_to=None):
     url = "https://api.resend.com/emails"
+    
+    sender = from_email
+    if not sender or "dummy" in sender or "no-reply" in sender:
+        sender = "A&H IMPEX <onboarding@resend.dev>"
+
     payload = {
-        "from": from_email,
-        "to": [to_email],
+        "from": sender,
+        "to": [to_email] if isinstance(to_email, str) else to_email,
         "subject": subject,
         "html": html_content
     }
@@ -58,12 +63,21 @@ def _send_via_resend(api_key, from_email, to_email, subject, html_content, reply
         data=data,
         headers={
             "Authorization": f"Bearer {api_key}",
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "User-Agent": "AH-IMPEX-Web/1.0"
         },
         method="POST"
     )
-    with urllib.request.urlopen(req, timeout=12) as response:
-        return response.status in (200, 201, 202)
+    try:
+        with urllib.request.urlopen(req, timeout=12) as response:
+            res_data = response.read().decode('utf-8')
+            logger.info(f"✅ Resend Response: {res_data}")
+            return response.status in (200, 201, 202)
+    except urllib.error.HTTPError as e:
+        err_msg = e.read().decode('utf-8')
+        logger.error(f"❌ Resend API HTTP Error {e.code}: {err_msg}")
+        print(f"❌ [Resend HTTP {e.code}] {err_msg}")
+        raise Exception(f"Resend API ({e.code}): {err_msg}")
 
 
 def _send_via_sendgrid(api_key, from_email, to_email, subject, html_content, reply_to=None):
