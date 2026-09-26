@@ -11,8 +11,7 @@ import {
   faPhone,
   faLocationDot,
   faClock,
-  faArrowRight,
-  faShieldHalved
+  faArrowRight
 } from '@fortawesome/free-solid-svg-icons';
 import {
   faLinkedinIn,
@@ -40,11 +39,6 @@ export default function ContactCTA({ onOpenQuoteModal }) {
             
             {/* Left Column: Heading & Company Contact */}
             <div className="lg:col-span-7">
-              <div className="inline-flex items-center gap-2 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-brand-800/90 border border-brand-500/30 text-brand-300 text-xs font-semibold tracking-wider uppercase mb-3 sm:mb-4 font-mono">
-                <FontAwesomeIcon icon={faShieldHalved} className="text-xs" aria-hidden="true" />
-                <span>Global Sourcing and Partnerships</span>
-              </div>
-
               <h2 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight mb-3 sm:mb-4 font-serif">
                 Ready to Initiate Your Next{' '}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-300 via-blue-200 to-white block sm:inline">Textile Production Run?</span>

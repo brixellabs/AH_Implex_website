@@ -81,11 +81,6 @@ export default function FactorySection({ onOpenQuoteModal }) {
         
         {/* Main Title Overlay */}
         <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold-500/10 border border-gold-500/30 text-gold-400 text-xs font-semibold tracking-wider uppercase mb-2.5 sm:mb-3">
-            <FontAwesomeIcon icon={faIndustry} className="text-xs" aria-hidden="true" />
-            <span>Industrial Scale &amp; Reliability</span>
-          </div>
-
           <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-tight font-serif">
             Built for Quality.{' '}
             <span className="gold-gradient-text">Designed for Scale.</span>

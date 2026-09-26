@@ -141,10 +141,7 @@ export default function AboutSection({ onOpenQuoteModal }) {
         {/* Underneath: Our Capabilities Grid */}
         <div className="mt-14 sm:mt-20 pt-12 sm:pt-16 border-t border-slate-200">
           <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-12">
-            <span className="text-brand-700 font-bold text-[11px] sm:text-xs uppercase tracking-widest bg-brand-50 px-3 py-1 rounded-full border border-brand-200">
-              Industrial Manufacturing Prowess
-            </span>
-            <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-slate-900 tracking-tight font-serif mt-3">
+            <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-slate-900 tracking-tight font-serif">
               Core Manufacturing Capabilities
             </h3>
             <p className="text-xs sm:text-sm text-slate-600 mt-2 font-normal">
