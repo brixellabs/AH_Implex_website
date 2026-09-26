@@ -203,6 +203,11 @@ COMPANY_NOTIFICATION_EMAIL = os.getenv(
     EMAIL_HOST_USER if EMAIL_HOST_USER else "info@ah-impex.com"
 )
 
+# HTTPS REST API Keys (Port 443 - 100% Guaranteed to work on Render without SMTP Port Block)
+BREVO_API_KEY = os.getenv('BREVO_API_KEY', '').strip()
+RESEND_API_KEY = os.getenv('RESEND_API_KEY', '').strip()
+SENDGRID_API_KEY = os.getenv('SENDGRID_API_KEY', '').strip()
+
 
 # Internationalization
 LANGUAGE_CODE = 'en-us'

@@ -1,10 +1,165 @@
+import os
+import json
 import logging
-from django.core.mail import send_mail, EmailMultiAlternatives
+import urllib.request
+import urllib.error
+from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
-from django.template.loader import render_to_string
-from django.utils.html import strip_tags
 
 logger = logging.getLogger(__name__)
+
+
+def _send_via_brevo(api_key, from_email, to_email, subject, html_content, reply_to=None):
+    url = "https://api.brevo.com/v3/smtp/email"
+    sender_name = "A&H IMPEX"
+    sender_email = from_email
+    if "<" in from_email and ">" in from_email:
+        sender_name = from_email.split("<")[0].strip()
+        sender_email = from_email.split("<")[1].replace(">", "").strip()
+
+    payload = {
+        "sender": {"name": sender_name, "email": sender_email},
+        "to": [{"email": to_email}],
+        "subject": subject,
+        "htmlContent": html_content
+    }
+    if reply_to:
+        payload["replyTo"] = {"email": reply_to}
+
+    data = json.dumps(payload).encode('utf-8')
+    req = urllib.request.Request(
+        url,
+        data=data,
+        headers={
+            "api-key": api_key,
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        },
+        method="POST"
+    )
+    with urllib.request.urlopen(req, timeout=12) as response:
+        return response.status in (200, 201, 202)
+
+
+def _send_via_resend(api_key, from_email, to_email, subject, html_content, reply_to=None):
+    url = "https://api.resend.com/emails"
+    payload = {
+        "from": from_email,
+        "to": [to_email],
+        "subject": subject,
+        "html": html_content
+    }
+    if reply_to:
+        payload["reply_to"] = reply_to
+
+    data = json.dumps(payload).encode('utf-8')
+    req = urllib.request.Request(
+        url,
+        data=data,
+        headers={
+            "Authorization": f"Bearer {api_key}",
+            "Content-Type": "application/json"
+        },
+        method="POST"
+    )
+    with urllib.request.urlopen(req, timeout=12) as response:
+        return response.status in (200, 201, 202)
+
+
+def _send_via_sendgrid(api_key, from_email, to_email, subject, html_content, reply_to=None):
+    url = "https://api.sendgrid.com/v3/mail/send"
+    sender_name = "A&H IMPEX"
+    sender_email = from_email
+    if "<" in from_email and ">" in from_email:
+        sender_name = from_email.split("<")[0].strip()
+        sender_email = from_email.split("<")[1].replace(">", "").strip()
+
+    payload = {
+        "personalizations": [{"to": [{"email": to_email}]}],
+        "from": {"email": sender_email, "name": sender_name},
+        "subject": subject,
+        "content": [{"type": "text/html", "value": html_content}]
+    }
+    if reply_to:
+        payload["reply_to"] = {"email": reply_to}
+
+    data = json.dumps(payload).encode('utf-8')
+    req = urllib.request.Request(
+        url,
+        data=data,
+        headers={
+            "Authorization": f"Bearer {api_key}",
+            "Content-Type": "application/json"
+        },
+        method="POST"
+    )
+    with urllib.request.urlopen(req, timeout=12) as response:
+        return response.status in (200, 201, 202)
+
+
+def dispatch_single_email(to_email, subject, html_content, plain_content, reply_to=None, from_email=None):
+    """
+    Universal Email Dispatcher:
+    1. First tries HTTPS REST APIs (Brevo / Resend / SendGrid) -> 100% UNBLOCKED ON RENDER!
+    2. Falls back to standard Django SMTP.
+    """
+    from_addr = from_email or getattr(settings, 'DEFAULT_FROM_EMAIL', 'A&H IMPEX <export@ah-impex.com>')
+    
+    brevo_key = getattr(settings, 'BREVO_API_KEY', '') or os.getenv('BREVO_API_KEY', '')
+    resend_key = getattr(settings, 'RESEND_API_KEY', '') or os.getenv('RESEND_API_KEY', '')
+    sendgrid_key = getattr(settings, 'SENDGRID_API_KEY', '') or os.getenv('SENDGRID_API_KEY', '')
+
+    # 1. Try Brevo HTTP API (Port 443 - Works on Render)
+    if brevo_key:
+        try:
+            if _send_via_brevo(brevo_key, from_addr, to_email, subject, html_content, reply_to):
+                logger.info(f"✅ [Brevo HTTPS API] Successfully sent email to {to_email}")
+                print(f"✅ [Brevo HTTPS API] Sent to {to_email}")
+                return True
+        except Exception as e:
+            logger.error(f"❌ [Brevo API Error] {str(e)}")
+            print(f"❌ [Brevo API Error] {str(e)}")
+
+    # 2. Try Resend HTTP API (Port 443 - Works on Render)
+    if resend_key:
+        try:
+            if _send_via_resend(resend_key, from_addr, to_email, subject, html_content, reply_to):
+                logger.info(f"✅ [Resend HTTPS API] Successfully sent email to {to_email}")
+                print(f"✅ [Resend HTTPS API] Sent to {to_email}")
+                return True
+        except Exception as e:
+            logger.error(f"❌ [Resend API Error] {str(e)}")
+            print(f"❌ [Resend API Error] {str(e)}")
+
+    # 3. Try SendGrid HTTP API (Port 443 - Works on Render)
+    if sendgrid_key:
+        try:
+            if _send_via_sendgrid(sendgrid_key, from_addr, to_email, subject, html_content, reply_to):
+                logger.info(f"✅ [SendGrid HTTPS API] Successfully sent email to {to_email}")
+                print(f"✅ [SendGrid HTTPS API] Sent to {to_email}")
+                return True
+        except Exception as e:
+            logger.error(f"❌ [SendGrid API Error] {str(e)}")
+            print(f"❌ [SendGrid API Error] {str(e)}")
+
+    # 4. Fallback to Standard Django SMTP (Port 587/465)
+    try:
+        msg = EmailMultiAlternatives(
+            subject=subject,
+            body=plain_content,
+            from_email=from_addr,
+            to=[to_email],
+            reply_to=[reply_to] if reply_to else None
+        )
+        msg.attach_alternative(html_content, "text/html")
+        msg.send(fail_silently=False)
+        logger.info(f"✅ [SMTP] Successfully dispatched email to {to_email}")
+        print(f"✅ [SMTP] Sent to {to_email}")
+        return True
+    except Exception as e:
+        logger.error(f"❌ [SMTP Error] Failed sending to {to_email}: {str(e)}")
+        print(f"❌ [SMTP Error] Failed sending to {to_email}: {str(e)}")
+        return False
 
 
 def send_inquiry_email_notifications(inquiry):
@@ -14,7 +169,7 @@ def send_inquiry_email_notifications(inquiry):
     2. To the Client acknowledging receipt of their inquiry.
     """
     company_email = getattr(settings, 'COMPANY_NOTIFICATION_EMAIL', 'info@ah-impex.com')
-    from_email = getattr(settings, 'DEFAULT_FROM_EMAIL', 'A&H Impex Export <no-reply@ah-impex.com>')
+    from_email = getattr(settings, 'DEFAULT_FROM_EMAIL', 'A&H Impex Export <export@ah-impex.com>')
 
     # -------------------------------------------------------------
     # 1. SEND NOTIFICATION TO COMPANY
@@ -40,7 +195,6 @@ def send_inquiry_email_notifications(inquiry):
             .table-details td.val {{ color: #f8fafc; font-weight: 500; }}
             .notes-box {{ background: #0f172a; border-left: 4px solid #C5A880; padding: 15px; border-radius: 6px; margin-top: 20px; font-size: 14px; line-height: 1.6; color: #e2e8f0; }}
             .footer {{ background: #0f172a; padding: 20px; text-align: center; font-size: 12px; color: #64748b; border-top: 1px solid #334155; }}
-            .button {{ display: inline-block; background: #C5A880; color: #0f172a; text-decoration: none; padding: 12px 24px; font-weight: bold; font-size: 13px; border-radius: 8px; margin-top: 20px; }}
         </style>
     </head>
     <body>
@@ -96,22 +250,16 @@ def send_inquiry_email_notifications(inquiry):
     {inquiry.notes}
     """
 
-    try:
-        msg = EmailMultiAlternatives(
-            subject=company_subject,
-            body=company_plain_message,
-            from_email=from_email,
-            to=[company_email],
-            reply_to=[inquiry.email] if inquiry.email else None
-        )
-        msg.attach_alternative(company_html_message, "text/html")
-        msg.send(fail_silently=False)
+    sent_company = dispatch_single_email(
+        to_email=company_email,
+        subject=company_subject,
+        html_content=company_html_message,
+        plain_content=company_plain_message,
+        reply_to=inquiry.email,
+        from_email=from_email
+    )
+    if sent_company:
         inquiry.email_sent_to_company = True
-        logger.info(f"✅ Successfully sent RFQ notification to company: {company_email}")
-        print(f"✅ [EMAIL SUCCESS] Sent RFQ #{inquiry.id} to company: {company_email}")
-    except Exception as e:
-        logger.error(f"❌ Failed to send email to company ({company_email}). Error: {str(e)}")
-        print(f"❌ [EMAIL ERROR] Failed sending to company ({company_email}): {str(e)}")
 
     # -------------------------------------------------------------
     # 2. SEND CONFIRMATION TO CLIENT
@@ -188,20 +336,16 @@ def send_inquiry_email_notifications(inquiry):
         {company_email}
         """
 
-        try:
-            msg = EmailMultiAlternatives(
-                subject=client_subject,
-                body=client_plain_message,
-                from_email=from_email,
-                to=[inquiry.email]
-            )
-            msg.attach_alternative(client_html_message, "text/html")
-            msg.send(fail_silently=False)
+        sent_client = dispatch_single_email(
+            to_email=inquiry.email,
+            subject=client_subject,
+            html_content=client_html_message,
+            plain_content=client_plain_message,
+            reply_to=company_email,
+            from_email=from_email
+        )
+        if sent_client:
             inquiry.email_sent_to_client = True
-            logger.info(f"✅ Successfully sent confirmation email to client: {inquiry.email}")
-            print(f"✅ [EMAIL SUCCESS] Sent confirmation email to client: {inquiry.email}")
-        except Exception as e:
-            logger.error(f"❌ Failed to send confirmation email to client ({inquiry.email}). Error: {str(e)}")
-            print(f"❌ [EMAIL ERROR] Failed sending to client ({inquiry.email}): {str(e)}")
 
     inquiry.save(update_fields=['email_sent_to_company', 'email_sent_to_client'])
+
