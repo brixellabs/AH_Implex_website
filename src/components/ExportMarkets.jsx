@@ -8,7 +8,6 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faGlobe,
   faShip,
   faAnchor,
   faClock,
@@ -28,13 +27,8 @@ export default function ExportMarkets({ onOpenQuoteModal }) {
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-brand-800/90 border border-brand-500/30 text-brand-300 text-xs font-semibold tracking-wider uppercase mb-2.5 sm:mb-3 font-mono">
-            <FontAwesomeIcon icon={faGlobe} className="text-xs" aria-hidden="true" />
-            <span>Worldwide Supply Chain</span>
-          </div>
-
           <h2 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight font-serif">
-            Global Logistics and <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-300 via-blue-200 to-white">Export Corridors</span>
+            Global Logistics <span className="font-sans font-semibold">&amp;</span> <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-300 via-blue-200 to-white">Export Corridors</span>
           </h2>
 
           <p className="text-slate-300 text-xs sm:text-base mt-2 sm:mt-4 font-light">

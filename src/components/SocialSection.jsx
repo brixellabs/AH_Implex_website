@@ -10,8 +10,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faArrowUpRightFromSquare,
-  faShareNodes
+  faArrowUpRightFromSquare
 } from '@fortawesome/free-solid-svg-icons';
 import {
   faLinkedinIn,
@@ -113,11 +112,6 @@ export default function SocialSection() {
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-14">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-50 border border-brand-200 text-brand-700 text-xs font-bold tracking-widest uppercase mb-2.5 sm:mb-3 font-mono">
-            <FontAwesomeIcon icon={faShareNodes} className="text-xs text-brand-600" />
-            <span>Real-Time Factory and Trade Updates</span>
-          </div>
-
           <h2 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-slate-900 tracking-tight font-serif leading-tight">
             Connect With A<span className="font-sans font-semibold">&amp;</span>H IMPEX On <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-700 via-brand-600 to-blue-600">Social Media</span>
           </h2>

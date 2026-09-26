@@ -31,11 +31,6 @@ export default function ManufacturingSection() {
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-brand-800/90 border border-brand-500/30 text-brand-300 text-xs font-semibold tracking-wider uppercase mb-2.5 sm:mb-3 font-mono">
-            <FontAwesomeIcon icon={faMicrochip} className="text-xs" aria-hidden="true" />
-            <span>Vertical Production Setup</span>
-          </div>
-
           <h2 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight font-serif">
             Precision Manufacturing <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-300 via-blue-200 to-white">Timeline</span>
           </h2>

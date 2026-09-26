@@ -8,7 +8,6 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faStar,
   faSliders,
   faFileInvoice,
   faArrowRight
@@ -34,10 +33,6 @@ export default function ProductSection({ onSelectProduct, onOpenQuoteModal }) {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-12 gap-4 sm:gap-6">
           <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-brand-50 border border-brand-200 text-brand-700 text-xs font-bold tracking-wider uppercase mb-2.5 sm:mb-3 font-mono">
-              <FontAwesomeIcon icon={faStar} className="text-xs text-gold-500" aria-hidden="true" />
-              <span>Export Product Catalog</span>
-            </div>
             <h2 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-slate-900 tracking-tight leading-tight font-serif">
               Textile Collections <span className="font-sans font-semibold">&amp;</span> <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-700 via-brand-600 to-blue-600">OEM Capabilities</span>
             </h2>
