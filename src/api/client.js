@@ -238,10 +238,24 @@ class ApiClient {
   }
 
   async submitInquiry(inquiryData) {
-    return await this.request('/inquiries/', {
-      method: 'POST',
-      body: JSON.stringify(inquiryData)
-    });
+    try {
+      return await this.request('/inquiries/', {
+        method: 'POST',
+        body: JSON.stringify(inquiryData)
+      });
+    } catch (err) {
+      console.warn("[Submit Inquiry Request Failed, trying clean fallback]", err.message);
+      const res = await fetch(`${this.baseUrl}/inquiries/`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(inquiryData)
+      });
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        throw new Error(errData.detail || `Inquiry submission failed (${res.status})`);
+      }
+      return await res.json();
+    }
   }
 
   async updateInquiryStatus(id, status, internalNotes = '') {

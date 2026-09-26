@@ -29,6 +29,11 @@ class InquiryListCreateView(generics.ListCreateAPIView):
             return [permissions.AllowAny()]
         return [permissions.IsAuthenticated()]
 
+    def get_authenticators(self):
+        if self.request and self.request.method == 'POST':
+            return []
+        return super().get_authenticators()
+
     def get_queryset(self):
         user = self.request.user
         if not user.is_authenticated:

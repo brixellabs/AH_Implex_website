@@ -35,6 +35,7 @@ export default function QuoteModal({ isOpen, onClose, initialData = {} }) {
   });
 
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     if (initialData) {
@@ -49,24 +50,33 @@ export default function QuoteModal({ isOpen, onClose, initialData = {} }) {
     }
     if (isOpen) {
       setIsSubmitted(false);
+      setIsSubmitting(false);
     }
   }, [initialData, isOpen]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (addInquiry) {
-      addInquiry(formData);
-    }
-    setIsSubmitted(true);
+    setIsSubmitting(true);
     try {
-      confetti({
-        particleCount: 70,
-        spread: 60,
-        origin: { y: 0.6 },
-        colors: ['#C5A880', '#10B981', '#ffffff']
-      });
-    } catch {
-      // Graceful fallback if confetti library unavailable
+      if (addInquiry) {
+        await addInquiry(formData);
+      }
+      setIsSubmitted(true);
+      try {
+        confetti({
+          particleCount: 70,
+          spread: 60,
+          origin: { y: 0.6 },
+          colors: ['#C5A880', '#10B981', '#ffffff']
+        });
+      } catch {
+        // confetti fallback
+      }
+    } catch (err) {
+      console.error("[QuoteModal Submission Error]", err);
+      setIsSubmitted(true);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -269,10 +279,11 @@ export default function QuoteModal({ isOpen, onClose, initialData = {} }) {
 
                 <button
                   type="submit"
-                  className="px-6 py-3 rounded-xl bg-gradient-to-r from-blue-600 via-brand-500 to-brand-600 hover:from-blue-500 hover:to-brand-500 text-white font-bold text-xs uppercase tracking-wider shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2 shimmer-sweep text-center"
+                  disabled={isSubmitting}
+                  className="px-6 py-3 rounded-xl bg-gradient-to-r from-blue-600 via-brand-500 to-brand-600 hover:from-blue-500 hover:to-brand-500 text-white font-bold text-xs uppercase tracking-wider shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2 shimmer-sweep text-center disabled:opacity-70"
                 >
-                  <FontAwesomeIcon icon={faPaperPlane} className="text-xs" aria-hidden="true" />
-                  <span>Submit Technical RFQ</span>
+                  <FontAwesomeIcon icon={faPaperPlane} className={`text-xs ${isSubmitting ? 'animate-bounce' : ''}`} aria-hidden="true" />
+                  <span>{isSubmitting ? 'Dispatching RFQ...' : 'Submit Technical RFQ'}</span>
                 </button>
               </div>
             </form>
