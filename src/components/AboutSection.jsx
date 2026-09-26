@@ -81,12 +81,9 @@ export default function AboutSection({ onOpenQuoteModal }) {
             transition={{ duration: 0.8 }}
             className="lg:col-span-7 flex flex-col justify-center"
           >
-            <div className="flex items-center gap-2.5 mb-3 sm:mb-4">
-              <span className="h-0.5 w-7 bg-brand-600 rounded-full" />
-              <span className="text-xs sm:text-sm font-bold tracking-widest text-brand-600 uppercase font-mono">
-                About A&amp;H Impex
-              </span>
-            </div>
+            <p className="text-xs sm:text-sm font-bold tracking-widest text-brand-600 uppercase font-mono mb-3 sm:mb-4">
+              About A&amp;H Impex
+            </p>
 
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight leading-tight mb-3 sm:mb-4 font-serif">
               {COMPANY.about.title}
