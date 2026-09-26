@@ -65,7 +65,7 @@ export default function AboutSection({ onOpenQuoteModal }) {
             <div className="relative rounded-2xl overflow-hidden shadow-xl border border-slate-200 group">
               <SafeImage
                 src={airJetWeavingImg}
-                fallbackSrc="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1200&q=80"
+                fallbackSrc={airJetWeavingImg}
                 alt="A&H IMPEX Modern Air-Jet Textile Weaving Looms"
                 className="w-full h-64 sm:h-80 md:h-[480px] object-cover"
                 zoomOnHover={true}

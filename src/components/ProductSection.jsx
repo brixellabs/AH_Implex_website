@@ -19,11 +19,38 @@ export default function ProductSection({ onSelectProduct, onOpenQuoteModal }) {
   const { products, categories } = useData();
   const [activeCategory, setActiveCategory] = useState('all');
 
+  // Strictly deduplicate products so each product has exactly one unique card
+  const dedupedProducts = React.useMemo(() => {
+    const seen = new Set();
+    const list = [];
+    for (const p of products || []) {
+      if (!p || !p.title) continue;
+      const key = (p.title || '')
+        .toLowerCase()
+        .replace(/&amp;/g, '&')
+        .replace(/\band\b/g, '&')
+        .replace(/[^a-z0-9]/g, '') || String(p.id);
+      if (!seen.has(key)) {
+        seen.add(key);
+        list.push(p);
+      }
+    }
+    return list;
+  }, [products]);
+
   const filteredProducts = activeCategory === 'all'
-    ? products
-    : products.filter((p) => {
-        const catValue = typeof p.category === 'object' && p.category ? p.category.slug || p.category.id : p.category;
-        return catValue === activeCategory || p.categoryName === activeCategory || p.category_name === activeCategory;
+    ? dedupedProducts
+    : dedupedProducts.filter((p) => {
+        const catValue = typeof p.category === 'object' && p.category ? (p.category.slug || p.category.id || '') : String(p.category || '');
+        const pCatName = String(p.categoryName || p.category_name || '').toLowerCase().trim();
+        const activeCatObj = categories.find(c => c.id === activeCategory);
+        const activeCatLabel = String(activeCatObj?.label || activeCatObj?.name || '').toLowerCase().trim();
+
+        return catValue === activeCategory ||
+               catValue.toLowerCase() === activeCategory.toLowerCase() ||
+               (activeCatLabel && catValue.toLowerCase() === activeCatLabel) ||
+               pCatName === activeCategory.toLowerCase() ||
+               (activeCatLabel && pCatName === activeCatLabel);
       });
 
   return (

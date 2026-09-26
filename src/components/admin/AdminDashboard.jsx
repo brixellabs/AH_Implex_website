@@ -49,6 +49,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import { useData } from '../../context/DataContext';
+import { getProductFallbackImage } from '../../data/products';
 import logoImg from '../../assets/logo.jpeg';
 import AuthModal from './AuthModal';
 import UserManagerTab from './UserManagerTab';
@@ -180,11 +181,11 @@ export default function AdminDashboard({ onExitAdmin }) {
     setProductImageFile(null);
     setProductFormData({
       title: '',
-      category: firstCat ? firstCat.id : 'home-textiles',
+      category: firstCat ? firstCat.id : 'home',
       categoryName: firstCat ? firstCat.label : 'Home Textiles',
       tagline: '',
       description: '',
-      image: 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=1200&q=80',
+      image: '',
       badge: 'Export Grade',
       specs: {
         composition: '100% Combed Compact Cotton (300 TC)',
@@ -749,7 +750,7 @@ export default function AdminDashboard({ onExitAdmin }) {
                     {/* Cover Image */}
                     <div className="h-44 w-full relative bg-slate-100 overflow-hidden">
                       <img
-                        src={p.image || 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=800&q=80'}
+                        src={(!p.image || p.image.includes('unsplash.com')) ? getProductFallbackImage(p) : p.image}
                         alt={p.title}
                         className="w-full h-full object-cover"
                       />

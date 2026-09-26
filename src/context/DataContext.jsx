@@ -15,19 +15,66 @@ import api from '../api/client';
 const DataContext = createContext(null);
 
 const STORAGE_KEYS = {
-  PRODUCTS: 'ah_impex_products_v8',
-  CATEGORIES: 'ah_impex_categories_v8',
-  COMPANY: 'ah_impex_company_v8',
-  INQUIRIES: 'ah_impex_inquiries_v8',
-  USER: 'ah_impex_user_v8',
+  PRODUCTS: 'ah_impex_products_v9',
+  CATEGORIES: 'ah_impex_categories_v9',
+  COMPANY: 'ah_impex_company_v9',
+  INQUIRIES: 'ah_impex_inquiries_v9',
+  USER: 'ah_impex_user_v9',
   TOKEN: 'ah_impex_access_token'
 };
+
+/**
+ * Deduplicates product arrays strictly by unique normalized title & ID.
+ * Replaces any unsplash URL with exact local asset image from src/assets/Product/
+ */
+export function deduplicateProducts(productList) {
+  if (!Array.isArray(productList)) return [];
+  const seenTitles = new Set();
+  const seenIds = new Set();
+  const result = [];
+
+  for (const prod of productList) {
+    if (!prod || !prod.title) continue;
+    
+    // Normalized comparison key
+    const rawTitle = String(prod.title).trim();
+    const normTitle = rawTitle
+      .toLowerCase()
+      .replace(/&amp;/g, '&')
+      .replace(/\band\b/g, '&')
+      .replace(/[^a-z0-9]/g, '');
+
+    const id = String(prod.id || '');
+
+    // Skip if already seen
+    if (normTitle && seenTitles.has(normTitle)) continue;
+    if (id && seenIds.has(id)) continue;
+
+    if (normTitle) seenTitles.add(normTitle);
+    if (id) seenIds.add(id);
+
+    // Fallback and image validation (no unsplash)
+    const isUnsplash = typeof prod.image === 'string' && prod.image.includes('unsplash.com');
+    const fallback = getProductFallbackImage(prod);
+    const validImg = (!isUnsplash && prod.image) ? prod.image : fallback;
+
+    result.push({
+      ...prod,
+      title: rawTitle.replace(/\s+and\s+/gi, ' & '),
+      categoryName: (prod.categoryName || prod.category_name || (typeof prod.category === 'object' ? prod.category.name : '') || 'Home Textiles').replace(/\s+and\s+/gi, ' & '),
+      image: validImg,
+      fallbackImage: fallback
+    });
+  }
+
+  return result;
+}
 
 export function DataProvider({ children }) {
   // 1. Auth & User Role State (SUPERADMIN, ADMIN, USER)
   const [currentUser, setCurrentUser] = useState(() => {
     try {
-      const saved = localStorage.getItem(STORAGE_KEYS.USER) || localStorage.getItem('ah_impex_user_v7');
+      const saved = localStorage.getItem(STORAGE_KEYS.USER) || localStorage.getItem('ah_impex_user_v8') || localStorage.getItem('ah_impex_user_v7');
       return saved ? JSON.parse(saved) : null;
     } catch {
       return null;
@@ -39,28 +86,19 @@ export function DataProvider({ children }) {
   const [isBackendConnected, setIsBackendConnected] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  // 2. Products State - Load all saved products without arbitrary length restriction
+  // 2. Products State - Load strictly deduplicated products with exact assets
   const [products, setProducts] = useState(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEYS.PRODUCTS);
       if (saved) {
         const parsed = JSON.parse(saved);
         if (Array.isArray(parsed) && parsed.length > 0) {
-          return parsed.map((p) => {
-            const hasValidImg = p.image && typeof p.image === 'string' && (p.image.startsWith('data:') || p.image.startsWith('http') || p.image.startsWith('/') || p.image.startsWith('blob:'));
-            return {
-              ...p,
-              title: (p.title || '').replace(/\s+and\s+/gi, ' & '),
-              categoryName: (p.categoryName || p.category_name || '').replace(/\s+and\s+/gi, ' & '),
-              image: hasValidImg ? p.image : getProductFallbackImage(p),
-              fallbackImage: getProductFallbackImage(p)
-            };
-          });
+          return deduplicateProducts(parsed);
         }
       }
-      return DEFAULT_PRODUCTS;
+      return deduplicateProducts(DEFAULT_PRODUCTS);
     } catch {
-      return DEFAULT_PRODUCTS;
+      return deduplicateProducts(DEFAULT_PRODUCTS);
     }
   });
 
@@ -143,10 +181,9 @@ export function DataProvider({ children }) {
           };
         });
 
-        // Merge: Keep all backend products + keep custom local products
+        // Merge & strictly deduplicate: local admin products are preserved
         setProducts((prev) => {
-          const customLocalOnly = prev.filter(lp => !backendProds.some(bp => bp.id === lp.id || bp.title === lp.title));
-          const merged = [...backendProds, ...customLocalOnly];
+          const merged = deduplicateProducts([...prev, ...backendProds]);
           localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(merged));
           return merged;
         });
@@ -280,12 +317,19 @@ export function DataProvider({ children }) {
   };
 
   // --- PRODUCT CRUD METHODS (WITH DJANGO API + MEDIA SYNC) ---
+  // --- PRODUCT CRUD METHODS (WITH DJANGO API + MEDIA SYNC) ---
   const addProduct = async (newProduct, imageFile = null) => {
+    const fallback = getProductFallbackImage(newProduct);
+    const initialImg = newProduct.image && !newProduct.image.includes('unsplash.com') ? newProduct.image : fallback;
+
     const productWithId = {
       ...newProduct,
       id: newProduct.id || `prod-${Date.now()}`,
       category: newProduct.category || 'home',
-      categoryName: newProduct.categoryName || 'Home Textiles',
+      categoryName: (newProduct.categoryName || newProduct.category_name || 'Home Textiles').replace(/\s+and\s+/gi, ' & '),
+      title: (newProduct.title || '').replace(/\s+and\s+/gi, ' & '),
+      image: initialImg,
+      fallbackImage: fallback,
       specs: newProduct.specs || { composition: '100% Export Cotton', gsm: '140 GSM', moq: '500 Sets', leadTime: '30 Days' },
       features: newProduct.features || ['Premium Export Grade', 'OEKO-TEX Certified']
     };
@@ -298,8 +342,9 @@ export function DataProvider({ children }) {
           const dataUrl = e.target.result;
           setProducts((prev) => {
             const updated = prev.map(p => p.id === productWithId.id ? { ...p, image: dataUrl } : p);
-            localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(updated));
-            return updated;
+            const deduped = deduplicateProducts(updated);
+            localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(deduped));
+            return deduped;
           });
         };
         reader.readAsDataURL(imageFile);
@@ -310,7 +355,7 @@ export function DataProvider({ children }) {
 
     // Update UI immediately (optimistic) & persist to localStorage
     setProducts((prev) => {
-      const updated = [productWithId, ...prev.filter(p => p.id !== productWithId.id)];
+      const updated = deduplicateProducts([productWithId, ...prev]);
       localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(updated));
       return updated;
     });
@@ -321,11 +366,11 @@ export function DataProvider({ children }) {
       if (savedProd && savedProd.id) {
         const enriched = {
           ...savedProd,
-          image: savedProd.image || productWithId.image || getProductFallbackImage(savedProd),
-          fallbackImage: getProductFallbackImage(savedProd)
+          image: savedProd.image && !savedProd.image.includes('unsplash.com') ? savedProd.image : productWithId.image,
+          fallbackImage: fallback
         };
         setProducts(prev => {
-          const updated = prev.map(p => (p.id === productWithId.id || p.id === savedProd.id) ? enriched : p);
+          const updated = deduplicateProducts(prev.map(p => (p.id === productWithId.id || p.id === savedProd.id) ? enriched : p));
           localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(updated));
           return updated;
         });
@@ -344,8 +389,9 @@ export function DataProvider({ children }) {
           const dataUrl = e.target.result;
           setProducts((prev) => {
             const updated = prev.map(p => p.id === id ? { ...p, image: dataUrl } : p);
-            localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(updated));
-            return updated;
+            const deduped = deduplicateProducts(updated);
+            localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(deduped));
+            return deduped;
           });
         };
         reader.readAsDataURL(imageFile);
@@ -356,8 +402,9 @@ export function DataProvider({ children }) {
 
     setProducts((prev) => {
       const updated = prev.map((p) => (p.id === id ? { ...p, ...updatedFields } : p));
-      localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(updated));
-      return updated;
+      const deduped = deduplicateProducts(updated);
+      localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(deduped));
+      return deduped;
     });
 
     try {
@@ -365,11 +412,11 @@ export function DataProvider({ children }) {
       if (savedProd) {
         const enriched = {
           ...savedProd,
-          image: savedProd.image || getProductFallbackImage(savedProd),
+          image: savedProd.image && !savedProd.image.includes('unsplash.com') ? savedProd.image : getProductFallbackImage(savedProd),
           fallbackImage: getProductFallbackImage(savedProd)
         };
         setProducts(prev => {
-          const updated = prev.map(p => p.id === id ? enriched : p);
+          const updated = deduplicateProducts(prev.map(p => p.id === id ? enriched : p));
           localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(updated));
           return updated;
         });
@@ -381,7 +428,7 @@ export function DataProvider({ children }) {
 
   const deleteProduct = async (id) => {
     setProducts((prev) => {
-      const updated = prev.filter((p) => p.id !== id);
+      const updated = deduplicateProducts(prev.filter((p) => p.id !== id));
       localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(updated));
       return updated;
     });

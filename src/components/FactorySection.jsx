@@ -14,6 +14,8 @@ import {
   faXmark
 } from '@fortawesome/free-solid-svg-icons';
 import SafeImage from './SafeImage';
+import airJetWeavingImg from '../assets/air jet weaving.jpg';
+import rawMaterialImg from '../assets/raw material and yarn inspection.jpeg';
 
 function CounterItem({ target, suffix = '', label, description, duration = 2 }) {
   const [count, setCount] = useState(0);
@@ -68,7 +70,7 @@ export default function FactorySection({ onOpenQuoteModal }) {
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{
-            backgroundImage: `url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=2200&q=80')`,
+            backgroundImage: `url(${airJetWeavingImg})`,
           }}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-navy-950 via-navy-950/90 to-navy-950" />
@@ -132,7 +134,8 @@ export default function FactorySection({ onOpenQuoteModal }) {
               onClick={() => setVideoModalOpen(true)}
             >
               <SafeImage
-                src="https://images.unsplash.com/photo-1596178065887-1198b6148b2b?auto=format&fit=crop&w=1200&q=80"
+                src={rawMaterialImg}
+                fallbackSrc={rawMaterialImg}
                 alt="A&H IMPEX Mill Virtual Tour"
                 className="w-full h-64 sm:h-80"
                 zoomOnHover={true}

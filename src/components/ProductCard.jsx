@@ -13,7 +13,8 @@ import { getProductFallbackImage } from '../data/products';
 
 export default function ProductCard({ product, onSelectProduct }) {
   const fallbackImg = getProductFallbackImage(product);
-  const displaySrc = product?.image || fallbackImg;
+  const isUnsplash = typeof product?.image === 'string' && product.image.includes('unsplash.com');
+  const displaySrc = (!isUnsplash && product?.image) ? product.image : fallbackImg;
 
   // Safe specs parsing
   let specs = {};
