@@ -43,15 +43,15 @@ function CounterItem({ target, suffix = '', label, description, duration = 2 }) 
   }, [isInView, target, duration]);
 
   return (
-    <div ref={ref} className="glass-card rounded-2xl p-6 sm:p-8 border border-white/10 text-center relative overflow-hidden">
-      <div className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white font-display mb-1">
+    <div ref={ref} className="glass-card rounded-2xl p-4 sm:p-6 lg:p-8 border border-white/10 text-center relative overflow-hidden">
+      <div className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white font-serif mb-1">
         {count}
         <span className="text-gold-400 font-mono">{suffix}</span>
       </div>
-      <p className="text-sm font-bold text-gold-300 uppercase tracking-wider mb-2 font-display">
+      <p className="text-xs sm:text-sm font-bold text-gold-300 uppercase tracking-wider mb-1.5 sm:mb-2 font-serif">
         {label}
       </p>
-      <p className="text-xs text-slate-300 font-light leading-relaxed">
+      <p className="text-[11px] sm:text-xs text-slate-300 font-light leading-relaxed">
         {description}
       </p>
     </div>
@@ -62,7 +62,7 @@ export default function FactorySection({ onOpenQuoteModal }) {
   const [videoModalOpen, setVideoModalOpen] = useState(false);
 
   return (
-    <section className="relative py-28 bg-navy-950 overflow-hidden">
+    <section className="relative py-14 sm:py-20 lg:py-28 bg-navy-950 overflow-hidden">
       {/* Immersive Full-Width Industrial Background */}
       <div className="absolute inset-0 z-0">
         <div
@@ -78,24 +78,24 @@ export default function FactorySection({ onOpenQuoteModal }) {
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Main Title Overlay */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold-500/10 border border-gold-500/30 text-gold-400 text-xs font-semibold tracking-wider uppercase mb-3">
+        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-16">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold-500/10 border border-gold-500/30 text-gold-400 text-xs font-semibold tracking-wider uppercase mb-2.5 sm:mb-3">
             <FontAwesomeIcon icon={faIndustry} className="text-xs" aria-hidden="true" />
             <span>Industrial Scale &amp; Reliability</span>
           </div>
 
-          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-tight font-display">
+          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-tight font-serif">
             Built for Quality.{' '}
             <span className="gold-gradient-text">Designed for Scale.</span>
           </h2>
 
-          <p className="text-slate-300 text-sm sm:text-base mt-4 font-light max-w-2xl mx-auto">
+          <p className="text-slate-300 text-xs sm:text-base mt-2 sm:mt-4 font-light max-w-2xl mx-auto">
             From single container sample orders to high-volume recurring retail contracts, our production infrastructure delivers unyielding consistency.
           </p>
         </div>
 
         {/* 4 Animated Count-Up Statistics Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-6 mb-10 sm:mb-16">
           <CounterItem
             target={18}
             suffix="M+"
@@ -123,7 +123,7 @@ export default function FactorySection({ onOpenQuoteModal }) {
         </div>
 
         {/* Video Tour & Mill Walkthrough Card (Inspired by Reference Design) */}
-        <div className="glass-card rounded-2xl p-6 sm:p-10 border border-white/10 relative overflow-hidden shadow-2xl">
+        <div className="glass-card rounded-2xl p-4 sm:p-8 lg:p-10 border border-white/10 relative overflow-hidden shadow-2xl">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             
             {/* Visual Thumbnail with Play Button */}
