@@ -59,8 +59,9 @@ class InquiryListCreateView(generics.ListCreateAPIView):
         try:
             send_inquiry_email_notifications(inquiry)
         except Exception as e:
-            # We don't fail the API call if mail server is offline
-            pass
+            import logging
+            logging.getLogger(__name__).error(f"❌ Failed to dispatch email notification: {str(e)}", exc_info=True)
+            print(f"❌ [Email Dispatch Exception] {str(e)}")
 
         read_serializer = InquirySerializer(inquiry)
         return Response({
