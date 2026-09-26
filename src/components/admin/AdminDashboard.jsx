@@ -48,7 +48,7 @@ import {
   faPaperPlane
 } from '@fortawesome/free-solid-svg-icons';
 import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
-import { useData } from '../../context/DataContext';
+import { useData, deduplicateProducts } from '../../context/DataContext';
 import { getProductFallbackImage } from '../../data/products';
 import logoImg from '../../assets/logo.jpeg';
 import AuthModal from './AuthModal';
@@ -279,7 +279,7 @@ export default function AdminDashboard({ onExitAdmin }) {
   // Handle Delete Category
   const handleDeleteCategory = async (cat) => {
     if (cat.id === 'all') return;
-    const count = products.filter((p) => p.category === cat.id).length;
+    const count = getCategoryProductCount(cat.id);
     if (
       window.confirm(
         `Are you sure you want to delete category "${cat.label}"? (${count} product(s) linked to this category)`
@@ -324,9 +324,45 @@ export default function AdminDashboard({ onExitAdmin }) {
     }
   };
 
+  // Strictly deduplicated products list
+  const dedupedProducts = React.useMemo(() => {
+    return deduplicateProducts(products || []);
+  }, [products]);
+
+  // Dynamic product count per category
+  const getCategoryProductCount = (catId) => {
+    if (!catId || catId === 'all') return dedupedProducts.length;
+    const targetCat = categories.find((c) => c.id === catId);
+    const targetLabel = String(targetCat?.label || targetCat?.name || '').toLowerCase().trim();
+
+    return dedupedProducts.filter((p) => {
+      const catValue = typeof p.category === 'object' && p.category ? (p.category.slug || p.category.id || '') : String(p.category || '');
+      const pCatName = String(p.categoryName || p.category_name || '').toLowerCase().trim();
+      return (
+        catValue === catId ||
+        catValue.toLowerCase() === catId.toLowerCase() ||
+        (targetLabel && catValue.toLowerCase() === targetLabel) ||
+        pCatName === catId.toLowerCase() ||
+        (targetLabel && pCatName === targetLabel)
+      );
+    }).length;
+  };
+
   // Filtered products list for Product Manager tab
-  const filteredProducts = products.filter((p) => {
-    const matchesCat = productFilterCat === 'all' || p.category === productFilterCat;
+  const filteredProducts = dedupedProducts.filter((p) => {
+    const matchesCat = productFilterCat === 'all' || (() => {
+      const catValue = typeof p.category === 'object' && p.category ? (p.category.slug || p.category.id || '') : String(p.category || '');
+      const pCatName = String(p.categoryName || p.category_name || '').toLowerCase().trim();
+      const activeCatObj = categories.find(c => c.id === productFilterCat);
+      const activeCatLabel = String(activeCatObj?.label || activeCatObj?.name || '').toLowerCase().trim();
+
+      return catValue === productFilterCat ||
+             catValue.toLowerCase() === productFilterCat.toLowerCase() ||
+             (activeCatLabel && catValue.toLowerCase() === activeCatLabel) ||
+             pCatName === productFilterCat.toLowerCase() ||
+             (activeCatLabel && pCatName === activeCatLabel);
+    })();
+
     const matchesSearch =
       p.title.toLowerCase().includes(productSearch.toLowerCase()) ||
       (p.tagline && p.tagline.toLowerCase().includes(productSearch.toLowerCase())) ||
@@ -510,8 +546,8 @@ export default function AdminDashboard({ onExitAdmin }) {
         <div className="flex flex-wrap items-center gap-2 pb-4 mb-6 border-b border-slate-200">
           {[
             { id: 'overview', label: 'Overview', icon: faGauge, count: null, visible: true },
-            { id: 'products', label: 'Products & Collections', icon: faBoxesStacked, count: products.length, visible: !isRegularUser },
-            { id: 'categories', label: 'Categories', icon: faTags, count: categories.length, visible: !isRegularUser },
+            { id: 'products', label: 'Products & Collections', icon: faBoxesStacked, count: dedupedProducts.length, visible: !isRegularUser },
+            { id: 'categories', label: 'Categories', icon: faTags, count: categories.filter(c => c.id !== 'all').length, visible: !isRegularUser },
             { id: 'content', label: 'Company CMS', icon: faBuilding, count: null, visible: !isRegularUser },
             { id: 'inquiries', label: 'Buyer RFQs', icon: faInbox, count: inquiries.length, visible: true },
             { id: 'users', label: 'Staff & Roles', icon: faUsers, count: null, visible: isSuperAdmin },
@@ -564,7 +600,7 @@ export default function AdminDashboard({ onExitAdmin }) {
                   </div>
                 </div>
                 <div className="mt-3">
-                  <span className="text-3xl font-extrabold text-slate-900 font-display">{products.length}</span>
+                  <span className="text-3xl font-extrabold text-slate-900 font-display">{dedupedProducts.length}</span>
                   <span className="text-xs text-slate-500 block mt-1">Active items live on catalog</span>
                 </div>
               </div>
@@ -577,7 +613,7 @@ export default function AdminDashboard({ onExitAdmin }) {
                   </div>
                 </div>
                 <div className="mt-3">
-                  <span className="text-3xl font-extrabold text-slate-900 font-display">{categories.length}</span>
+                  <span className="text-3xl font-extrabold text-slate-900 font-display">{categories.filter(c => c.id !== 'all').length}</span>
                   <span className="text-xs text-slate-500 block mt-1">Specialized collections</span>
                 </div>
               </div>
@@ -717,12 +753,12 @@ export default function AdminDashboard({ onExitAdmin }) {
                   <select
                     value={productFilterCat}
                     onChange={(e) => setProductFilterCat(e.target.value)}
-                    className="px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-slate-700 text-xs focus:outline-none focus:border-brand-500"
+                    className="px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-slate-700 text-xs focus:outline-none focus:border-brand-500 font-medium cursor-pointer"
                   >
-                    <option value="all">All Categories ({products.length})</option>
-                    {categories.map((c) => (
+                    <option value="all">All Categories ({dedupedProducts.length})</option>
+                    {categories.filter(c => c.id !== 'all').map((c) => (
                       <option key={c.id} value={c.id}>
-                        {c.label}
+                        {c.label} ({getCategoryProductCount(c.id)})
                       </option>
                     ))}
                   </select>
@@ -888,8 +924,8 @@ export default function AdminDashboard({ onExitAdmin }) {
               {/* Right Column: Category Cards Grid (lg:col-span-7 xl:col-span-8) */}
               <div className="lg:col-span-7 xl:col-span-8 space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {categories.map((cat) => {
-                    const count = products.filter((p) => p.category === cat.id).length;
+                  {categories.filter(c => c.id !== 'all').map((cat) => {
+                    const count = getCategoryProductCount(cat.id);
                     const isEditing = editingCatId === cat.id;
 
                     return (
@@ -1336,7 +1372,7 @@ export default function AdminDashboard({ onExitAdmin }) {
                       onChange={(e) => setProductFormData({ ...productFormData, category: e.target.value })}
                       className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs focus:outline-none focus:border-brand-500"
                     >
-                      {categories.map((c) => (
+                      {categories.filter(c => c.id !== 'all').map((c) => (
                         <option key={c.id} value={c.id}>
                           {c.label}
                         </option>
