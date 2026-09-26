@@ -4,7 +4,15 @@
  * ==============================================================================
  */
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000/api';
+const LIVE_RENDER_API = 'https://ah-implex-website.onrender.com/api';
+const LOCAL_DEV_API = 'http://127.0.0.1:8000/api';
+
+const isLocalhost = typeof window !== 'undefined' && (
+  window.location.hostname === 'localhost' ||
+  window.location.hostname === '127.0.0.1'
+);
+
+const API_BASE_URL = import.meta.env.VITE_API_URL || (isLocalhost ? LOCAL_DEV_API : LIVE_RENDER_API);
 
 class ApiClient {
   constructor() {
