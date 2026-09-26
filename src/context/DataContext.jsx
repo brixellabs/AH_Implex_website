@@ -39,18 +39,21 @@ export function DataProvider({ children }) {
   const [isBackendConnected, setIsBackendConnected] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  // 2. Products State - STRICTLY the 6 items corresponding to src/assets/Product folder
+  // 2. Products State - Load all saved products without arbitrary length restriction
   const [products, setProducts] = useState(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEYS.PRODUCTS);
       if (saved) {
         const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length === DEFAULT_PRODUCTS.length) {
-          return parsed.map((p, idx) => ({
-            ...p,
-            image: DEFAULT_PRODUCTS[idx]?.image || getProductFallbackImage(p),
-            fallbackImage: DEFAULT_PRODUCTS[idx]?.image || getProductFallbackImage(p)
-          }));
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          return parsed.map((p) => {
+            const hasValidImg = p.image && typeof p.image === 'string' && (p.image.startsWith('data:') || p.image.startsWith('http') || p.image.startsWith('/') || p.image.startsWith('blob:'));
+            return {
+              ...p,
+              image: hasValidImg ? p.image : getProductFallbackImage(p),
+              fallbackImage: getProductFallbackImage(p)
+            };
+          });
         }
       }
       return DEFAULT_PRODUCTS;
@@ -122,9 +125,9 @@ export function DataProvider({ children }) {
       }
 
       if (prodsRes.status === 'fulfilled' && Array.isArray(prodsRes.value) && prodsRes.value.length > 0) {
-        const enrichedProds = prodsRes.value.map((p, idx) => {
+        const backendProds = prodsRes.value.map((p, idx) => {
           const isUnsplash = typeof p.image === 'string' && p.image.includes('unsplash.com');
-          const isCustomUpload = p.image && typeof p.image === 'string' && !isUnsplash && (p.image.startsWith('data:') || p.image.includes('/media/products/'));
+          const isCustomUpload = p.image && typeof p.image === 'string' && !isUnsplash && (p.image.startsWith('data:') || p.image.includes('/media/products/') || p.image.startsWith('http'));
           const finalImg = isCustomUpload ? p.image : (DEFAULT_PRODUCTS[idx]?.image || getProductFallbackImage(p));
           return {
             ...p,
@@ -132,8 +135,14 @@ export function DataProvider({ children }) {
             fallbackImage: getProductFallbackImage(p)
           };
         });
-        setProducts(enrichedProds);
-        localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(enrichedProds));
+
+        // Merge: Keep all backend products + keep custom local products
+        setProducts((prev) => {
+          const customLocalOnly = prev.filter(lp => !backendProds.some(bp => bp.id === lp.id || bp.title === lp.title));
+          const merged = [...backendProds, ...customLocalOnly];
+          localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(merged));
+          return merged;
+        });
         connected = true;
       }
 
@@ -268,18 +277,51 @@ export function DataProvider({ children }) {
     const productWithId = {
       ...newProduct,
       id: newProduct.id || `prod-${Date.now()}`,
-      specs: newProduct.specs || { composition: '', gsm: '', moq: '500 Sets', leadTime: '30 Days' },
+      category: newProduct.category || 'home',
+      categoryName: newProduct.categoryName || 'Home Textiles',
+      specs: newProduct.specs || { composition: '100% Export Cotton', gsm: '140 GSM', moq: '500 Sets', leadTime: '30 Days' },
       features: newProduct.features || ['Premium Export Grade', 'OEKO-TEX Certified']
     };
 
-    // Update UI immediately (optimistic)
-    setProducts((prev) => [productWithId, ...prev]);
+    // If an image file was provided, create an instant base64 preview
+    if (imageFile instanceof File) {
+      try {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const dataUrl = e.target.result;
+          setProducts((prev) => {
+            const updated = prev.map(p => p.id === productWithId.id ? { ...p, image: dataUrl } : p);
+            localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(updated));
+            return updated;
+          });
+        };
+        reader.readAsDataURL(imageFile);
+      } catch (err) {
+        console.warn("Could not read image preview:", err);
+      }
+    }
+
+    // Update UI immediately (optimistic) & persist to localStorage
+    setProducts((prev) => {
+      const updated = [productWithId, ...prev.filter(p => p.id !== productWithId.id)];
+      localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(updated));
+      return updated;
+    });
 
     // Async sync to Django backend
     try {
       const savedProd = await api.createProduct(productWithId, imageFile);
       if (savedProd && savedProd.id) {
-        setProducts(prev => prev.map(p => p.id === productWithId.id ? savedProd : p));
+        const enriched = {
+          ...savedProd,
+          image: savedProd.image || productWithId.image || getProductFallbackImage(savedProd),
+          fallbackImage: getProductFallbackImage(savedProd)
+        };
+        setProducts(prev => {
+          const updated = prev.map(p => (p.id === productWithId.id || p.id === savedProd.id) ? enriched : p);
+          localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(updated));
+          return updated;
+        });
       }
     } catch (e) {
       console.warn("Product created locally, Django sync pending:", e.message);
@@ -288,14 +330,42 @@ export function DataProvider({ children }) {
   };
 
   const updateProduct = async (id, updatedFields, imageFile = null) => {
-    setProducts((prev) =>
-      prev.map((p) => (p.id === id ? { ...p, ...updatedFields } : p))
-    );
+    if (imageFile instanceof File) {
+      try {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const dataUrl = e.target.result;
+          setProducts((prev) => {
+            const updated = prev.map(p => p.id === id ? { ...p, image: dataUrl } : p);
+            localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(updated));
+            return updated;
+          });
+        };
+        reader.readAsDataURL(imageFile);
+      } catch (err) {
+        console.warn("Could not read image preview:", err);
+      }
+    }
+
+    setProducts((prev) => {
+      const updated = prev.map((p) => (p.id === id ? { ...p, ...updatedFields } : p));
+      localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(updated));
+      return updated;
+    });
 
     try {
       const savedProd = await api.updateProduct(id, updatedFields, imageFile);
       if (savedProd) {
-        setProducts(prev => prev.map(p => p.id === id ? savedProd : p));
+        const enriched = {
+          ...savedProd,
+          image: savedProd.image || getProductFallbackImage(savedProd),
+          fallbackImage: getProductFallbackImage(savedProd)
+        };
+        setProducts(prev => {
+          const updated = prev.map(p => p.id === id ? enriched : p);
+          localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(updated));
+          return updated;
+        });
       }
     } catch (e) {
       console.warn("Product updated locally, Django sync pending:", e.message);
@@ -303,7 +373,11 @@ export function DataProvider({ children }) {
   };
 
   const deleteProduct = async (id) => {
-    setProducts((prev) => prev.filter((p) => p.id !== id));
+    setProducts((prev) => {
+      const updated = prev.filter((p) => p.id !== id);
+      localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(updated));
+      return updated;
+    });
     try {
       await api.deleteProduct(id);
     } catch (e) {

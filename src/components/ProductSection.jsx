@@ -22,7 +22,10 @@ export default function ProductSection({ onSelectProduct, onOpenQuoteModal }) {
 
   const filteredProducts = activeCategory === 'all'
     ? products
-    : products.filter((p) => p.category === activeCategory);
+    : products.filter((p) => {
+        const catValue = typeof p.category === 'object' && p.category ? p.category.slug || p.category.id : p.category;
+        return catValue === activeCategory || p.categoryName === activeCategory || p.category_name === activeCategory;
+      });
 
   return (
     <section id="products" className="py-14 sm:py-20 lg:py-24 cotton-weave-bg bg-slate-50 relative overflow-hidden border-b border-slate-200">
