@@ -43,10 +43,10 @@ export default function ExportMarkets({ onOpenQuoteModal }) {
         </div>
 
         {/* Split Layout: Regional Breakdown & Interactive Map Visual */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-center mb-10 sm:mb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-8 lg:gap-10 items-stretch mb-10 sm:mb-16">
           
           {/* Left Column: Regional Selector & Shipping Specs */}
-          <div className="lg:col-span-6 space-y-3 sm:space-y-4">
+          <div className="lg:col-span-6 flex flex-col justify-between space-y-3 sm:space-y-4">
             <div className="space-y-2.5 sm:space-y-3">
               {EXPORT_REGIONS.map((region) => {
                 const isActive = activeRegion.id === region.id;
@@ -54,33 +54,33 @@ export default function ExportMarkets({ onOpenQuoteModal }) {
                   <div
                     key={region.id}
                     onClick={() => setActiveRegion(region)}
-                    className={`p-4 sm:p-5 rounded-2xl border transition-all duration-300 cursor-pointer ${
+                    className={`p-3.5 sm:p-5 rounded-2xl border transition-all duration-300 cursor-pointer ${
                       isActive
                         ? 'bg-brand-800/95 border-brand-400/80 shadow-xl ring-2 ring-brand-500/30'
                         : 'glass-card border-brand-700/60 hover:border-brand-500/50'
                     }`}
                   >
-                    <div className="flex items-center justify-between mb-1.5 sm:mb-2">
-                      <div className="flex items-center gap-2.5 sm:gap-3">
-                        <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-brand-700 border border-brand-500/40 text-brand-200 flex items-center justify-center text-xs font-bold font-mono shrink-0">
+                    <div className="flex items-center justify-between mb-1.5 sm:mb-2 gap-2">
+                      <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+                        <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-brand-700 border border-brand-500/40 text-brand-200 flex items-center justify-center text-[11px] sm:text-xs font-bold font-mono shrink-0">
                           {region.share}
                         </span>
-                        <h4 className="text-sm sm:text-base font-bold text-white font-serif">
+                        <h4 className="text-sm sm:text-base font-bold text-white font-serif truncate">
                           {region.name}
                         </h4>
                       </div>
-                      <span className="text-[11px] sm:text-xs text-brand-300 flex items-center gap-1.5 font-medium font-mono">
-                        <FontAwesomeIcon icon={faClock} className="text-brand-300 text-xs" aria-hidden="true" />
+                      <span className="text-[10px] sm:text-xs text-brand-300 flex items-center gap-1 sm:gap-1.5 font-medium font-mono shrink-0">
+                        <FontAwesomeIcon icon={faClock} className="text-brand-300 text-[10px] sm:text-xs" aria-hidden="true" />
                         {region.transitDays}
                       </span>
                     </div>
 
-                    <p className="text-xs text-slate-300 font-light mb-2.5 sm:mb-3">
+                    <p className="text-[11px] sm:text-xs text-slate-300 font-light mb-2 sm:mb-3 leading-relaxed">
                       {region.description}
                     </p>
 
-                    <div className="flex flex-wrap items-center gap-1.5 text-[10px] sm:text-[11px]">
-                      <span className="text-slate-400">Key Ports:</span>
+                    <div className="flex flex-wrap items-center gap-1 sm:gap-1.5 text-[10px] sm:text-[11px]">
+                      <span className="text-slate-400 font-medium">Key Ports:</span>
                       {region.ports.map((port, pIdx) => (
                         <span
                           key={pIdx}
@@ -95,35 +95,37 @@ export default function ExportMarkets({ onOpenQuoteModal }) {
               })}
             </div>
 
-            <div className="pt-2">
+            <div className="pt-1 sm:pt-2">
               <button
                 onClick={() => onOpenQuoteModal({ subject: `Inquiry: Shipping Rates to ${activeRegion.name}` })}
-                className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-blue-600 via-brand-500 to-brand-600 text-white font-bold text-xs uppercase tracking-wider shadow-lg hover:scale-[1.01] transition-all flex items-center justify-center gap-2 shimmer-sweep text-center"
+                className="w-full py-3 px-3 sm:px-4 rounded-xl bg-gradient-to-r from-blue-600 via-brand-500 to-brand-600 text-white font-bold text-xs uppercase tracking-wider shadow-lg hover:scale-[1.01] transition-all flex items-center justify-center gap-2 shimmer-sweep text-center"
               >
-                <span>Calculate Freight &amp; Lead Times for {activeRegion.name}</span>
-                <FontAwesomeIcon icon={faArrowRight} className="text-xs" aria-hidden="true" />
+                <span className="truncate">Calculate Freight for {activeRegion.name}</span>
+                <FontAwesomeIcon icon={faArrowRight} className="text-xs shrink-0" aria-hidden="true" />
               </button>
             </div>
           </div>
 
           {/* Right Column: Interactive Google Map with Mill Location */}
-          <div className="lg:col-span-6">
-            <div className="glass-card rounded-2xl p-4 sm:p-6 border border-brand-700/60 relative overflow-hidden shadow-2xl">
-              <div className="flex items-center justify-between pb-3 sm:pb-4 border-b border-brand-700/60 mb-3 sm:mb-4">
-                <div className="flex items-center gap-2">
-                  <FontAwesomeIcon icon={faIndustry} className="text-brand-300 text-xs sm:text-sm" aria-hidden="true" />
-                  <span className="text-xs font-bold text-white uppercase tracking-wider font-mono">
+          <div className="lg:col-span-6 flex flex-col">
+            <div className="glass-card rounded-2xl p-3.5 sm:p-6 border border-brand-700/60 relative overflow-hidden shadow-2xl flex-1 flex flex-col justify-between">
+              
+              {/* Header Bar */}
+              <div className="flex flex-row items-center justify-between pb-3 sm:pb-4 border-b border-brand-700/60 mb-3 sm:mb-4 gap-2">
+                <div className="flex items-center gap-2 min-w-0">
+                  <FontAwesomeIcon icon={faIndustry} className="text-brand-300 text-xs sm:text-sm shrink-0" aria-hidden="true" />
+                  <span className="text-[11px] sm:text-xs font-bold text-white uppercase tracking-wider font-mono truncate">
                     A&amp;H IMPEX Mill &amp; Export Hub
                   </span>
                 </div>
-                <span className="text-[10px] sm:text-[11px] px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-medium font-mono flex items-center gap-1.5">
+                <span className="text-[9px] sm:text-[11px] px-2 sm:px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-medium font-mono flex items-center gap-1 sm:gap-1.5 shrink-0">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                   <span>Verified Facility</span>
                 </span>
               </div>
 
               {/* Embedded Google Map */}
-              <div className="relative aspect-[16/11] sm:aspect-[16/10] bg-brand-950 rounded-xl overflow-hidden border border-brand-700/50 min-h-[260px] sm:min-h-[320px] shadow-inner">
+              <div className="relative w-full h-[280px] sm:h-[320px] md:h-[360px] bg-brand-950 rounded-xl overflow-hidden border border-brand-700/50 shadow-inner">
                 <iframe
                   title="A&H IMPEX Mill Location"
                   src="https://maps.google.com/maps?q=Khurrianwala%20Industrial%20Zone%2C%20Faisalabad%2C%20Pakistan&t=&z=12&ie=UTF8&iwloc=&output=embed"
@@ -133,14 +135,14 @@ export default function ExportMarkets({ onOpenQuoteModal }) {
                 />
 
                 {/* Floating Bottom Location Badge */}
-                <div className="absolute bottom-2.5 left-2.5 right-2.5 sm:bottom-3 sm:left-3 sm:right-3 bg-brand-900/95 backdrop-blur-md p-2.5 sm:p-3 rounded-xl border border-brand-500/40 shadow-2xl flex items-center justify-between gap-2 z-10">
-                  <div className="min-w-0">
-                    <div className="flex items-center gap-1.5 text-xs font-bold text-white">
+                <div className="absolute bottom-2 left-2 right-2 sm:bottom-3 sm:left-3 sm:right-3 bg-brand-900/95 backdrop-blur-md p-2 sm:p-3 rounded-xl border border-brand-500/40 shadow-2xl flex items-center justify-between gap-2 z-10">
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center gap-1.5 text-[11px] sm:text-xs font-bold text-white">
                       <FontAwesomeIcon icon={faLocationDot} className="text-red-400 text-xs shrink-0" />
                       <span className="truncate font-serif">A&amp;H IMPEX Mill &amp; Export Desk</span>
                     </div>
-                    <p className="text-[10px] sm:text-[11px] text-slate-300 truncate font-light mt-0.5">
-                      Khurrianwala Industrial Estate, Faisalabad, Pakistan
+                    <p className="text-[9px] sm:text-[11px] text-slate-300 truncate font-light mt-0.5">
+                      Khurrianwala Industrial Estate, Faisalabad, PK
                     </p>
                   </div>
 
@@ -148,18 +150,18 @@ export default function ExportMarkets({ onOpenQuoteModal }) {
                     href="https://www.google.com/maps/search/?api=1&query=Khurrianwala+Industrial+Zone+Faisalabad+Pakistan"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-2.5 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-[10px] sm:text-xs font-semibold shrink-0 flex items-center gap-1.5 shadow-md transition-all hover:scale-105"
+                    className="px-2 sm:px-2.5 py-1 sm:py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-[10px] sm:text-xs font-semibold shrink-0 flex items-center gap-1 sm:gap-1.5 shadow-md transition-all hover:scale-105"
                   >
-                    <span>Open in Maps</span>
-                    <FontAwesomeIcon icon={faArrowUpRightFromSquare} className="text-[10px]" />
+                    <span>Maps</span>
+                    <FontAwesomeIcon icon={faArrowUpRightFromSquare} className="text-[9px] sm:text-[10px]" />
                   </a>
                 </div>
               </div>
 
               {/* Incoterms Bar */}
               <div className="mt-3 sm:mt-4 pt-3 border-t border-brand-700/60 flex flex-wrap items-center justify-between text-xs text-slate-300 gap-2">
-                <span className="text-slate-400 font-medium text-[11px] sm:text-xs">Supported Incoterms:</span>
-                <div className="flex items-center gap-1 sm:gap-1.5 font-bold text-brand-200 text-[10px] sm:text-[11px] font-mono">
+                <span className="text-slate-400 font-medium text-[10px] sm:text-xs">Supported Incoterms:</span>
+                <div className="flex flex-wrap items-center gap-1 sm:gap-1.5 font-bold text-brand-200 text-[10px] sm:text-[11px] font-mono">
                   {['FOB', 'CIF', 'CFR', 'DDP', 'EXW'].map((term) => (
                     <span key={term} className="px-1.5 sm:px-2 py-0.5 rounded bg-brand-800 border border-brand-700/60">
                       {term}
@@ -173,20 +175,20 @@ export default function ExportMarkets({ onOpenQuoteModal }) {
         </div>
 
         {/* 4 Shipping Capabilities Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-6">
           {SHIPPING_CAPABILITIES.map((cap, idx) => (
             <div
               key={idx}
-              className="glass-card rounded-xl p-4 sm:p-5 border border-brand-700/60 flex flex-col justify-between"
+              className="glass-card rounded-xl p-3.5 sm:p-5 border border-brand-700/60 flex flex-col justify-between"
             >
               <div>
-                <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-brand-800 border border-brand-500/30 flex items-center justify-center text-brand-300 mb-2.5 sm:mb-3">
+                <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-brand-800 border border-brand-500/30 flex items-center justify-center text-brand-300 mb-2 sm:mb-3">
                   <FontAwesomeIcon icon={faShip} className="text-xs sm:text-sm" aria-hidden="true" />
                 </div>
-                <h4 className="text-sm font-bold text-white mb-1 font-serif">
+                <h4 className="text-xs sm:text-sm font-bold text-white mb-1 font-serif">
                   {cap.title}
                 </h4>
-                <p className="text-xs text-slate-300 leading-relaxed font-light">
+                <p className="text-[11px] sm:text-xs text-slate-300 leading-relaxed font-light">
                   {cap.description}
                 </p>
               </div>
