@@ -34,7 +34,7 @@ export default function ExportMarkets({ onOpenQuoteModal }) {
           </div>
 
           <h2 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight font-serif">
-            Global Logistics &amp; <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-300 via-blue-200 to-white">Export Corridors</span>
+            Global Logistics and <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-300 via-blue-200 to-white">Export Corridors</span>
           </h2>
 
           <p className="text-slate-300 text-xs sm:text-base mt-2 sm:mt-4 font-light">

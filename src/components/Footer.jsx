@@ -108,7 +108,7 @@ export default function Footer({ onOpenQuoteModal, onOpenAdmin }) {
             <div className="flex items-center gap-2 pt-1">
               <span className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[11px] sm:text-xs font-medium font-mono">
                 <FontAwesomeIcon icon={faShieldHalved} className="text-xs" aria-hidden="true" />
-                ISO 9001 &amp; OEKO-TEX Standard 100
+                ISO 9001 and OEKO-TEX Standard 100
               </span>
             </div>
           </div>
@@ -136,7 +136,7 @@ export default function Footer({ onOpenQuoteModal, onOpenAdmin }) {
               </li>
               <li>
                 <a href="#certifications" className="hover:text-brand-300 transition-colors">
-                  Compliance &amp; Certifications
+                  Compliance and Certifications
                 </a>
               </li>
               <li>
@@ -175,12 +175,12 @@ export default function Footer({ onOpenQuoteModal, onOpenAdmin }) {
             <ul className="space-y-2 sm:space-y-2.5 text-xs text-slate-400">
               <li>
                 <a href="#products" className="hover:text-brand-300 transition-colors">
-                  Luxury Sateen &amp; Percale Bedding
+                  Luxury Sateen and Percale Bedding
                 </a>
               </li>
               <li>
                 <a href="#products" className="hover:text-brand-300 transition-colors">
-                  Hotel &amp; Resort White Linens
+                  Hotel and Resort White Linens
                 </a>
               </li>
               <li>
@@ -190,12 +190,12 @@ export default function Footer({ onOpenQuoteModal, onOpenAdmin }) {
               </li>
               <li>
                 <a href="#products" className="hover:text-brand-300 transition-colors">
-                  Export Chinos &amp; Fleece Apparel
+                  Export Chinos and Fleece Apparel
                 </a>
               </li>
               <li>
                 <a href="#products" className="hover:text-brand-300 transition-colors">
-                  Custom OEM Greige &amp; Dyed Fabrics
+                  Custom OEM Greige and Dyed Fabrics
                 </a>
               </li>
               <li>

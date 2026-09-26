@@ -42,7 +42,7 @@ export default function ContactCTA({ onOpenQuoteModal }) {
             <div className="lg:col-span-7">
               <div className="inline-flex items-center gap-2 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-brand-800/90 border border-brand-500/30 text-brand-300 text-xs font-semibold tracking-wider uppercase mb-3 sm:mb-4 font-mono">
                 <FontAwesomeIcon icon={faShieldHalved} className="text-xs" aria-hidden="true" />
-                <span>Global Sourcing &amp; Partnerships</span>
+                <span>Global Sourcing and Partnerships</span>
               </div>
 
               <h2 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight mb-3 sm:mb-4 font-serif">
@@ -93,7 +93,7 @@ export default function ContactCTA({ onOpenQuoteModal }) {
                     <FontAwesomeIcon icon={faLocationDot} className="text-xs sm:text-sm" aria-hidden="true" />
                   </div>
                   <div>
-                    <span className="text-slate-400 text-[11px] sm:text-xs block font-mono">Mill &amp; Head Office:</span>
+                    <span className="text-slate-400 text-[11px] sm:text-xs block font-mono">Mill and Head Office:</span>
                     <span className="text-white font-medium text-xs sm:text-sm">{info.contact.address}</span>
                     <span className="text-slate-400 text-[10px] sm:text-[11px] block mt-0.5 font-light">{info.contact.addressNote}</span>
                   </div>
@@ -115,7 +115,7 @@ export default function ContactCTA({ onOpenQuoteModal }) {
             <div className="lg:col-span-5 bg-brand-800/90 rounded-2xl p-5 sm:p-8 border border-brand-700/60 shadow-2xl flex flex-col justify-between">
               <div>
                 <h3 className="text-base sm:text-lg font-bold text-white mb-1.5 sm:mb-2 font-serif">
-                  Direct Inquiries &amp; Quotations
+                  Direct Inquiries and Quotations
                 </h3>
                 <p className="text-xs text-slate-300 font-light mb-4 sm:mb-6">
                   Select your preferred channel to receive fabric swatches, technical lab dip approvals, or container volume quotations.

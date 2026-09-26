@@ -36,7 +36,7 @@ export default function ProductSection({ onSelectProduct, onOpenQuoteModal }) {
               <span>Export Product Catalog</span>
             </div>
             <h2 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-slate-900 tracking-tight leading-tight font-serif">
-              Textile Collections &amp; <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-700 via-brand-600 to-blue-600">OEM Capabilities</span>
+              Textile Collections and <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-700 via-brand-600 to-blue-600">OEM Capabilities</span>
             </h2>
             <p className="text-slate-600 text-xs sm:text-base mt-2 sm:mt-3 font-normal">
               Engineered for international department stores, institutional buyers, and private label importers. Available with custom thread counts, dyes, and branded retail packaging.

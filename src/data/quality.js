@@ -12,7 +12,7 @@ export const QUALITY_STAGES = [
   {
     id: 'stage-1',
     step: '01',
-    name: 'Raw Material & Yarn Inspection',
+    name: 'Raw Material and Yarn Inspection',
     tag: 'Incoming QC',
     description: 'Every consignment of raw cotton and yarn is checked for fiber length, Micronaire value, tensile strength, and twist per inch. Lot-wise verification guarantees uniform lot dyeing later.',
     checkpoints: [
@@ -40,7 +40,7 @@ export const QUALITY_STAGES = [
   {
     id: 'stage-3',
     step: '03',
-    name: 'Color Fastness & Shrinkage Testing',
+    name: 'Color Fastness and Shrinkage Testing',
     tag: 'Laboratory QC',
     description: 'In-house physical and wet laboratory conducting accelerated commercial wash trials, rub fastness (Crockmeter), spectrophotometric Delta-E color evaluation, and warp/weft shrinkage tests.',
     checkpoints: [
@@ -54,7 +54,7 @@ export const QUALITY_STAGES = [
   {
     id: 'stage-4',
     step: '04',
-    name: 'In-Line Stitching & Seam Inspection',
+    name: 'In-Line Stitching and Seam Inspection',
     tag: 'Production QC',
     description: 'Stationed quality auditors check stitch tension, SPI (stitches per inch), hemming accuracy, and seam elasticity during active assembly to prevent batch defects before completion.',
     checkpoints: [
@@ -82,7 +82,7 @@ export const QUALITY_STAGES = [
   {
     id: 'stage-6',
     step: '06',
-    name: 'Metal Detection & Container Loading Check',
+    name: 'Metal Detection and Container Loading Check',
     tag: 'Pre-Shipment QC',
     description: 'All consumer textile units pass through 9-point calibrated metal detectors to detect broken needle tips. Containers are inspected for clean dry floors, odor-free walls, and desiccant placement.',
     checkpoints: [

@@ -33,7 +33,7 @@ export default function CertificationSection({ onOpenQuoteModal }) {
           </div>
 
           <h2 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-slate-900 tracking-tight leading-tight font-serif">
-            Certifications &amp; <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-700 via-brand-600 to-blue-600">International Standards</span>
+            Certifications and <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-700 via-brand-600 to-blue-600">International Standards</span>
           </h2>
 
           <p className="text-slate-600 text-xs sm:text-base mt-2 sm:mt-4 font-normal">

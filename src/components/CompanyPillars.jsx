@@ -17,7 +17,7 @@ import {
 export const PILLARS = [
   {
     icon: faBullseye,
-    title: 'Vision & Mission',
+    title: 'Vision and Mission',
     subtitle: 'Strategic Global Excellence',
     description: 'To be the most reliable international partner for high-precision woven textiles and home furnishings, championing vertical innovation and sustainable manufacturing practices.',
     linkText: 'Explore Strategy',
@@ -25,7 +25,7 @@ export const PILLARS = [
   },
   {
     icon: faAward,
-    title: 'Quality & Integrity',
+    title: 'Quality and Integrity',
     subtitle: 'Zero Defect Philosophy',
     description: 'From yarn tension monitoring to 100% light-table review and ANSI/ASQ Z1.4 sampling, every meter is guaranteed to meet stringent international tensile and colorfast standards.',
     linkText: 'View QC Pipeline',
@@ -33,7 +33,7 @@ export const PILLARS = [
   },
   {
     icon: faUsers,
-    title: 'Social & HR Policy',
+    title: 'Social and HR Policy',
     subtitle: 'Ethical Workplace Culture',
     description: 'Operating in strict accordance with amfori BSCI and Sedex SMETA principles—ensuring fair living wages, workplace safety, female empowerment, and zero child labor.',
     linkText: 'Read Standards',
@@ -52,7 +52,7 @@ export default function CompanyPillars() {
             Strategic Foundation
           </p>
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white font-serif tracking-tight">
-            Built on Precision, Integrity &amp; Global Standards
+            Built on Precision, Integrity and Global Standards
           </h2>
         </div>
 
