@@ -67,34 +67,9 @@ export default function AboutSection({ onOpenQuoteModal }) {
                 src={airJetWeavingImg}
                 fallbackSrc="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1200&q=80"
                 alt="A&H IMPEX Modern Air-Jet Textile Weaving Looms"
-                className="w-full h-64 sm:h-80 md:h-[480px]"
+                className="w-full h-64 sm:h-80 md:h-[480px] object-cover"
                 zoomOnHover={true}
               />
-              
-              {/* Subtle dark gradient overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-brand-900/90 via-brand-900/20 to-transparent" />
-
-              {/* Floating Experience Stamp Badge */}
-              <div className="absolute top-3 left-3 sm:top-4 sm:left-4 z-20 bg-gradient-to-br from-blue-600 via-brand-500 to-brand-600 text-white px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl shadow-xl border border-white/30 flex items-center gap-2 backdrop-blur-md">
-                <span className="text-base sm:text-xl font-extrabold leading-none font-serif">15+</span>
-                <div className="flex flex-col">
-                  <span className="text-[9px] sm:text-[10px] uppercase tracking-wider font-bold text-white leading-tight">Years Heritage</span>
-                  <span className="text-[8px] sm:text-[9px] text-blue-100 font-mono">1980s - Present</span>
-                </div>
-              </div>
-
-              {/* Floating Badge at Bottom */}
-              <div className="absolute bottom-3 left-3 right-3 sm:bottom-6 sm:left-6 sm:right-6 p-3 sm:p-4 rounded-xl bg-brand-900/95 border border-brand-700/80 backdrop-blur-md shadow-xl z-20">
-                <div className="flex items-center gap-2.5 sm:gap-3.5">
-                  <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-lg bg-brand-800 border border-brand-500/40 flex items-center justify-center text-brand-300 shrink-0">
-                    <FontAwesomeIcon icon={faIndustry} className="text-base sm:text-lg" aria-hidden="true" />
-                  </div>
-                  <div>
-                    <h4 className="text-xs sm:text-sm font-bold text-white tracking-wide font-serif">Vertical Manufacturing Facility</h4>
-                    <p className="text-[10px] sm:text-xs text-slate-300 mt-0.5">Air-jet weaving, wet processing &amp; finished unit assembly</p>
-                  </div>
-                </div>
-              </div>
             </div>
           </motion.div>
 
