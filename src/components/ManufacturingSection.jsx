@@ -26,21 +26,21 @@ export default function ManufacturingSection() {
   const activeStep = MANUFACTURING_STEPS[activeStepIndex];
 
   return (
-    <section id="manufacturing" className="py-24 bg-brand-900 relative overflow-hidden border-t border-b border-brand-800">
+    <section id="manufacturing" className="py-14 sm:py-20 lg:py-24 bg-brand-900 relative overflow-hidden border-t border-b border-brand-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-800/90 border border-brand-500/30 text-brand-300 text-xs font-semibold tracking-wider uppercase mb-3 font-mono">
+        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-16">
+          <div className="inline-flex items-center gap-2 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-brand-800/90 border border-brand-500/30 text-brand-300 text-xs font-semibold tracking-wider uppercase mb-2.5 sm:mb-3 font-mono">
             <FontAwesomeIcon icon={faMicrochip} className="text-xs" aria-hidden="true" />
             <span>Vertical Production Setup</span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight font-serif">
+          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight font-serif">
             Precision Manufacturing <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-300 via-blue-200 to-white">Timeline</span>
           </h2>
 
-          <p className="text-slate-300 text-sm sm:text-base mt-4 font-light">
+          <p className="text-slate-300 text-xs sm:text-base mt-2 sm:mt-4 font-light">
             Every fiber travels through five strictly controlled manufacturing phases, ensuring exceptional structural strength, color consistency, and international compliance.
           </p>
         </div>
@@ -105,14 +105,14 @@ export default function ManufacturingSection() {
         </div>
 
         {/* Mobile Horizontal Step Buttons */}
-        <div className="lg:hidden flex items-center gap-2 overflow-x-auto pb-4 mb-8 no-scrollbar">
+        <div className="lg:hidden flex items-center gap-2 overflow-x-auto pb-3 mb-6 no-scrollbar touch-pan-x">
           {MANUFACTURING_STEPS.map((step, idx) => {
             const isActive = activeStepIndex === idx;
             return (
               <button
                 key={step.step}
                 onClick={() => setActiveStepIndex(idx)}
-                className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all flex items-center gap-2 border ${
+                className={`px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all flex items-center gap-1.5 border shrink-0 ${
                   isActive
                     ? 'bg-brand-700 text-white border-brand-500 shadow-md'
                     : 'bg-brand-800 text-slate-300 border-brand-700/60'
@@ -133,9 +133,9 @@ export default function ManufacturingSection() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.4 }}
-            className="glass-card rounded-2xl p-6 sm:p-10 border border-brand-700/60 shadow-2xl relative overflow-hidden"
+            className="glass-card rounded-2xl p-5 sm:p-8 lg:p-10 border border-brand-700/60 shadow-2xl relative overflow-hidden"
           >
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-12 items-center">
               
               {/* Left Column: Image with overlay */}
               <div className="lg:col-span-6 relative rounded-xl overflow-hidden shadow-2xl border border-brand-700/60 group">
@@ -144,13 +144,13 @@ export default function ManufacturingSection() {
                   src={activeStep.image}
                   fallbackSrc={activeStep.fallbackImage}
                   alt={activeStep.title}
-                  className="w-full h-72 sm:h-96"
+                  className="w-full h-56 sm:h-80 md:h-96"
                   zoomOnHover={true}
                   loading="eager"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-brand-900 via-transparent to-transparent opacity-80" />
                 
-                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs text-slate-200 bg-brand-900/85 backdrop-blur-md px-3.5 py-2 rounded-lg border border-brand-700/60">
+                <div className="absolute bottom-3 left-3 right-3 sm:bottom-4 sm:left-4 sm:right-4 flex items-center justify-between text-[11px] sm:text-xs text-slate-200 bg-brand-900/90 backdrop-blur-md px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-lg border border-brand-700/60">
                   <span className="font-semibold text-brand-300 font-mono">Phase {activeStep.step} Production</span>
                   <span className="text-slate-400 font-light">Strict Quality Tolerance</span>
                 </div>
@@ -158,33 +158,33 @@ export default function ManufacturingSection() {
 
               {/* Right Column: Step Specifications & Details */}
               <div className="lg:col-span-6 flex flex-col justify-center">
-                <div className="flex items-center gap-3 mb-2">
-                  <span className="text-xs uppercase font-extrabold tracking-widest px-2.5 py-1 rounded bg-brand-700/60 text-brand-200 border border-brand-500/30 font-mono">
+                <div className="flex items-center gap-2 sm:gap-3 mb-2">
+                  <span className="text-[10px] sm:text-xs uppercase font-extrabold tracking-widest px-2 py-0.5 sm:px-2.5 sm:py-1 rounded bg-brand-700/60 text-brand-200 border border-brand-500/30 font-mono">
                     Phase {activeStep.step} of 05
                   </span>
-                  <span className="text-xs text-slate-400 font-medium">{activeStep.tagline}</span>
+                  <span className="text-xs text-slate-400 font-medium truncate">{activeStep.tagline}</span>
                 </div>
 
-                <h3 className="text-2xl sm:text-3xl font-bold text-white tracking-tight mb-4 font-serif">
+                <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white tracking-tight mb-3 sm:mb-4 font-serif">
                   {activeStep.title}
                 </h3>
 
-                <p className="text-slate-300 text-sm sm:text-base leading-relaxed mb-6 font-light">
+                <p className="text-slate-300 text-xs sm:text-sm md:text-base leading-relaxed mb-4 sm:mb-6 font-light">
                   {activeStep.description}
                 </p>
 
                 {/* Technical Specs Table */}
-                <div className="bg-brand-800/80 rounded-xl p-4 border border-brand-700/50 space-y-2.5 mb-6 text-xs">
+                <div className="bg-brand-800/80 rounded-xl p-3 sm:p-4 border border-brand-700/50 space-y-2 mb-4 sm:mb-6 text-xs">
                   {activeStep.specs.map((item, i) => (
                     <div key={i} className="flex items-center justify-between">
-                      <span className="text-slate-400 font-medium">{item.label}:</span>
-                      <span className="text-white font-semibold text-right font-mono">{item.value}</span>
+                      <span className="text-slate-400 font-medium text-[11px] sm:text-xs">{item.label}:</span>
+                      <span className="text-white font-semibold text-right font-mono text-[11px] sm:text-xs">{item.value}</span>
                     </div>
                   ))}
                 </div>
 
                 {/* Highlights List */}
-                <div className="space-y-2 mb-6">
+                <div className="space-y-1.5 sm:space-y-2 mb-4 sm:mb-6">
                   {activeStep.highlights.map((point, i) => (
                     <div key={i} className="flex items-center gap-2 text-xs sm:text-sm text-slate-200">
                       <div className="w-4 h-4 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
@@ -196,20 +196,20 @@ export default function ManufacturingSection() {
                 </div>
 
                 {/* Next Step Navigation */}
-                <div className="flex items-center gap-4 pt-4 border-t border-brand-700/60">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 pt-4 border-t border-brand-700/60">
                   <button
                     onClick={() =>
                       setActiveStepIndex((prev) =>
                         prev < MANUFACTURING_STEPS.length - 1 ? prev + 1 : 0
                       )
                     }
-                    className="px-5 py-2.5 rounded-lg bg-brand-800 hover:bg-brand-700 text-slate-200 hover:text-white border border-brand-700/80 text-xs font-semibold flex items-center gap-1.5 transition-all"
+                    className="px-5 py-2.5 rounded-lg bg-brand-800 hover:bg-brand-700 text-slate-200 hover:text-white border border-brand-700/80 text-xs font-semibold flex items-center justify-center gap-1.5 transition-all"
                   >
                     <span>{activeStepIndex === MANUFACTURING_STEPS.length - 1 ? 'Back to Step 01' : 'Next Process Step'}</span>
                     <FontAwesomeIcon icon={faChevronRight} className="text-xs" aria-hidden="true" />
                   </button>
-                  <span className="text-xs text-slate-400 hidden sm:inline font-light">
-                    Click any timeline icon above to inspect that facility
+                  <span className="text-[11px] sm:text-xs text-slate-400 hidden sm:inline font-light">
+                    Click any step above to inspect that facility
                   </span>
                 </div>
 
@@ -223,3 +223,4 @@ export default function ManufacturingSection() {
     </section>
   );
 }
+

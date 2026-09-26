@@ -8,7 +8,7 @@
  */
 
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
-import { PRODUCTS as DEFAULT_PRODUCTS, PRODUCT_CATEGORIES as DEFAULT_CATEGORIES } from '../data/products';
+import { PRODUCTS as DEFAULT_PRODUCTS, PRODUCT_CATEGORIES as DEFAULT_CATEGORIES, getProductFallbackImage } from '../data/products';
 import { COMPANY as DEFAULT_COMPANY } from '../data/company';
 import api from '../api/client';
 
@@ -39,15 +39,18 @@ export function DataProvider({ children }) {
   const [isBackendConnected, setIsBackendConnected] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  // 2. Products State
+  // 2. Products State - STRICTLY the 6 items corresponding to src/assets/Product folder
   const [products, setProducts] = useState(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEYS.PRODUCTS);
       if (saved) {
         const parsed = JSON.parse(saved);
-        const hasUnsplash = Array.isArray(parsed) && parsed.some(p => typeof p.image === 'string' && p.image.includes('unsplash.com'));
-        if (!hasUnsplash && Array.isArray(parsed) && parsed.length === DEFAULT_PRODUCTS.length) {
-          return parsed;
+        if (Array.isArray(parsed) && parsed.length === DEFAULT_PRODUCTS.length) {
+          return parsed.map((p, idx) => ({
+            ...p,
+            image: DEFAULT_PRODUCTS[idx]?.image || getProductFallbackImage(p),
+            fallbackImage: DEFAULT_PRODUCTS[idx]?.image || getProductFallbackImage(p)
+          }));
         }
       }
       return DEFAULT_PRODUCTS;
@@ -119,8 +122,13 @@ export function DataProvider({ children }) {
       }
 
       if (prodsRes.status === 'fulfilled' && Array.isArray(prodsRes.value) && prodsRes.value.length > 0) {
-        setProducts(prodsRes.value);
-        localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(prodsRes.value));
+        const enrichedProds = prodsRes.value.map(p => ({
+          ...p,
+          image: (p.image && typeof p.image === 'string' && (p.image.startsWith('http') || p.image.startsWith('data:'))) ? p.image : getProductFallbackImage(p),
+          fallbackImage: getProductFallbackImage(p)
+        }));
+        setProducts(enrichedProds);
+        localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(enrichedProds));
         connected = true;
       }
 

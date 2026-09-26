@@ -178,16 +178,16 @@ export default function FactorySection({ onOpenQuoteModal }) {
                 </div>
               </div>
 
-              <div className="flex items-center gap-4">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
                 <button
                   onClick={() => setVideoModalOpen(true)}
-                  className="px-6 py-2.5 rounded-lg bg-gradient-to-r from-gold-500 to-gold-600 text-navy-950 font-bold text-xs shadow-md transition-all hover:scale-[1.02]"
+                  className="px-6 py-2.5 rounded-lg bg-gradient-to-r from-gold-500 to-gold-600 text-navy-950 font-bold text-xs shadow-md transition-all hover:scale-[1.02] text-center"
                 >
                   Play Facility Overview
                 </button>
                 <button
                   onClick={() => onOpenQuoteModal({ subject: 'Schedule Factory Audit / In-Person Visit' })}
-                  className="px-5 py-2.5 rounded-lg bg-navy-900 border border-white/15 text-slate-200 hover:text-white text-xs font-semibold hover:border-gold-500/40 transition-all"
+                  className="px-5 py-2.5 rounded-lg bg-navy-900 border border-white/15 text-slate-200 hover:text-white text-xs font-semibold hover:border-gold-500/40 transition-all text-center"
                 >
                   Schedule On-Site Audit
                 </button>

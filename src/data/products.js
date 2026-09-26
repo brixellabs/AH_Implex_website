@@ -12,13 +12,49 @@
  * ==============================================================================
  */
 
-// Local Product Asset Imports
-import luxuryBedsheetsImg from '../assets/Product/luxury bedsheets.jpg';
-import highThreadCountImg from '../assets/Product/High thread count hotel & retail bedding crafted from combed long-staple cotton..jfif';
-import industrialFabricsImg from '../assets/Product/Engineered high-durability fabrics for oil & gas, construction, and utilities..jfif';
-import terryTowelsImg from '../assets/Product/Plush, ultra-absorbent terry towelling with reinforced double-stitched borders..jfif';
-import medicalFabricsImg from '../assets/Product/Antimicrobial, bleach-safe fabrics for hospital systems and surgical centers..jfif';
-import cardedYarnCanvasImg from '../assets/Product/carded yarn canvas.jfif';
+// Local Product Asset Imports (Clean URL-safe filenames for production deployment)
+import luxuryBedsheetsImg from '../assets/Product/luxury-bedsheets.jpg';
+import highThreadCountImg from '../assets/Product/high-thread-count-bedding.jfif';
+import industrialFabricsImg from '../assets/Product/industrial-durability-fabrics.jfif';
+import terryTowelsImg from '../assets/Product/plush-terry-towelling.jfif';
+import medicalFabricsImg from '../assets/Product/antimicrobial-hospital-fabrics.jfif';
+import cardedYarnCanvasImg from '../assets/Product/carded-yarn-canvas.jfif';
+
+export const PRODUCT_IMAGES = {
+  luxuryBedsheets: luxuryBedsheetsImg,
+  highThreadCount: highThreadCountImg,
+  industrialFabrics: industrialFabricsImg,
+  terryTowels: terryTowelsImg,
+  medicalFabrics: medicalFabricsImg,
+  cardedYarnCanvas: cardedYarnCanvasImg,
+};
+
+export function getProductFallbackImage(product) {
+  if (!product) return luxuryBedsheetsImg;
+  
+  const text = `${product.id || ''} ${product.title || ''} ${product.category || ''} ${product.category_name || ''} ${product.categoryName || ''} ${product.tagline || ''} ${product.description || ''}`.toLowerCase();
+  
+  if (text.includes('canvas') || text.includes('duck') || text.includes('carded') || text.includes('greige') || text.includes('cone') || text.includes('oem') || text.includes('weaving')) {
+    return cardedYarnCanvasImg;
+  }
+  if (text.includes('medical') || text.includes('hospital') || text.includes('scrub') || text.includes('autoclav') || text.includes('barrier') || text.includes('drape') || text.includes('surgical')) {
+    return medicalFabricsImg;
+  }
+  if (text.includes('towel') || text.includes('terry') || text.includes('hospitality') || text.includes('dining') || text.includes('bath') || text.includes('pool') || text.includes('absorbent')) {
+    return terryTowelsImg;
+  }
+  if (text.includes('workwear') || text.includes('twill') || text.includes('industrial') || text.includes('flame') || text.includes('apparel') || text.includes('oil') || text.includes('durability')) {
+    return industrialFabricsImg;
+  }
+  if (text.includes('thread') || text.includes('hotel') || text.includes('percale') || text.includes('retail')) {
+    return highThreadCountImg;
+  }
+  if (text.includes('sateen') || text.includes('bed') || text.includes('home') || text.includes('linen') || text.includes('sheet') || text.includes('quilt') || text.includes('cotton')) {
+    return luxuryBedsheetsImg;
+  }
+  
+  return luxuryBedsheetsImg;
+}
 
 export const PRODUCT_CATEGORIES = [
   { id: 'all', label: 'All Collections' },
