@@ -31,6 +31,9 @@ export default function ProductCard({ product, onSelectProduct }) {
   const weight = specs.threadCount || specs.gsm || '';
   const moq = specs.moq || '500 Units';
 
+  const displayTitle = (product?.title || '').replace(/\s+and\s+/gi, ' & ');
+  const displayCategory = (product?.categoryName || product?.category_name || '').replace(/\s+and\s+/gi, ' & ');
+
   return (
     <motion.div
       layout
@@ -46,16 +49,16 @@ export default function ProductCard({ product, onSelectProduct }) {
           <SafeImage
             src={displaySrc}
             fallbackSrc={fallbackImg}
-            alt={product.title}
+            alt={displayTitle}
             className="w-full h-full object-cover"
             zoomOnHover={true}
           />
 
           {/* Clean Category Badge */}
-          {product.categoryName && (
+          {displayCategory && (
             <div className="absolute top-3 left-3 z-10 pointer-events-none">
               <span className="px-3 py-1 rounded-full text-[11px] font-bold tracking-wider uppercase bg-[#071830]/90 text-white backdrop-blur-md border border-white/10 shadow-sm">
-                {product.categoryName}
+                {displayCategory}
               </span>
             </div>
           )}
@@ -63,9 +66,9 @@ export default function ProductCard({ product, onSelectProduct }) {
 
         {/* Card Content - Clean, simple, easy to read */}
         <div className="p-5">
-          {/* Title - Full Product Name without truncation */}
-          <h3 className="text-base sm:text-lg font-bold text-slate-900 group-hover:text-brand-700 transition-colors font-serif leading-snug mb-2 min-h-[52px] flex items-center">
-            {product.title}
+          {/* Title - Full Product Name without truncation, Crisp Modern Font with Clean Ampersand */}
+          <h3 className="text-base sm:text-lg font-bold text-slate-900 group-hover:text-brand-700 transition-colors font-sans leading-snug mb-2 min-h-[52px] flex items-center">
+            {displayTitle}
           </h3>
 
           {/* 1-Line Clean Material & Specs */}

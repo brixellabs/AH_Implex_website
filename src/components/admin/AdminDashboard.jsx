@@ -763,7 +763,7 @@ export default function AdminDashboard({ onExitAdmin }) {
 
                     {/* Content */}
                     <div className="p-5 space-y-2.5">
-                      <h4 className="font-bold text-slate-900 text-sm font-serif line-clamp-1">{p.title}</h4>
+                      <h4 className="font-bold text-slate-900 text-sm font-sans line-clamp-1">{p.title}</h4>
                       <p className="text-xs text-slate-500 line-clamp-2">{p.tagline || p.description}</p>
                       
                       {/* Specs pills */}

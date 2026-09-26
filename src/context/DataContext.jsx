@@ -15,11 +15,11 @@ import api from '../api/client';
 const DataContext = createContext(null);
 
 const STORAGE_KEYS = {
-  PRODUCTS: 'ah_impex_products_v7',
-  CATEGORIES: 'ah_impex_categories_v7',
-  COMPANY: 'ah_impex_company_v7',
-  INQUIRIES: 'ah_impex_inquiries_v7',
-  USER: 'ah_impex_user_v7',
+  PRODUCTS: 'ah_impex_products_v8',
+  CATEGORIES: 'ah_impex_categories_v8',
+  COMPANY: 'ah_impex_company_v8',
+  INQUIRIES: 'ah_impex_inquiries_v8',
+  USER: 'ah_impex_user_v8',
   TOKEN: 'ah_impex_access_token'
 };
 
@@ -27,7 +27,7 @@ export function DataProvider({ children }) {
   // 1. Auth & User Role State (SUPERADMIN, ADMIN, USER)
   const [currentUser, setCurrentUser] = useState(() => {
     try {
-      const saved = localStorage.getItem(STORAGE_KEYS.USER);
+      const saved = localStorage.getItem(STORAGE_KEYS.USER) || localStorage.getItem('ah_impex_user_v7');
       return saved ? JSON.parse(saved) : null;
     } catch {
       return null;
@@ -50,6 +50,8 @@ export function DataProvider({ children }) {
             const hasValidImg = p.image && typeof p.image === 'string' && (p.image.startsWith('data:') || p.image.startsWith('http') || p.image.startsWith('/') || p.image.startsWith('blob:'));
             return {
               ...p,
+              title: (p.title || '').replace(/\s+and\s+/gi, ' & '),
+              categoryName: (p.categoryName || p.category_name || '').replace(/\s+and\s+/gi, ' & '),
               image: hasValidImg ? p.image : getProductFallbackImage(p),
               fallbackImage: getProductFallbackImage(p)
             };
@@ -68,8 +70,11 @@ export function DataProvider({ children }) {
       const saved = localStorage.getItem(STORAGE_KEYS.CATEGORIES);
       if (saved) {
         const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length === DEFAULT_CATEGORIES.length) {
-          return parsed;
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          return parsed.map((c) => ({
+            ...c,
+            label: (c.label || c.name || '').replace(/\s+and\s+/gi, ' & ')
+          }));
         }
       }
       return DEFAULT_CATEGORIES;
@@ -131,6 +136,8 @@ export function DataProvider({ children }) {
           const finalImg = isCustomUpload ? p.image : (DEFAULT_PRODUCTS[idx]?.image || getProductFallbackImage(p));
           return {
             ...p,
+            title: (p.title || '').replace(/\s+and\s+/gi, ' & '),
+            categoryName: (p.categoryName || p.category_name || (typeof p.category === 'object' ? p.category.name : '') || '').replace(/\s+and\s+/gi, ' & '),
             image: finalImg,
             fallbackImage: getProductFallbackImage(p)
           };
