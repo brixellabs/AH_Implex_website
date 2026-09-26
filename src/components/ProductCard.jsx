@@ -63,13 +63,13 @@ export default function ProductCard({ product, onSelectProduct }) {
 
         {/* Card Content - Clean, simple, easy to read */}
         <div className="p-5">
-          {/* Title */}
-          <h3 className="text-lg font-bold text-slate-900 group-hover:text-brand-700 transition-colors font-serif line-clamp-1 mb-1.5">
+          {/* Title - Full Product Name without truncation */}
+          <h3 className="text-base sm:text-lg font-bold text-slate-900 group-hover:text-brand-700 transition-colors font-serif leading-snug mb-2 min-h-[52px] flex items-center">
             {product.title}
           </h3>
 
           {/* 1-Line Clean Material & Specs */}
-          <p className="text-xs text-slate-500 font-medium truncate mb-4">
+          <p className="text-xs text-slate-600 font-medium line-clamp-1 mb-4">
             {material} {weight ? `• ${weight}` : ''}
           </p>
 
