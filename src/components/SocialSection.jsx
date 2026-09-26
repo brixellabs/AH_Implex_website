@@ -70,7 +70,7 @@ export default function SocialSection() {
     {
       id: 'facebook',
       name: 'Facebook Page',
-      platform: 'Community & Reviews',
+      platform: 'Community and Reviews',
       handle: '@ahimpextextiles • Catalog',
       description: 'Review buyer feedback, view photo albums of finished consignments for retailers, and message trade reps directly.',
       bullets: [

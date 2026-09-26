@@ -65,10 +65,10 @@ export function getProductFallbackImage(product) {
 export const PRODUCT_CATEGORIES = [
   { id: 'all', label: 'All Collections' },
   { id: 'home', label: 'Home Textiles' },
-  { id: 'apparel', label: 'Apparel & Workwear' },
-  { id: 'hospitality', label: 'Hospitality & Dining' },
-  { id: 'medical', label: 'Institutional & Medical' },
-  { id: 'oem', label: 'OEM & Yarn Weaving' },
+  { id: 'apparel', label: 'Apparel and Workwear' },
+  { id: 'hospitality', label: 'Hospitality and Dining' },
+  { id: 'medical', label: 'Institutional and Medical' },
+  { id: 'oem', label: 'OEM and Yarn Weaving' },
 ];
 
 export const PRODUCTS = [
@@ -98,14 +98,14 @@ export const PRODUCTS = [
     id: 'prod-02',
     category: 'home',
     categoryName: 'Home Textiles',
-    title: 'High Thread-Count Hotel & Retail Bedding',
-    tagline: 'High thread count hotel & retail bedding crafted from combed long-staple cotton',
+    title: 'High Thread-Count Hotel and Retail Bedding',
+    tagline: 'High thread count hotel and retail bedding crafted from combed long-staple cotton',
     description: 'Crisp, lightweight hotel-grade percale and sateen weave designed for breathable luxury. Finished with hidden button closures and reinforced envelope pillow flaps.',
     image: highThreadCountImg,
     fallbackImage: highThreadCountImg,
     specs: {
       composition: '100% Combed Cotton / Egyptian Blend',
-      threadCount: '300 TC – 800 TC Sateen & Percale',
+      threadCount: '300 TC – 800 TC Sateen and Percale',
       gsm: '120 – 150 GSM',
       finish: 'Bio-wash, Soft hand feel, Easy Iron',
       sizes: 'Custom European & American sizing',
@@ -119,9 +119,9 @@ export const PRODUCTS = [
   {
     id: 'prod-03',
     category: 'apparel',
-    categoryName: 'Apparel & Workwear',
-    title: 'Industrial Workwear & High-Durability Twill',
-    tagline: 'Engineered high-durability fabrics for oil & gas, construction, and utilities',
+    categoryName: 'Apparel and Workwear',
+    title: 'Industrial Workwear and High-Durability Twill',
+    tagline: 'Engineered high-durability fabrics for oil and gas, construction, and utilities',
     description: 'Precision woven 3/1 twill fabrics engineered for harsh industrial environments. Optional flame-retardant (FR), anti-static, and water-repellent finishes.',
     image: industrialFabricsImg,
     fallbackImage: industrialFabricsImg,
@@ -141,7 +141,7 @@ export const PRODUCTS = [
   {
     id: 'prod-04',
     category: 'hospitality',
-    categoryName: 'Hospitality & Dining',
+    categoryName: 'Hospitality and Dining',
     title: '550 - 700 GSM Combed Ring-Spun Hotel Towels',
     tagline: 'Plush, ultra-absorbent terry towelling with reinforced double-stitched borders',
     description: 'Designed specifically for high-turnover industrial laundering in luxury hotel chains and resorts. Woven from 100% 2-ply ring-spun combed loops for maximum absorbency.',
@@ -162,8 +162,8 @@ export const PRODUCTS = [
   {
     id: 'prod-05',
     category: 'medical',
-    categoryName: 'Institutional & Medical',
-    title: 'Autoclavable Hospital Scrubs & Barrier Drapes',
+    categoryName: 'Institutional and Medical',
+    title: 'Autoclavable Hospital Scrubs and Barrier Drapes',
     tagline: 'Antimicrobial, bleach-safe fabrics for hospital systems and surgical centers',
     description: 'Medical grade poplin and micro-twill fabrics treated with antimicrobial finishes. Highly resistant to repeated high-temperature industrial autoclave wash cycles.',
     image: medicalFabricsImg,
@@ -183,16 +183,16 @@ export const PRODUCTS = [
   {
     id: 'prod-06',
     category: 'oem',
-    categoryName: 'OEM & Yarn Weaving',
-    title: 'Carded Yarn Cones, Canvas & Custom Weaving',
+    categoryName: 'OEM and Yarn Weaving',
+    title: 'Carded Yarn Cones, Canvas and Custom Weaving',
     tagline: 'Bespoke Warp/Weft Constructions from Greige to Finish',
-    description: 'Direct procurement of ring-spun & carded yarn cones. Shuttleless air-jet weaving of canvas, heavy duck, oxford, and greige master rolls up to 340cm width.',
+    description: 'Direct procurement of ring-spun and carded yarn cones. Shuttleless air-jet weaving of canvas, heavy duck, oxford, and greige master rolls up to 340cm width.',
     image: cardedYarnCanvasImg,
     fallbackImage: cardedYarnCanvasImg,
     specs: {
       yarnCounts: 'Ne 10/1 to Ne 100/1 Carded & Combed',
       widths: '60" to 134" Extra-Wide Weaving',
-      gsm: '120 – 480 GSM Heavy Canvas & Duck',
+      gsm: '120 – 480 GSM Heavy Canvas and Duck',
       finish: 'Greige master rolls, Bleached, Vat dyed',
       moq: '5,000 Linear Meters',
       leadTime: '30–45 Days'

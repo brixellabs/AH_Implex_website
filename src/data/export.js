@@ -30,7 +30,7 @@ export const EXPORT_REGIONS = [
   },
   {
     id: 'middle-east',
-    name: 'Middle East & GCC',
+    name: 'Middle East and GCC',
     countries: ['United Arab Emirates', 'Saudi Arabia', 'Qatar', 'Kuwait'],
     share: '10%',
     description: 'Five-star hospitality linens, luxury jacquard damask sets, and heavy-density hotel bath and bed collections.',
@@ -39,7 +39,7 @@ export const EXPORT_REGIONS = [
   },
   {
     id: 'oceania',
-    name: 'Australia & New Zealand',
+    name: 'Australia and New Zealand',
     countries: ['Australia', 'New Zealand'],
     share: '5%',
     description: 'Pure cotton percale and breathable linen blends formatted specifically for Southern Hemisphere seasonal cycles.',
@@ -50,12 +50,12 @@ export const EXPORT_REGIONS = [
 
 export const SHIPPING_CAPABILITIES = [
   {
-    title: 'FCL & LCL Ocean Freight',
+    title: 'FCL and LCL Ocean Freight',
     description: 'Full Container Load (20ft, 40ft High Cube) and Less than Container Load consolidated sea freight with real-time GPS container tracking.',
     icon: 'Ship'
   },
   {
-    title: 'Air Freight For Samples & Urgent POs',
+    title: 'Air Freight for Samples and Urgent POs',
     description: 'Rapid door-to-door courier samples (DHL/FedEx) and commercial air cargo chartering for critical seasonal rollouts.',
     icon: 'Plane'
   },
@@ -65,7 +65,7 @@ export const SHIPPING_CAPABILITIES = [
     icon: 'FileCheck'
   },
   {
-    title: 'Customs & Seaworthy Packing',
+    title: 'Customs and Seaworthy Packing',
     description: 'Heavy-duty 5-to-7-ply corrugated cartons with strapping, moisture-barrier lining, silica desiccant bags, and phytosanitary-certified heat-treated pallets.',
     icon: 'ShieldCheck'
   }
