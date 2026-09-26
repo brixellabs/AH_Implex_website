@@ -158,10 +158,13 @@ export function DataProvider({ children }) {
       if (saved) {
         const parsed = JSON.parse(saved);
         if (Array.isArray(parsed) && parsed.length > 0) {
-          return parsed.map((c) => ({
+          const map = new Map();
+          DEFAULT_CATEGORIES.forEach(c => map.set(c.id, c));
+          parsed.forEach(c => map.set(c.id, {
             ...c,
             label: (c.label || c.name || '').replace(/\s+and\s+/gi, ' & ')
           }));
+          return Array.from(map.values());
         }
       }
       return DEFAULT_CATEGORIES;

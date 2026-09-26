@@ -755,13 +755,22 @@ export default function AdminDashboard({ onExitAdmin }) {
                     onChange={(e) => setProductFilterCat(e.target.value)}
                     className="px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-slate-700 text-xs focus:outline-none focus:border-brand-500 font-medium cursor-pointer"
                   >
-                    <option value="all">All Categories ({dedupedProducts.length})</option>
+                    <option value="all">All Categories</option>
                     {categories.filter(c => c.id !== 'all').map((c) => (
                       <option key={c.id} value={c.id}>
-                        {c.label} ({getCategoryProductCount(c.id)})
+                        {c.label}
                       </option>
                     ))}
                   </select>
+                </div>
+
+                {/* Dynamic Product Count Indicator */}
+                <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-50 border border-slate-200 text-[11px] font-medium text-slate-600">
+                  <span>Showing</span>
+                  <strong className="text-slate-900 font-bold font-mono">{filteredProducts.length}</strong>
+                  <span>of</span>
+                  <strong className="text-slate-900 font-bold font-mono">{dedupedProducts.length}</strong>
+                  <span>Items</span>
                 </div>
               </div>
 
