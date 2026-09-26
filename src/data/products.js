@@ -32,24 +32,30 @@ export const PRODUCT_IMAGES = {
 export function getProductFallbackImage(product) {
   if (!product) return luxuryBedsheetsImg;
   
-  const text = `${product.id || ''} ${product.title || ''} ${product.category || ''} ${product.category_name || ''} ${product.categoryName || ''} ${product.tagline || ''} ${product.description || ''}`.toLowerCase();
+  const text = `${product.id || ''} ${product.title || ''} ${product.category || ''} ${product.category_name || ''} ${product.categoryName || ''} ${product.tagline || ''} ${product.description || ''} ${product.badge || ''}`.toLowerCase();
   
-  if (text.includes('canvas') || text.includes('duck') || text.includes('carded') || text.includes('greige') || text.includes('cone') || text.includes('oem') || text.includes('weaving')) {
-    return cardedYarnCanvasImg;
-  }
-  if (text.includes('medical') || text.includes('hospital') || text.includes('scrub') || text.includes('autoclav') || text.includes('barrier') || text.includes('drape') || text.includes('surgical')) {
-    return medicalFabricsImg;
-  }
-  if (text.includes('towel') || text.includes('terry') || text.includes('hospitality') || text.includes('dining') || text.includes('bath') || text.includes('pool') || text.includes('absorbent')) {
+  // 1. Towels & Terry Bath Linens
+  if (text.includes('towel') || text.includes('terry') || text.includes('bath') || text.includes('absorbent') || text.includes('plush') || text.includes('resort') || text.includes('dining') || text.includes('550') || text.includes('700')) {
     return terryTowelsImg;
   }
-  if (text.includes('workwear') || text.includes('twill') || text.includes('industrial') || text.includes('flame') || text.includes('apparel') || text.includes('oil') || text.includes('durability')) {
+  // 2. Medical, Hospital Scrubs & Autoclavable Fabrics
+  if (text.includes('hospital') || text.includes('medical') || text.includes('scrub') || text.includes('autoclav') || text.includes('barrier') || text.includes('drape') || text.includes('surgical') || text.includes('bleach') || text.includes('antimicrobial') || text.includes('poplin')) {
+    return medicalFabricsImg;
+  }
+  // 3. Yarn Cones, Canvas & OEM Weaving
+  if (text.includes('canvas') || text.includes('duck') || text.includes('carded') || text.includes('cone') || text.includes('yarn') || text.includes('greige') || text.includes('oem') || text.includes('weaving')) {
+    return cardedYarnCanvasImg;
+  }
+  // 4. Industrial Twill & Workwear Uniforms
+  if (text.includes('workwear') || text.includes('twill') || text.includes('industrial') || text.includes('durability') || text.includes('flame') || text.includes('apparel') || text.includes('oil') || text.includes('gas') || text.includes('11612') || text.includes('heavy-duty')) {
     return industrialFabricsImg;
   }
-  if (text.includes('thread') || text.includes('hotel') || text.includes('percale') || text.includes('retail')) {
+  // 5. High Thread Count Hotel Percale Bedding
+  if (text.includes('thread') || text.includes('percale') || text.includes('300tc') || text.includes('hotel') || text.includes('retail bedding') || text.includes('flagship')) {
     return highThreadCountImg;
   }
-  if (text.includes('sateen') || text.includes('bed') || text.includes('home') || text.includes('linen') || text.includes('sheet') || text.includes('quilt') || text.includes('cotton')) {
+  // 6. Luxury Sateen Bedding Collection
+  if (text.includes('sateen') || text.includes('luxury') || text.includes('bed') || text.includes('sheet') || text.includes('duvet') || text.includes('combed') || text.includes('400tc') || text.includes('1000tc')) {
     return luxuryBedsheetsImg;
   }
   

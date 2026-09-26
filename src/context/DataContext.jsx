@@ -15,11 +15,11 @@ import api from '../api/client';
 const DataContext = createContext(null);
 
 const STORAGE_KEYS = {
-  PRODUCTS: 'ah_impex_products_v2',
-  CATEGORIES: 'ah_impex_categories_v2',
-  COMPANY: 'ah_impex_company_v2',
-  INQUIRIES: 'ah_impex_inquiries_v2',
-  USER: 'ah_impex_user_v2',
+  PRODUCTS: 'ah_impex_products_v5',
+  CATEGORIES: 'ah_impex_categories_v5',
+  COMPANY: 'ah_impex_company_v5',
+  INQUIRIES: 'ah_impex_inquiries_v5',
+  USER: 'ah_impex_user_v5',
   TOKEN: 'ah_impex_access_token'
 };
 
@@ -122,11 +122,16 @@ export function DataProvider({ children }) {
       }
 
       if (prodsRes.status === 'fulfilled' && Array.isArray(prodsRes.value) && prodsRes.value.length > 0) {
-        const enrichedProds = prodsRes.value.map(p => ({
-          ...p,
-          image: (p.image && typeof p.image === 'string' && (p.image.startsWith('http') || p.image.startsWith('data:'))) ? p.image : getProductFallbackImage(p),
-          fallbackImage: getProductFallbackImage(p)
-        }));
+        const enrichedProds = prodsRes.value.map((p, idx) => {
+          const isUnsplash = typeof p.image === 'string' && p.image.includes('unsplash.com');
+          const isCustomUpload = p.image && typeof p.image === 'string' && !isUnsplash && (p.image.startsWith('data:') || p.image.includes('/media/products/'));
+          const finalImg = isCustomUpload ? p.image : (DEFAULT_PRODUCTS[idx]?.image || getProductFallbackImage(p));
+          return {
+            ...p,
+            image: finalImg,
+            fallbackImage: getProductFallbackImage(p)
+          };
+        });
         setProducts(enrichedProds);
         localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(enrichedProds));
         connected = true;
