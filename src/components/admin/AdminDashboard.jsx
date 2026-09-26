@@ -473,7 +473,7 @@ export default function AdminDashboard({ onExitAdmin }) {
               </div>
               <div className="flex items-center gap-2.5">
                 <span className="text-base font-extrabold text-white tracking-tight font-display">
-                  A&amp;H <span className="text-brand-300 font-light">IMPEX</span>
+                  A<span className="font-sans font-semibold">&amp;</span>H <span className="text-brand-300 font-light">IMPEX</span>
                 </span>
                 <span className="hidden sm:inline-block px-2.5 py-0.5 rounded-full bg-brand-800/90 text-brand-200 border border-brand-600/50 text-[10px] font-semibold tracking-wide">
                   Console
@@ -641,7 +641,7 @@ export default function AdminDashboard({ onExitAdmin }) {
                 <div className="flex items-center justify-between">
                   <div>
                     <h3 className="text-lg font-bold text-slate-900 font-display">Quick Management Actions</h3>
-                    <p className="text-xs text-slate-500 mt-0.5">Direct shortcuts to manage commercial catalog &amp; buyer workflows</p>
+                    <p className="text-xs text-slate-500 mt-0.5">Direct shortcuts to manage commercial catalog <span className="font-sans font-semibold">&amp;</span> buyer workflows</p>
                   </div>
                 </div>
 
@@ -654,7 +654,7 @@ export default function AdminDashboard({ onExitAdmin }) {
                       <FontAwesomeIcon icon={faPlus} />
                     </div>
                     <span className="font-bold text-slate-900 text-xs block">Add New Product</span>
-                    <span className="text-[11px] text-slate-500">Upload images &amp; export specs</span>
+                    <span className="text-[11px] text-slate-500">Upload images <span className="font-sans font-semibold">&amp;</span> export specs</span>
                   </button>
 
                   <button
@@ -665,7 +665,7 @@ export default function AdminDashboard({ onExitAdmin }) {
                       <FontAwesomeIcon icon={faTags} />
                     </div>
                     <span className="font-bold text-slate-900 text-xs block">Manage Categories</span>
-                    <span className="text-[11px] text-slate-500">Edit product sectors &amp; taxonomy</span>
+                    <span className="text-[11px] text-slate-500">Edit product sectors <span className="font-sans font-semibold">&amp;</span> taxonomy</span>
                   </button>
 
                   <button
@@ -676,7 +676,7 @@ export default function AdminDashboard({ onExitAdmin }) {
                       <FontAwesomeIcon icon={faInbox} />
                     </div>
                     <span className="font-bold text-slate-900 text-xs block">View Buyer RFQs</span>
-                    <span className="text-[11px] text-slate-500">Check incoming quotes &amp; dispatch</span>
+                    <span className="text-[11px] text-slate-500">Check incoming quotes <span className="font-sans font-semibold">&amp;</span> dispatch</span>
                   </button>
                 </div>
               </div>
@@ -864,13 +864,13 @@ export default function AdminDashboard({ onExitAdmin }) {
               <div>
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-800 text-xs font-semibold uppercase tracking-wider mb-2 border border-blue-100">
                   <FontAwesomeIcon icon={faTags} className="text-blue-600 text-xs" />
-                  <span>Taxonomy &amp; Catalog Management</span>
+                  <span>Taxonomy <span className="font-sans font-semibold">&amp;</span> Catalog Management</span>
                 </div>
                 <h2 className="text-xl sm:text-2xl font-bold text-slate-900 font-display">
-                  Product Categories &amp; Classifications
+                  Product Categories <span className="font-sans font-semibold">&amp;</span> Classifications
                 </h2>
                 <p className="text-xs sm:text-sm text-slate-500 mt-1 max-w-2xl">
-                  Define &amp; structure export product categories. Categories instantly organize catalog browsing &amp; power buyer quote routing.
+                  Define <span className="font-sans font-semibold">&amp;</span> structure export product categories. Categories instantly organize catalog browsing <span className="font-sans font-semibold">&amp;</span> power buyer quote routing.
                 </p>
               </div>
 
@@ -1039,7 +1039,7 @@ export default function AdminDashboard({ onExitAdmin }) {
                   <span>Content Management System</span>
                 </div>
                 <h2 className="text-xl sm:text-2xl font-bold text-slate-900 font-display">
-                  Hero Section &amp; Commercial Contacts
+                  Hero Section <span className="font-sans font-semibold">&amp;</span> Commercial Contacts
                 </h2>
                 <p className="text-xs sm:text-sm text-slate-500 mt-1 max-w-2xl">
                   Update live corporate hero copywriting, value propositions, &amp; official export desk communications. All changes sync in real-time.
@@ -1180,7 +1180,7 @@ export default function AdminDashboard({ onExitAdmin }) {
                   <div>
                     <label className="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
                       <FontAwesomeIcon icon={faLocationDot} className="text-rose-600 text-xs" />
-                      <span>Headquarters &amp; Mill Address</span>
+                      <span>Headquarters <span className="font-sans font-semibold">&amp;</span> Mill Address</span>
                     </label>
                     <input
                       type="text"
@@ -1226,8 +1226,10 @@ export default function AdminDashboard({ onExitAdmin }) {
             <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
               <div className="p-5 border-b border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
-                  <h3 className="text-base font-bold text-slate-900 font-serif">Commercial Buyer RFQs &amp; Inquiries</h3>
-                  <span className="text-xs text-slate-500">Every inquiry automatically triggers email dispatch to company &amp; buyer</span>
+                  <h3 className="text-base font-bold text-slate-900 font-serif">
+                    Commercial Buyer RFQs <span className="font-sans font-semibold">&amp;</span> Inquiries
+                  </h3>
+                  <span className="text-xs text-slate-500">Every inquiry automatically triggers email dispatch to company <span className="font-sans font-semibold">&amp;</span> buyer</span>
                 </div>
                 <span className="px-3 py-1 rounded-full bg-blue-50 text-blue-800 text-xs font-bold font-mono">
                   {inquiries.length} Total Submissions
@@ -1238,8 +1240,8 @@ export default function AdminDashboard({ onExitAdmin }) {
                 <table className="w-full text-left text-xs text-slate-600">
                   <thead className="bg-slate-50 text-slate-700 font-mono text-[11px] uppercase tracking-wider border-b border-slate-200">
                     <tr>
-                      <th className="py-3 px-4">Ref Code &amp; Date</th>
-                      <th className="py-3 px-4">Buyer &amp; Company</th>
+                      <th className="py-3 px-4">Ref Code <span className="font-sans font-semibold">&amp;</span> Date</th>
+                      <th className="py-3 px-4">Buyer <span className="font-sans font-semibold">&amp;</span> Company</th>
                       <th className="py-3 px-4">Inquired Product / Volume</th>
                       <th className="py-3 px-4">Port / Requirements</th>
                       <th className="py-3 px-4">Status</th>

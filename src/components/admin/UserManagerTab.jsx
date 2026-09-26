@@ -131,13 +131,13 @@ export default function UserManagerTab({ onToast }) {
         <div>
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-semibold uppercase tracking-wider mb-2">
             <FontAwesomeIcon icon={faShieldHalved} className="text-slate-500" />
-            <span>Staff &amp; Access Governance</span>
+            <span>Staff <span className="font-sans font-semibold">&amp;</span> Access Governance</span>
           </div>
           <h2 className="text-xl sm:text-2xl font-bold text-slate-900 font-display">
-            User Accounts &amp; Staff Roles
+            User Accounts <span className="font-sans font-semibold">&amp;</span> Staff Roles
           </h2>
           <p className="text-xs sm:text-sm text-slate-500 mt-1 max-w-2xl">
-            Manage staff credentials, allocate administrative privileges, &amp; review registered buyer access levels across the platform.
+            Manage staff credentials, allocate administrative privileges, <span className="font-sans font-semibold">&amp;</span> review registered buyer access levels across the platform.
           </p>
         </div>
 
@@ -200,7 +200,7 @@ export default function UserManagerTab({ onToast }) {
             <thead className="bg-slate-50 text-slate-700 font-mono text-[11px] uppercase tracking-wider border-b border-slate-200">
               <tr>
                 <th className="py-3 px-4">User Details</th>
-                <th className="py-3 px-4">Company &amp; Country</th>
+                <th className="py-3 px-4">Company <span className="font-sans font-semibold">&amp;</span> Country</th>
                 <th className="py-3 px-4">Current Role</th>
                 <th className="py-3 px-4">Role Action / Promotion</th>
                 <th className="py-3 px-4 text-right">Actions</th>

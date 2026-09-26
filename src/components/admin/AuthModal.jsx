@@ -87,7 +87,7 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
               Staff Portal Sign In
             </h2>
             <p className="text-xs text-brand-300 font-light text-left">
-              A&amp;H IMPEX Management Console
+              A<span className="font-sans font-semibold">&amp;</span>H IMPEX Management Console
             </p>
           </div>
         </div>
