@@ -137,7 +137,7 @@ export default function UserManagerTab({ onToast }) {
             User Accounts &amp; Staff Roles
           </h2>
           <p className="text-xs sm:text-sm text-slate-500 mt-1 max-w-2xl">
-            Manage staff credentials, allocate administrative privileges, and review registered buyer access levels across the platform.
+            Manage staff credentials, allocate administrative privileges, &amp; review registered buyer access levels across the platform.
           </p>
         </div>
 
@@ -322,7 +322,7 @@ export default function UserManagerTab({ onToast }) {
                 </div>
                 <div>
                   <h3 className="text-base font-bold text-slate-900 font-serif">Create New Staff Admin Account</h3>
-                  <span className="text-[11px] text-slate-500">Grants administrative access to products and RFQs</span>
+                  <span className="text-[11px] text-slate-500">Grants administrative access to products &amp; RFQs</span>
                 </div>
               </div>
               <button

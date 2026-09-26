@@ -168,7 +168,7 @@ export default function AdminDashboard({ onExitAdmin }) {
       const reader = new FileReader();
       reader.onloadend = () => {
         setProductFormData((prev) => ({ ...prev, image: reader.result }));
-        showToast('Image attached and ready for upload!');
+        showToast('Image attached & ready for upload!');
       };
       reader.readAsDataURL(file);
     }
@@ -516,7 +516,7 @@ export default function AdminDashboard({ onExitAdmin }) {
                   <button
                     onClick={handleAdminLogout}
                     className="w-8 h-8 rounded-lg bg-brand-800 hover:bg-rose-900/60 border border-brand-700 hover:border-rose-500/40 text-slate-300 hover:text-rose-200 flex items-center justify-center text-xs transition-all ml-1 shadow-sm"
-                    title="Sign out and return to website"
+                    title="Sign out &amp; return to website"
                   >
                     <FontAwesomeIcon icon={faRightFromBracket} />
                   </button>
@@ -861,7 +861,7 @@ export default function AdminDashboard({ onExitAdmin }) {
                   Product Categories &amp; Classifications
                 </h2>
                 <p className="text-xs sm:text-sm text-slate-500 mt-1 max-w-2xl">
-                  Define and structure export product categories. Categories instantly organize catalog browsing and power buyer quote routing.
+                  Define &amp; structure export product categories. Categories instantly organize catalog browsing &amp; power buyer quote routing.
                 </p>
               </div>
 
@@ -916,7 +916,7 @@ export default function AdminDashboard({ onExitAdmin }) {
                     <span>Catalog Integration</span>
                   </div>
                   <p className="text-[11px] leading-relaxed text-slate-500">
-                    Categories automatically synchronize with the frontend product filter tabs and RFQ specification selectors across the live portal.
+                    Categories automatically synchronize with the frontend product filter tabs &amp; RFQ specification selectors across the live portal.
                   </p>
                 </div>
               </div>
@@ -1033,7 +1033,7 @@ export default function AdminDashboard({ onExitAdmin }) {
                   Hero Section &amp; Commercial Contacts
                 </h2>
                 <p className="text-xs sm:text-sm text-slate-500 mt-1 max-w-2xl">
-                  Update live corporate hero copywriting, value propositions, and official export desk communications. All changes sync in real-time.
+                  Update live corporate hero copywriting, value propositions, &amp; official export desk communications. All changes sync in real-time.
                 </p>
               </div>
 
@@ -1079,7 +1079,7 @@ export default function AdminDashboard({ onExitAdmin }) {
                       rows={4}
                       value={companyFormData.heroDescription}
                       onChange={(e) => setCompanyFormData({ ...companyFormData, heroDescription: e.target.value })}
-                      placeholder="Enter detailed company introduction and manufacturing summary..."
+                      placeholder="Enter detailed company introduction &amp; manufacturing summary..."
                       className="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:outline-none focus:border-brand-500 focus:bg-white transition-all shadow-inner leading-relaxed"
                     />
                   </div>
@@ -1100,7 +1100,7 @@ export default function AdminDashboard({ onExitAdmin }) {
                       {companyFormData.eyebrow || 'Institutional Bedding • Hospitality Linens • Workwear Textiles'}
                     </span>
                     <p className="text-xs text-slate-300 leading-relaxed font-sans">
-                      {companyFormData.heroDescription || 'Vertically integrated spinning, weaving, eco-dyeing, and precision automated stitching mill delivering container-grade textile shipments to international markets.'}
+                      {companyFormData.heroDescription || 'Vertically integrated spinning, weaving, eco-dyeing, & precision automated stitching mill delivering container-grade textile shipments to international markets.'}
                     </p>
                   </div>
                 </div>
@@ -1196,7 +1196,7 @@ export default function AdminDashboard({ onExitAdmin }) {
                     <span>Save CMS Changes</span>
                   </button>
                   <p className="text-[11px] text-center text-slate-400">
-                    Saves directly to Django REST API and updates live website content.
+                    Saves directly to Django REST API &amp; updates live website content.
                   </p>
                 </div>
 
