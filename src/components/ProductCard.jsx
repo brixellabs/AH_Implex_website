@@ -17,10 +17,8 @@ import SafeImage from './SafeImage';
 import { getProductFallbackImage } from '../data/products';
 
 export default function ProductCard({ product, onSelectProduct }) {
-  const localImage = getProductFallbackImage(product);
-  const displaySrc = product.image && (typeof product.image === 'string' && (product.image.startsWith('/src/assets/Product') || product.image.startsWith('data:image') || product.image.includes('assets/Product') || product.image.includes('luxury') || product.image.includes('carded') || product.image.includes('cotton') || product.image.includes('fabrics') || product.image.includes('towelling') || product.image.includes('bleach-safe')))
-    ? product.image 
-    : localImage;
+  const fallbackImg = getProductFallbackImage(product);
+  const displaySrc = product?.image || fallbackImg;
 
   return (
     <motion.div
@@ -36,7 +34,7 @@ export default function ProductCard({ product, onSelectProduct }) {
         <div className="relative h-52 sm:h-64 md:h-72 w-full overflow-hidden bg-slate-100">
           <SafeImage
             src={displaySrc}
-            fallbackSrc={localImage}
+            fallbackSrc={fallbackImg}
             alt={product.title}
             className="w-full h-full"
             zoomOnHover={true}
