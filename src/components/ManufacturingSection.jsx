@@ -161,7 +161,16 @@ export default function ManufacturingSection() {
                 </div>
 
                 <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white tracking-tight mb-3 sm:mb-4 font-serif">
-                  {activeStep.title}
+                  {String(activeStep.title).includes('&') ? (
+                    activeStep.title.split('&').map((part, i, arr) => (
+                      <React.Fragment key={i}>
+                        {part}
+                        {i < arr.length - 1 && <span className="font-sans font-semibold">&amp;</span>}
+                      </React.Fragment>
+                    ))
+                  ) : (
+                    activeStep.title
+                  )}
                 </h3>
 
                 <p className="text-slate-300 text-xs sm:text-sm md:text-base leading-relaxed mb-4 sm:mb-6 font-light">

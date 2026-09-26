@@ -10,9 +10,9 @@ import qualityInspectionImg from '../assets/quality inspection.jfif';
 export const MANUFACTURING_STEPS = [
   {
     step: '01',
-    title: 'Yarn Selection and Warping',
-    tagline: 'Precision Fiber Sourcing and High-Tension Creeling',
-    description: 'We procure ring-spun, combed, and compact yarns from ISO-accredited spinning mills. Yarns undergo testing for Uster CV%, count uniformity, and tensile strength before high-speed computerized direct warping.',
+    title: 'Yarn Selection & Warping',
+    tagline: 'Precision Fiber Sourcing & High-Tension Creeling',
+    description: 'We procure ring-spun, combed, & compact yarns from ISO-accredited spinning mills. Yarns undergo testing for Uster CV%, count uniformity, & tensile strength before high-speed computerized direct warping.',
     image: yarnWarpingImg,
     fallbackImage: yarnWarpingImg,
     specs: [
@@ -26,7 +26,7 @@ export const MANUFACTURING_STEPS = [
     step: '02',
     title: 'Air-Jet Weaving',
     tagline: 'High-Speed Shuttleless Weaving Looms',
-    description: 'Our weaving facility runs modern high-speed air-jet looms capable of producing tight, flawless plain weaves, sateens, percales, twills, and dobby textures with uniform selvages up to 340cm width.',
+    description: 'Our weaving facility runs modern high-speed air-jet looms capable of producing tight, flawless plain weaves, sateens, percales, twills, & dobby textures with uniform selvages up to 340cm width.',
     image: airJetWeavingImg,
     fallbackImage: airJetWeavingImg,
     specs: [
@@ -34,13 +34,13 @@ export const MANUFACTURING_STEPS = [
       { label: 'Max Width', value: 'Up to 340 cm (134 inches)' },
       { label: 'Weave Capabilities', value: 'Percale, Sateen, Twill, Dobby, Oxford' }
     ],
-    highlights: ['Electronic let-off and take-up', 'Optical weft insertion detectors', 'Low air-consumption eco-valves']
+    highlights: ['Electronic let-off & take-up', 'Optical weft insertion detectors', 'Low air-consumption eco-valves']
   },
   {
     step: '03',
-    title: 'Dyeing and Finishing',
-    tagline: 'Continuous Bleaching and Eco-Friendly Reactive Dyeing',
-    description: 'Fabrics are processed using continuous pad-steam and thermofix dyeing lines. We utilize low-salt, OEKO-TEX Standard 100 compliant reactive dyestuffs followed by mercerizing, stenter heat-setting, and calendaring.',
+    title: 'Dyeing & Finishing',
+    tagline: 'Continuous Bleaching & Eco-Friendly Reactive Dyeing',
+    description: 'Fabrics are processed using continuous pad-steam & thermofix dyeing lines. We utilize low-salt, OEKO-TEX Standard 100 compliant reactive dyestuffs followed by mercerizing, stenter heat-setting, & calendaring.',
     image: dyeingFinishingImg,
     fallbackImage: dyeingFinishingImg,
     specs: [
@@ -52,9 +52,9 @@ export const MANUFACTURING_STEPS = [
   },
   {
     step: '04',
-    title: 'Stitching and Detailing',
-    tagline: 'Automated Hemming and Precision Unit Assembly',
-    description: 'Equipped with computerized lockstitch, overlock, and automatic multi-needle flatbed machines. Our skilled operators assemble fitted sheets, duvet covers, pillowcases, and garments with reinforced stress seams.',
+    title: 'Stitching & Detailing',
+    tagline: 'Automated Hemming & Precision Unit Assembly',
+    description: 'Equipped with computerized lockstitch, overlock, & automatic multi-needle flatbed machines. Our skilled operators assemble fitted sheets, duvet covers, pillowcases, & garments with reinforced stress seams.',
     image: stitchingDetailingImg,
     fallbackImage: stitchingDetailingImg,
     specs: [
@@ -66,9 +66,9 @@ export const MANUFACTURING_STEPS = [
   },
   {
     step: '05',
-    title: 'Quality Inspection and Dispatch',
-    tagline: '100% Light-Table Review, Metal Detection and Packing',
-    description: 'Every finished unit passes through illuminated light tables for optical grading, needle detection, and barcode verification before being sealed in export-grade cartons with moisture barrier lining.',
+    title: 'Quality Inspection & Dispatch',
+    tagline: '100% Light-Table Review, Metal Detection & Packing',
+    description: 'Every finished unit passes through illuminated light tables for optical grading, needle detection, & barcode verification before being sealed in export-grade cartons with moisture barrier lining.',
     image: qualityInspectionImg,
     fallbackImage: qualityInspectionImg,
     specs: [
@@ -76,6 +76,6 @@ export const MANUFACTURING_STEPS = [
       { label: 'Safety', value: 'Ferrous & Non-Ferrous Needle Detector' },
       { label: 'Packaging', value: 'Drop-Test Certified Heavy Corrugated Cartons' }
     ],
-    highlights: ['Comprehensive pre-shipment audit dossier', 'Container palletization with humidity desiccants', 'Full bill of lading and export documentation']
+    highlights: ['Comprehensive pre-shipment audit dossier', 'Container palletization with humidity desiccants', 'Full bill of lading & export documentation']
   }
 ];

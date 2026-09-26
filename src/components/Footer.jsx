@@ -48,16 +48,16 @@ export default function Footer({ onOpenQuoteModal, onOpenAdmin }) {
               </div>
               <div className="flex flex-col">
                 <span className="text-lg sm:text-xl font-bold tracking-tight text-white font-display">
-                  A&amp;H <span className="text-brand-300 font-light">IMPEX</span>
+                  A<span className="font-sans font-semibold">&amp;</span>H <span className="text-brand-300 font-light">IMPEX</span>
                 </span>
                 <span className="text-[9px] sm:text-[10px] tracking-widest uppercase text-slate-400 font-medium">
-                  Textile Manufacturer &amp; Exports
+                  Textile Manufacturer <span className="font-sans font-semibold">&amp;</span> Exporter
                 </span>
               </div>
             </a>
 
             <p className="text-xs sm:text-sm text-slate-400 leading-relaxed font-light max-w-sm">
-              Vertically integrated manufacturer and international exporter of luxury bed linens, hospitality institutional textiles, and export apparel. Operating European air-jet looms and strict AQL 1.5 standards.
+              Vertically integrated manufacturer <span className="font-sans font-semibold">&amp;</span> international exporter of luxury bed linens, hospitality institutional textiles, <span className="font-sans font-semibold">&amp;</span> export apparel. Operating European air-jet looms <span className="font-sans font-semibold">&amp;</span> strict AQL 1.5 standards.
             </p>
 
             {/* Social Media Channels */}
@@ -108,7 +108,7 @@ export default function Footer({ onOpenQuoteModal, onOpenAdmin }) {
             <div className="flex items-center gap-2 pt-1">
               <span className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[11px] sm:text-xs font-medium font-mono">
                 <FontAwesomeIcon icon={faShieldHalved} className="text-xs" aria-hidden="true" />
-                ISO 9001 and OEKO-TEX Standard 100
+                ISO 9001 <span className="font-sans font-semibold">&amp;</span> OEKO-TEX Standard 100
               </span>
             </div>
           </div>
@@ -121,7 +121,7 @@ export default function Footer({ onOpenQuoteModal, onOpenAdmin }) {
             <ul className="space-y-2 sm:space-y-2.5 text-xs text-slate-400">
               <li>
                 <a href="#about" className="hover:text-brand-300 transition-colors">
-                  About A&amp;H Impex
+                  About A<span className="font-sans font-semibold">&amp;</span>H Impex
                 </a>
               </li>
               <li>
@@ -136,7 +136,7 @@ export default function Footer({ onOpenQuoteModal, onOpenAdmin }) {
               </li>
               <li>
                 <a href="#certifications" className="hover:text-brand-300 transition-colors">
-                  Compliance and Certifications
+                  Compliance <span className="font-sans font-semibold">&amp;</span> Certifications
                 </a>
               </li>
               <li>
@@ -175,12 +175,12 @@ export default function Footer({ onOpenQuoteModal, onOpenAdmin }) {
             <ul className="space-y-2 sm:space-y-2.5 text-xs text-slate-400">
               <li>
                 <a href="#products" className="hover:text-brand-300 transition-colors">
-                  Luxury Sateen and Percale Bedding
+                  Luxury Sateen <span className="font-sans font-semibold">&amp;</span> Percale Bedding
                 </a>
               </li>
               <li>
                 <a href="#products" className="hover:text-brand-300 transition-colors">
-                  Hotel and Resort White Linens
+                  Hotel <span className="font-sans font-semibold">&amp;</span> Resort White Linens
                 </a>
               </li>
               <li>
@@ -190,12 +190,12 @@ export default function Footer({ onOpenQuoteModal, onOpenAdmin }) {
               </li>
               <li>
                 <a href="#products" className="hover:text-brand-300 transition-colors">
-                  Export Chinos and Fleece Apparel
+                  Export Chinos <span className="font-sans font-semibold">&amp;</span> Fleece Apparel
                 </a>
               </li>
               <li>
                 <a href="#products" className="hover:text-brand-300 transition-colors">
-                  Custom OEM Greige and Dyed Fabrics
+                  Custom OEM Greige <span className="font-sans font-semibold">&amp;</span> Dyed Fabrics
                 </a>
               </li>
               <li>

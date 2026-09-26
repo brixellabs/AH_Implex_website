@@ -17,25 +17,25 @@ import {
 export const PILLARS = [
   {
     icon: faBullseye,
-    title: 'Vision and Mission',
+    title: 'Vision & Mission',
     subtitle: 'Strategic Global Excellence',
-    description: 'To be the most reliable international partner for high-precision woven textiles and home furnishings, championing vertical innovation and sustainable manufacturing practices.',
+    description: 'To be the most reliable international partner for high-precision woven textiles & home furnishings, championing vertical innovation & sustainable manufacturing practices.',
     linkText: 'Explore Strategy',
     href: '#about'
   },
   {
     icon: faAward,
-    title: 'Quality and Integrity',
+    title: 'Quality & Integrity',
     subtitle: 'Zero Defect Philosophy',
-    description: 'From yarn tension monitoring to 100% light-table review and ANSI/ASQ Z1.4 sampling, every meter is guaranteed to meet stringent international tensile and colorfast standards.',
+    description: 'From yarn tension monitoring to 100% light-table review & ANSI/ASQ Z1.4 sampling, every meter is guaranteed to meet stringent international tensile & colorfast standards.',
     linkText: 'View QC Pipeline',
     href: '#quality'
   },
   {
     icon: faUsers,
-    title: 'Social and HR Policy',
+    title: 'Social & HR Policy',
     subtitle: 'Ethical Workplace Culture',
-    description: 'Operating in strict accordance with amfori BSCI and Sedex SMETA principles—ensuring fair living wages, workplace safety, female empowerment, and zero child labor.',
+    description: 'Operating in strict accordance with amfori BSCI & Sedex SMETA principles—ensuring fair living wages, workplace safety, female empowerment, & zero child labor.',
     linkText: 'Read Standards',
     href: '#certifications'
   }
@@ -52,7 +52,7 @@ export default function CompanyPillars() {
             Strategic Foundation
           </p>
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white font-serif tracking-tight">
-            Built on Precision, Integrity and Global Standards
+            Built on Precision, Integrity <span className="font-sans font-semibold">&amp;</span> Global Standards
           </h2>
         </div>
 
@@ -79,7 +79,16 @@ export default function CompanyPillars() {
 
                 <div className="flex items-center justify-between mb-1.5">
                   <h3 className="text-lg sm:text-xl font-bold text-white tracking-wide group-hover:text-brand-200 transition-colors font-serif">
-                    {pillar.title}
+                    {String(pillar.title).includes('&') ? (
+                      pillar.title.split('&').map((part, i, arr) => (
+                        <React.Fragment key={i}>
+                          {part}
+                          {i < arr.length - 1 && <span className="font-sans font-semibold">&amp;</span>}
+                        </React.Fragment>
+                      ))
+                    ) : (
+                      pillar.title
+                    )}
                   </h3>
                   <FontAwesomeIcon icon={faArrowUpRightFromSquare} className="text-xs text-slate-400 group-hover:text-brand-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" aria-hidden="true" />
                 </div>

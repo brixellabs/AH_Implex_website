@@ -19,37 +19,37 @@ export const COMPANY = {
   shortName: 'A&H Impex',
   eyebrow: 'TEXTILE MANUFACTURER & GLOBAL EXPORTER',
   tagline: 'Premium Textiles. Precision Manufacturing. Global Reach.',
-  heroDescription: 'Vertically integrated textile manufacturing excellence. From high-speed air-jet weaving to precision stitching, we engineer certified home textiles, institutional linens, and apparel for discerning global brands and importers.',
+  heroDescription: 'Vertically integrated textile manufacturing excellence. From high-speed air-jet weaving to precision stitching, we engineer certified home textiles, institutional linens, & apparel for discerning global brands & importers.',
 
   about: {
     title: 'Precision Craftsmanship Engineered for Global Commerce',
     subtitle: 'Two Decades of Textile Innovation & Industrial Integrity',
-    paragraph1: 'A&H Impex is an established textile manufacturer and international exporter delivering premium woven fabrics, luxury bed linens, hospitality solutions, and export-grade garments. Founded with an uncompromising focus on vertical quality, we bridge technical manufacturing precision with global supply chain reliability.',
-    paragraph2: 'Our production ecosystem integrates state-of-the-art European and Japanese air-jet looms, computerized reactive dyeing lines, and high-precision stitching facilities. With an annual weaving and processing capacity exceeding 18 million linear meters, we cater to premier department stores, luxury hotel chains, and retail brands across North America, Europe, and the Middle East.',
-    paragraph3: 'Every consignment produced within our facility strictly conforms to international human-ecological and social standards, including ISO 9001:2015, OEKO-TEX Standard 100, and amfori BSCI protocols.'
+    paragraph1: 'A&H Impex is an established textile manufacturer & international exporter delivering premium woven fabrics, luxury bed linens, hospitality solutions, & export-grade garments. Founded with an uncompromising focus on vertical quality, we bridge technical manufacturing precision with global supply chain reliability.',
+    paragraph2: 'Our production ecosystem integrates state-of-the-art European & Japanese air-jet looms, computerized reactive dyeing lines, & high-precision stitching facilities. With an annual weaving & processing capacity exceeding 18 million linear meters, we cater to premier department stores, luxury hotel chains, & retail brands across North America, Europe, & the Middle East.',
+    paragraph3: 'Every consignment produced within our facility strictly conforms to international human-ecological & social standards, including ISO 9001:2015, OEKO-TEX Standard 100, & amfori BSCI protocols.'
   },
 
   // Verified manufacturing statistics for count-up displays
   stats: [
-    { value: 18, suffix: 'M+', label: 'Meters Annual Output', description: 'Air-jet weaving, dyeing and processing capacity' },
+    { value: 18, suffix: 'M+', label: 'Meters Annual Output', description: 'Air-jet weaving, dyeing & processing capacity' },
     { value: 180, suffix: '+', label: 'Air-Jet & Dobby Looms', description: 'Shuttleless high-efficiency weaving infrastructure' },
-    { value: 25, suffix: '+', label: 'Export Destinations', description: 'Serving clients across EU, USA, UK, and Middle East' },
+    { value: 25, suffix: '+', label: 'Export Destinations', description: 'Serving clients across EU, USA, UK, & Middle East' },
     { value: 99.6, suffix: '%', label: 'AQL Quality Pass Rate', description: 'ANSI/ASQ Z1.4 Level II standard inspection record' }
   ],
 
   // Core trust pillars featured in hero and value rows
   trustPillars: [
     { title: 'Quality Focused', description: 'Rigorous 6-stage testing from raw yarn to final packaging' },
-    { title: 'Export Ready', description: 'Seaworthy packing, customs clearance, and global port delivery' },
-    { title: 'OEM & Private Label', description: 'Custom weaving, bespoke dyeing, and branded packaging' },
-    { title: 'International Standards', description: 'ISO 9001, OEKO-TEX 100, BSCI, and Sedex compliant' }
+    { title: 'Export Ready', description: 'Seaworthy packing, customs clearance, & global port delivery' },
+    { title: 'OEM & Private Label', description: 'Custom weaving, bespoke dyeing, & branded packaging' },
+    { title: 'International Standards', description: 'ISO 9001, OEKO-TEX 100, BSCI, & Sedex compliant' }
   ],
 
   // Core technical capabilities
   capabilities: [
     {
       title: 'High-Speed Air-Jet Weaving',
-      desc: 'Uniform yarn density across sateens, percales, and dobby textures up to 340cm extra-wide widths.',
+      desc: 'Uniform yarn density across sateens, percales, & dobby textures up to 340cm extra-wide widths.',
       stat: '180+ Looms'
     },
     {
@@ -59,12 +59,12 @@ export const COMPANY = {
     },
     {
       title: 'Precision Cut & Stitching Lines',
-      desc: 'Computerized multi-needle hemming and automated elastication for bedding and institutional linens.',
+      desc: 'Computerized multi-needle hemming & automated elastication for bedding & institutional linens.',
       stat: '10-12 SPI'
     },
     {
       title: 'Turnkey Store-Ready Packaging',
-      desc: 'Self-fabric zippered bags, FSC-certified cardboard sleeves, barcodes, and master cartons.',
+      desc: 'Self-fabric zippered bags, FSC-certified cardboard sleeves, barcodes, & master cartons.',
       stat: '100% Export Grade'
     }
   ],

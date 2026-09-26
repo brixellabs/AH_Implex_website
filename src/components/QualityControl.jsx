@@ -107,7 +107,16 @@ export default function QualityControl({ onOpenQuoteModal }) {
                 </div>
 
                 <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-slate-900 tracking-tight mb-3 sm:mb-4 font-serif">
-                  {activeStage.name}
+                  {String(activeStage.name).includes('&') ? (
+                    activeStage.name.split('&').map((part, i, arr) => (
+                      <React.Fragment key={i}>
+                        {part}
+                        {i < arr.length - 1 && <span className="font-sans font-semibold">&amp;</span>}
+                      </React.Fragment>
+                    ))
+                  ) : (
+                    activeStage.name
+                  )}
                 </h3>
 
                 <p className="text-slate-600 text-xs sm:text-sm md:text-base leading-relaxed mb-4 sm:mb-6">

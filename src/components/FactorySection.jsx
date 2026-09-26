@@ -97,7 +97,7 @@ export default function FactorySection({ onOpenQuoteModal }) {
             target={18}
             suffix="M+"
             label="Meters Output"
-            description="Annual air-jet weaving, dyeing and processing capacity"
+            description="Annual air-jet weaving, dyeing &amp; processing capacity"
           />
           <CounterItem
             target={180}
@@ -109,7 +109,7 @@ export default function FactorySection({ onOpenQuoteModal }) {
             target={25}
             suffix="+"
             label="Export Countries"
-            description="Active retail and institutional supply chains globally"
+            description="Active retail &amp; institutional supply chains globally"
           />
           <CounterItem
             target={99.6}

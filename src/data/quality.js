@@ -12,9 +12,9 @@ export const QUALITY_STAGES = [
   {
     id: 'stage-1',
     step: '01',
-    name: 'Raw Material and Yarn Inspection',
+    name: 'Raw Material & Yarn Inspection',
     tag: 'Incoming QC',
-    description: 'Every consignment of raw cotton and yarn is checked for fiber length, Micronaire value, tensile strength, and twist per inch. Lot-wise verification guarantees uniform lot dyeing later.',
+    description: 'Every consignment of raw cotton & yarn is checked for fiber length, Micronaire value, tensile strength, & twist per inch. Lot-wise verification guarantees uniform lot dyeing later.',
     checkpoints: [
       'Fiber length & micronaire testing',
       'Yarn count verification (Ne)',
@@ -40,9 +40,9 @@ export const QUALITY_STAGES = [
   {
     id: 'stage-3',
     step: '03',
-    name: 'Color Fastness and Shrinkage Testing',
+    name: 'Color Fastness & Shrinkage Testing',
     tag: 'Laboratory QC',
-    description: 'In-house physical and wet laboratory conducting accelerated commercial wash trials, rub fastness (Crockmeter), spectrophotometric Delta-E color evaluation, and warp/weft shrinkage tests.',
+    description: 'In-house physical & wet laboratory conducting accelerated commercial wash trials, rub fastness (Crockmeter), spectrophotometric Delta-E color evaluation, & warp/weft shrinkage tests.',
     checkpoints: [
       'Delta-E < 0.8 color variance',
       'Wash fastness (ISO 105-C06) Grade 4–5',
@@ -54,9 +54,9 @@ export const QUALITY_STAGES = [
   {
     id: 'stage-4',
     step: '04',
-    name: 'In-Line Stitching and Seam Inspection',
+    name: 'In-Line Stitching & Seam Inspection',
     tag: 'Production QC',
-    description: 'Stationed quality auditors check stitch tension, SPI (stitches per inch), hemming accuracy, and seam elasticity during active assembly to prevent batch defects before completion.',
+    description: 'Stationed quality auditors check stitch tension, SPI (stitches per inch), hemming accuracy, & seam elasticity during active assembly to prevent batch defects before completion.',
     checkpoints: [
       '10–12 SPI uniform lockstitch check',
       'Tension balance & thread trimming',
@@ -70,7 +70,7 @@ export const QUALITY_STAGES = [
     step: '05',
     name: 'Final AQL Inspection',
     tag: 'International Audit',
-    description: 'Independent QA managers randomly pull packaged cartons in accordance with ANSI/ASQ Z1.4 (ISO 2859-1) Level II sampling, validating packaging, labeling, barcode accuracy, and aesthetics.',
+    description: 'Independent QA managers randomly pull packaged cartons in accordance with ANSI/ASQ Z1.4 (ISO 2859-1) Level II sampling, validating packaging, labeling, barcode accuracy, & aesthetics.',
     checkpoints: [
       'AQL 1.5 Major / AQL 4.0 Minor',
       'Carton drop test & barcode scan',
@@ -82,9 +82,9 @@ export const QUALITY_STAGES = [
   {
     id: 'stage-6',
     step: '06',
-    name: 'Metal Detection and Container Loading Check',
+    name: 'Metal Detection & Container Loading Check',
     tag: 'Pre-Shipment QC',
-    description: 'All consumer textile units pass through 9-point calibrated metal detectors to detect broken needle tips. Containers are inspected for clean dry floors, odor-free walls, and desiccant placement.',
+    description: 'All consumer textile units pass through 9-point calibrated metal detectors to detect broken needle tips. Containers are inspected for clean dry floors, odor-free walls, & desiccant placement.',
     checkpoints: [
       'Ferrous & non-ferrous needle detection',
       'Container floor moisture < 12%',

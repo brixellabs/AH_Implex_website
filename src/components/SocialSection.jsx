@@ -33,7 +33,7 @@ export default function SocialSection() {
       name: 'LinkedIn Corporate Page',
       platform: 'B2B Trade Network',
       handle: '@ah-impex • Sourcing',
-      description: 'Connect with our Director of Export, supply chain merchandisers, and procurement team for official corporate updates.',
+      description: 'Connect with our Director of Export, supply chain merchandisers, & procurement team for official corporate updates.',
       bullets: [
         'Monthly Export Dispatch Reports',
         'OEKO-TEX & BSCI Audits',
@@ -52,7 +52,7 @@ export default function SocialSection() {
       name: 'Instagram Gallery',
       platform: 'Visual Catalog',
       handle: '@a_h_impex • Mill Reels',
-      description: 'Explore reels showing our airjet looms, continuous dyeing processes, custom embroidery, and close-up fabric texture swatches.',
+      description: 'Explore reels showing our airjet looms, continuous dyeing processes, custom embroidery, & close-up fabric texture swatches.',
       bullets: [
         'Close-up TC Weave Textures',
         'Track Suit & Chino Fittings',
@@ -69,9 +69,9 @@ export default function SocialSection() {
     {
       id: 'facebook',
       name: 'Facebook Page',
-      platform: 'Community and Reviews',
+      platform: 'Community & Reviews',
       handle: '@ahimpextextiles • Catalog',
-      description: 'Review buyer feedback, view photo albums of finished consignments for retailers, and message trade reps directly.',
+      description: 'Review buyer feedback, view photo albums of finished consignments for retailers, & message trade reps directly.',
       bullets: [
         'Live Messenger Support',
         'Verified Client Ratings',
@@ -90,7 +90,7 @@ export default function SocialSection() {
       name: 'WhatsApp Trade Desk',
       platform: 'Instant Desk',
       handle: `${whatsappFormatted}`,
-      description: 'Connect directly with senior international merchandising team for fast-track swatches, container pricing, and lead times.',
+      description: 'Connect directly with senior international merchandising team for fast-track swatches, container pricing, & lead times.',
       bullets: [
         'Instant Volume Costing',
         'Fabric Swatch Tracking',
@@ -117,7 +117,7 @@ export default function SocialSection() {
           </h2>
 
           <p className="text-slate-600 text-xs sm:text-base mt-2 sm:mt-3 font-normal leading-relaxed">
-            Stay updated with our latest weaving videos, newly stitched fabric collections, trade show attendances, and direct buyer testimonials.
+            Stay updated with our latest weaving videos, newly stitched fabric collections, trade show attendances, &amp; direct buyer testimonials.
           </p>
         </div>
 

@@ -32,7 +32,7 @@ export default function ExportMarkets({ onOpenQuoteModal }) {
           </h2>
 
           <p className="text-slate-300 text-xs sm:text-base mt-2 sm:mt-4 font-light">
-            Exporting full-container loads (FCL) and consolidated shipments (LCL) directly to major commercial ports across North America, the European Union, the UK, and the GCC.
+            Exporting full-container loads (FCL) <span className="font-sans font-semibold">&amp;</span> consolidated shipments (LCL) directly to major commercial ports across North America, the European Union, the UK, <span className="font-sans font-semibold">&amp;</span> the GCC.
           </p>
         </div>
 
@@ -94,7 +94,7 @@ export default function ExportMarkets({ onOpenQuoteModal }) {
                 onClick={() => onOpenQuoteModal({ subject: `Inquiry: Shipping Rates to ${activeRegion.name}` })}
                 className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-blue-600 via-brand-500 to-brand-600 text-white font-bold text-xs uppercase tracking-wider shadow-lg hover:scale-[1.01] transition-all flex items-center justify-center gap-2 shimmer-sweep text-center"
               >
-                <span>Calculate Freight &amp; Lead Times for {activeRegion.name}</span>
+                <span>Calculate Freight <span className="font-sans font-semibold">&amp;</span> Lead Times for {activeRegion.name}</span>
                 <FontAwesomeIcon icon={faArrowRight} className="text-xs shrink-0" aria-hidden="true" />
               </button>
             </div>

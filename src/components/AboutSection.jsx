@@ -23,7 +23,7 @@ export default function AboutSection({ onOpenQuoteModal }) {
     {
       icon: faIndustry,
       title: 'High-Speed Air-Jet Weaving',
-      desc: 'Uniform density sateens, percales, twills, and dobby weaves up to 340cm width on Japanese & European looms.',
+      desc: 'Uniform density sateens, percales, twills, & dobby weaves up to 340cm width on Japanese & European looms.',
       stat: '180+ Looms'
     },
     {
@@ -35,13 +35,13 @@ export default function AboutSection({ onOpenQuoteModal }) {
     {
       icon: faBuilding,
       title: 'Precision Cut & Stitching',
-      desc: 'Automated flatbed lockstitch, multi-needle elastic hemming, and bar-tack reinforcement for bedding & apparel.',
+      desc: 'Automated flatbed lockstitch, multi-needle elastic hemming, & bar-tack reinforcement for bedding & apparel.',
       stat: '10-12 SPI'
     },
     {
       icon: faBoxOpen,
       title: 'Turnkey Retail Packaging',
-      desc: 'Store-ready packaging: self-fabric zippered bags, FSC-certified sleeves, barcodes, and export carton strapping.',
+      desc: 'Store-ready packaging: self-fabric zippered bags, FSC-certified sleeves, barcodes, & export carton strapping.',
       stat: '100% Export Grade'
     }
   ];
@@ -82,7 +82,7 @@ export default function AboutSection({ onOpenQuoteModal }) {
             className="lg:col-span-7 flex flex-col justify-center"
           >
             <p className="text-xs sm:text-sm font-bold tracking-widest text-brand-600 uppercase font-mono mb-3 sm:mb-4">
-              About A&amp;H Impex
+              About A<span className="font-sans font-semibold">&amp;</span>H Impex
             </p>
 
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight leading-tight mb-3 sm:mb-4 font-serif">
@@ -145,7 +145,7 @@ export default function AboutSection({ onOpenQuoteModal }) {
               Core Manufacturing Capabilities
             </h3>
             <p className="text-xs sm:text-sm text-slate-600 mt-2 font-normal">
-              Engineered infrastructure supporting large-scale contract production and boutique private label runs.
+              Engineered infrastructure supporting large-scale contract production <span className="font-sans font-semibold">&amp;</span> boutique private label runs.
             </p>
           </div>
 
@@ -169,7 +169,7 @@ export default function AboutSection({ onOpenQuoteModal }) {
                     </span>
                   </div>
 
-                  <h4 className="text-sm sm:text-base font-bold text-slate-900 mb-1.5 sm:mb-2 tracking-wide font-serif group-hover:text-brand-700 transition-colors">
+                  <h4 className="text-sm sm:text-base font-bold text-slate-900 mb-1.5 sm:mb-2 tracking-wide font-sans group-hover:text-brand-700 transition-colors">
                     {item.title}
                   </h4>
 

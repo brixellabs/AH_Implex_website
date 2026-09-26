@@ -102,12 +102,12 @@ export default function Navbar({ onOpenQuoteModal, onOpenAdmin }) {
               <div className="flex flex-col text-left justify-center">
                 <div className="flex items-center gap-1 sm:gap-1.5">
                   <span className="text-sm sm:text-base lg:text-lg font-bold tracking-wider text-white font-display uppercase leading-tight group-hover:text-brand-200 transition-colors whitespace-nowrap">
-                    A&amp;H <span className="text-brand-300 font-light">IMPEX</span>
+                    A<span className="font-sans font-semibold">&amp;</span>H <span className="text-brand-300 font-light">IMPEX</span>
                   </span>
                   <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_#34D399]" />
                 </div>
                 <span className="text-[7.5px] sm:text-[8.5px] tracking-[0.15em] sm:tracking-[0.2em] uppercase text-slate-300 font-semibold whitespace-nowrap">
-                  Textile Manufacturer &amp; Exporter
+                  Textile Manufacturer <span className="font-sans font-semibold">&amp;</span> Exporter
                 </span>
               </div>
             </a>
