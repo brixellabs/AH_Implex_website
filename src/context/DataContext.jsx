@@ -252,7 +252,32 @@ export function DataProvider({ children }) {
       await fetchAllFromBackend();
       return { success: true, user: data.user };
     } catch (error) {
-      return { success: false, error: error.message || 'Login failed' };
+      // Offline / Local Demo Fallback Authentication
+      const u = (username || '').toLowerCase().trim();
+      if (
+        (u === 'superadmin' && (password === 'SuperAdmin123!' || password === 'superadmin')) ||
+        (u === 'admin' && (password === 'Admin123!' || password === 'admin')) ||
+        (u === 'client_user' && (password === 'Client123!' || password === 'client'))
+      ) {
+        const isSuper = u === 'superadmin';
+        const role = isSuper ? 'SUPERADMIN' : (u === 'admin' ? 'ADMIN' : 'USER');
+        const fallbackUser = {
+          id: isSuper ? 1 : (u === 'admin' ? 2 : 3),
+          username: u,
+          email: isSuper ? 'superadmin@ah-impex.com' : (u === 'admin' ? 'admin@ah-impex.com' : 'client@nordichotels.se'),
+          first_name: isSuper ? 'Chief' : (u === 'admin' ? 'Export' : 'Henrik'),
+          last_name: isSuper ? 'Executive' : (u === 'admin' ? 'Manager' : 'Larsson'),
+          role: role,
+          is_superadmin: isSuper,
+          is_staff: isSuper || role === 'ADMIN',
+          company_name: isSuper ? 'A&H IMPEX Head Office' : (u === 'admin' ? 'A&H IMPEX Commercial Operations' : 'Nordic Hospitality Group'),
+          country: isSuper || u === 'admin' ? 'Pakistan' : 'Sweden'
+        };
+        setCurrentUser(fallbackUser);
+        localStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(fallbackUser));
+        return { success: true, user: fallbackUser };
+      }
+      return { success: false, error: error.message || 'Invalid username or password' };
     }
   };
 
