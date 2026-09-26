@@ -70,13 +70,12 @@ def _send_via_resend(api_key, from_email, to_email, subject, html_content, reply
     )
     try:
         with urllib.request.urlopen(req, timeout=12) as response:
-            res_data = response.read().decode('utf-8')
-            logger.info(f"✅ Resend Response: {res_data}")
+            logger.info(f"[Resend Response] {res_data}")
             return response.status in (200, 201, 202)
     except urllib.error.HTTPError as e:
         err_msg = e.read().decode('utf-8')
-        logger.error(f"❌ Resend API HTTP Error {e.code}: {err_msg}")
-        print(f"❌ [Resend HTTP {e.code}] {err_msg}")
+        logger.error(f"[Resend API HTTP Error {e.code}] {err_msg}")
+        print(f"[Resend HTTP {e.code}] {err_msg}")
         raise Exception(f"Resend API ({e.code}): {err_msg}")
 
 
@@ -127,34 +126,34 @@ def dispatch_single_email(to_email, subject, html_content, plain_content, reply_
     if brevo_key:
         try:
             if _send_via_brevo(brevo_key, from_addr, to_email, subject, html_content, reply_to):
-                logger.info(f"✅ [Brevo HTTPS API] Successfully sent email to {to_email}")
-                print(f"✅ [Brevo HTTPS API] Sent to {to_email}")
+                logger.info(f"[Brevo HTTPS API] Successfully sent email to {to_email}")
+                print(f"[Brevo HTTPS API] Sent to {to_email}")
                 return True
         except Exception as e:
-            logger.error(f"❌ [Brevo API Error] {str(e)}")
-            print(f"❌ [Brevo API Error] {str(e)}")
+            logger.error(f"[Brevo API Error] {str(e)}")
+            print(f"[Brevo API Error] {str(e)}")
 
     # 2. Try Resend HTTP API (Port 443 - Works on Render)
     if resend_key:
         try:
             if _send_via_resend(resend_key, from_addr, to_email, subject, html_content, reply_to):
-                logger.info(f"✅ [Resend HTTPS API] Successfully sent email to {to_email}")
-                print(f"✅ [Resend HTTPS API] Sent to {to_email}")
+                logger.info(f"[Resend HTTPS API] Successfully sent email to {to_email}")
+                print(f"[Resend HTTPS API] Sent to {to_email}")
                 return True
         except Exception as e:
-            logger.error(f"❌ [Resend API Error] {str(e)}")
-            print(f"❌ [Resend API Error] {str(e)}")
+            logger.error(f"[Resend API Error] {str(e)}")
+            print(f"[Resend API Error] {str(e)}")
 
     # 3. Try SendGrid HTTP API (Port 443 - Works on Render)
     if sendgrid_key:
         try:
             if _send_via_sendgrid(sendgrid_key, from_addr, to_email, subject, html_content, reply_to):
-                logger.info(f"✅ [SendGrid HTTPS API] Successfully sent email to {to_email}")
-                print(f"✅ [SendGrid HTTPS API] Sent to {to_email}")
+                logger.info(f"[SendGrid HTTPS API] Successfully sent email to {to_email}")
+                print(f"[SendGrid HTTPS API] Sent to {to_email}")
                 return True
         except Exception as e:
-            logger.error(f"❌ [SendGrid API Error] {str(e)}")
-            print(f"❌ [SendGrid API Error] {str(e)}")
+            logger.error(f"[SendGrid API Error] {str(e)}")
+            print(f"[SendGrid API Error] {str(e)}")
 
     # 4. Fallback to Standard Django SMTP (Port 587/465)
     try:
@@ -167,12 +166,12 @@ def dispatch_single_email(to_email, subject, html_content, plain_content, reply_
         )
         msg.attach_alternative(html_content, "text/html")
         msg.send(fail_silently=False)
-        logger.info(f"✅ [SMTP] Successfully dispatched email to {to_email}")
-        print(f"✅ [SMTP] Sent to {to_email}")
+        logger.info(f"[SMTP] Successfully dispatched email to {to_email}")
+        print(f"[SMTP] Sent to {to_email}")
         return True
     except Exception as e:
-        logger.error(f"❌ [SMTP Error] Failed sending to {to_email}: {str(e)}")
-        print(f"❌ [SMTP Error] Failed sending to {to_email}: {str(e)}")
+        logger.error(f"[SMTP Error] Failed sending to {to_email}: {str(e)}")
+        print(f"[SMTP Error] Failed sending to {to_email}: {str(e)}")
         return False
 
 
