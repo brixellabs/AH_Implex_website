@@ -15,11 +15,11 @@ import api from '../api/client';
 const DataContext = createContext(null);
 
 const STORAGE_KEYS = {
-  PRODUCTS: 'ah_impex_products_v5',
-  CATEGORIES: 'ah_impex_categories_v5',
-  COMPANY: 'ah_impex_company_v5',
-  INQUIRIES: 'ah_impex_inquiries_v5',
-  USER: 'ah_impex_user_v5',
+  PRODUCTS: 'ah_impex_products_v6',
+  CATEGORIES: 'ah_impex_categories_v6',
+  COMPANY: 'ah_impex_company_v6',
+  INQUIRIES: 'ah_impex_inquiries_v6',
+  USER: 'ah_impex_user_v6',
   TOKEN: 'ah_impex_access_token'
 };
 
