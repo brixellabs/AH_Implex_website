@@ -102,16 +102,16 @@ def send_inquiry_email_notifications(inquiry):
             body=company_plain_message,
             from_email=from_email,
             to=[company_email],
-            reply_to=[inquiry.email]
+            reply_to=[inquiry.email] if inquiry.email else None
         )
         msg.attach_alternative(company_html_message, "text/html")
         msg.send(fail_silently=False)
         inquiry.email_sent_to_company = True
-        logger.info(f"Successfully sent RFQ notification to company: {company_email}")
+        logger.info(f"✅ Successfully sent RFQ notification to company: {company_email}")
+        print(f"✅ [EMAIL SUCCESS] Sent RFQ #{inquiry.id} to company: {company_email}")
     except Exception as e:
-        logger.warning(f"Failed to send email to company ({company_email}). Error: {str(e)}")
-        # If configured for console fallback, we print to standard output
-        print(f"\n[EMAIL DISPATCH TO COMPANY] Subject: {company_subject}\nTo: {company_email}\n{company_plain_message}\n")
+        logger.error(f"❌ Failed to send email to company ({company_email}). Error: {str(e)}")
+        print(f"❌ [EMAIL ERROR] Failed sending to company ({company_email}): {str(e)}")
 
     # -------------------------------------------------------------
     # 2. SEND CONFIRMATION TO CLIENT
@@ -198,8 +198,10 @@ def send_inquiry_email_notifications(inquiry):
             msg.attach_alternative(client_html_message, "text/html")
             msg.send(fail_silently=False)
             inquiry.email_sent_to_client = True
-            logger.info(f"Successfully sent confirmation email to client: {inquiry.email}")
+            logger.info(f"✅ Successfully sent confirmation email to client: {inquiry.email}")
+            print(f"✅ [EMAIL SUCCESS] Sent confirmation email to client: {inquiry.email}")
         except Exception as e:
-            logger.warning(f"Failed to send confirmation email to client ({inquiry.email}). Error: {str(e)}")
+            logger.error(f"❌ Failed to send confirmation email to client ({inquiry.email}). Error: {str(e)}")
+            print(f"❌ [EMAIL ERROR] Failed sending to client ({inquiry.email}): {str(e)}")
 
     inquiry.save(update_fields=['email_sent_to_company', 'email_sent_to_client'])

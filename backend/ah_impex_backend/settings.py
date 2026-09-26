@@ -189,10 +189,19 @@ EMAIL_HOST = os.getenv('EMAIL_HOST', 'smtp.gmail.com')
 EMAIL_PORT = int(os.getenv('EMAIL_PORT', 587))
 EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS', 'True').lower() in ('true', '1', 't')
 EMAIL_USE_SSL = os.getenv('EMAIL_USE_SSL', 'False').lower() in ('true', '1', 't')
-EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', 'dummy.export.ahimpex@gmail.com')
-EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', 'dummy_app_password_xyz123')
-DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', 'A&H Impex Global Export <dummy.export.ahimpex@gmail.com>')
-COMPANY_NOTIFICATION_EMAIL = os.getenv('COMPANY_NOTIFICATION_EMAIL', 'info@ah-impex.com')
+EMAIL_TIMEOUT = int(os.getenv('EMAIL_TIMEOUT', 15))
+
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', '').strip()
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', '').strip()
+
+DEFAULT_FROM_EMAIL = os.getenv(
+    'DEFAULT_FROM_EMAIL',
+    f"A&H IMPEX Export <{EMAIL_HOST_USER}>" if EMAIL_HOST_USER else "A&H IMPEX <export@ah-impex.com>"
+)
+COMPANY_NOTIFICATION_EMAIL = os.getenv(
+    'COMPANY_NOTIFICATION_EMAIL',
+    EMAIL_HOST_USER if EMAIL_HOST_USER else "info@ah-impex.com"
+)
 
 
 # Internationalization
