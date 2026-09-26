@@ -14,7 +14,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faArrowRight,
   faCircleCheck,
-  faStar,
   faFileInvoice
 } from '@fortawesome/free-solid-svg-icons';
 import { COMPANY } from '../data/company';
@@ -157,12 +156,6 @@ export default function HeroSection({ onOpenQuoteModal }) {
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="flex flex-col items-start w-full bg-[#071830]/30 sm:bg-transparent p-4 sm:p-0 rounded-2xl sm:rounded-none backdrop-blur-[2px] sm:backdrop-blur-none border border-white/5 sm:border-transparent"
           >
-            {/* Eyebrow badge */}
-            <div className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-1 sm:py-1.5 rounded-full bg-[#0e294d]/95 border border-brand-400/40 text-brand-200 text-[11px] sm:text-xs font-semibold tracking-wider uppercase mb-4 sm:mb-6 shadow-lg backdrop-blur-md font-mono">
-              <FontAwesomeIcon icon={faStar} className="text-gold-400 text-xs" aria-hidden="true" />
-              <span>{info.eyebrow}</span>
-            </div>
-
             {/* Main Heading with Drop Shadow */}
             <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-[1.18] sm:leading-[1.15] mb-4 sm:mb-6 font-serif drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
               Premium Textiles.{' '}
