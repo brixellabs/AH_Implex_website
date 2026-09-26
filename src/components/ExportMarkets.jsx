@@ -12,7 +12,10 @@ import {
   faShip,
   faAnchor,
   faClock,
-  faArrowRight
+  faArrowRight,
+  faLocationDot,
+  faArrowUpRightFromSquare,
+  faIndustry
 } from '@fortawesome/free-solid-svg-icons';
 import { EXPORT_REGIONS, SHIPPING_CAPABILITIES } from '../data/export';
 
@@ -103,71 +106,59 @@ export default function ExportMarkets({ onOpenQuoteModal }) {
             </div>
           </div>
 
-          {/* Right Column: Stylized Global Logistics Visual with Animated Port Dots */}
+          {/* Right Column: Interactive Google Map with Mill Location */}
           <div className="lg:col-span-6">
-            <div className="glass-card rounded-2xl p-4 sm:p-8 border border-brand-700/60 relative overflow-hidden shadow-2xl">
-              <div className="flex items-center justify-between pb-3 sm:pb-4 border-b border-brand-700/60 mb-4 sm:mb-6">
+            <div className="glass-card rounded-2xl p-4 sm:p-6 border border-brand-700/60 relative overflow-hidden shadow-2xl">
+              <div className="flex items-center justify-between pb-3 sm:pb-4 border-b border-brand-700/60 mb-3 sm:mb-4">
                 <div className="flex items-center gap-2">
-                  <FontAwesomeIcon icon={faAnchor} className="text-brand-300 text-xs" aria-hidden="true" />
+                  <FontAwesomeIcon icon={faIndustry} className="text-brand-300 text-xs sm:text-sm" aria-hidden="true" />
                   <span className="text-xs font-bold text-white uppercase tracking-wider font-mono">
-                    Ocean &amp; Air Freight Hubs
+                    A&amp;H IMPEX Mill &amp; Export Hub
                   </span>
                 </div>
-                <span className="text-[10px] sm:text-[11px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-medium font-mono">
-                  24/7 Tracking
+                <span className="text-[10px] sm:text-[11px] px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-medium font-mono flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  <span>Verified Facility</span>
                 </span>
               </div>
 
-              {/* Stylized World Map Graphic Canvas */}
-              <div className="relative aspect-[16/11] sm:aspect-[16/10] bg-brand-950 rounded-xl overflow-hidden border border-brand-700/50 p-3 sm:p-4 flex flex-col justify-between min-h-[220px]">
-                {/* Background dot grid */}
-                <div className="absolute inset-0 bg-fabric-weave opacity-40 pointer-events-none" />
+              {/* Embedded Google Map */}
+              <div className="relative aspect-[16/11] sm:aspect-[16/10] bg-brand-950 rounded-xl overflow-hidden border border-brand-700/50 min-h-[260px] sm:min-h-[320px] shadow-inner">
+                <iframe
+                  title="A&H IMPEX Mill Location"
+                  src="https://maps.google.com/maps?q=Khurrianwala%20Industrial%20Zone%2C%20Faisalabad%2C%20Pakistan&t=&z=12&ie=UTF8&iwloc=&output=embed"
+                  className="w-full h-full border-0 absolute inset-0"
+                  loading="lazy"
+                  allowFullScreen
+                />
 
-                {/* Animated trade lines representation */}
-                <svg className="absolute inset-0 w-full h-full pointer-events-none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                  <path d="M 180 120 Q 120 70 80 60" fill="none" stroke="rgba(148,191,228,0.5)" strokeWidth="1.5" strokeDasharray="4 4" />
-                  <path d="M 180 120 Q 90 40 40 70" fill="none" stroke="rgba(148,191,228,0.5)" strokeWidth="1.5" strokeDasharray="4 4" />
-                  <path d="M 180 120 Q 150 100 130 110" fill="none" stroke="rgba(148,191,228,0.5)" strokeWidth="1.5" strokeDasharray="4 4" />
-                  <path d="M 180 120 Q 220 150 250 170" fill="none" stroke="rgba(148,191,228,0.5)" strokeWidth="1.5" strokeDasharray="4 4" />
-                </svg>
-
-                {/* Port Markers */}
-                <div className="relative z-10 flex flex-col justify-between h-full text-xs">
-                  <div className="flex justify-between items-start gap-2">
-                    <div className="bg-brand-900/90 border border-brand-700/60 p-1.5 sm:p-2 rounded-lg backdrop-blur-md">
-                      <p className="font-bold text-white text-[10px] sm:text-[11px] font-serif">North America</p>
-                      <p className="text-[9px] sm:text-[10px] text-brand-300 font-mono">LA / NY Ports</p>
+                {/* Floating Bottom Location Badge */}
+                <div className="absolute bottom-2.5 left-2.5 right-2.5 sm:bottom-3 sm:left-3 sm:right-3 bg-brand-900/95 backdrop-blur-md p-2.5 sm:p-3 rounded-xl border border-brand-500/40 shadow-2xl flex items-center justify-between gap-2 z-10">
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-1.5 text-xs font-bold text-white">
+                      <FontAwesomeIcon icon={faLocationDot} className="text-red-400 text-xs shrink-0" />
+                      <span className="truncate font-serif">A&amp;H IMPEX Mill &amp; Export Desk</span>
                     </div>
-
-                    <div className="bg-brand-900/90 border border-brand-700/60 p-1.5 sm:p-2 rounded-lg backdrop-blur-md">
-                      <p className="font-bold text-white text-[10px] sm:text-[11px] font-serif">Europe</p>
-                      <p className="text-[9px] sm:text-[10px] text-emerald-400 font-mono">Rotterdam / Hamburg</p>
-                    </div>
+                    <p className="text-[10px] sm:text-[11px] text-slate-300 truncate font-light mt-0.5">
+                      Khurrianwala Industrial Estate, Faisalabad, Pakistan
+                    </p>
                   </div>
 
-                  {/* Mill Center Origin Pin */}
-                  <div className="self-center bg-gradient-to-r from-blue-600 to-brand-600 text-white px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg shadow-xl font-extrabold text-[10px] sm:text-[11px] flex items-center gap-1.5 border border-white/40">
-                    <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-white animate-ping" />
-                    <span className="font-display">A&amp;H IMPEX MILL HUB</span>
-                  </div>
-
-                  <div className="flex justify-between items-end gap-2">
-                    <div className="bg-brand-900/90 border border-brand-700/60 p-1.5 sm:p-2 rounded-lg backdrop-blur-md">
-                      <p className="font-bold text-white text-[10px] sm:text-[11px] font-serif">Middle East</p>
-                      <p className="text-[9px] sm:text-[10px] text-brand-300 font-mono">Jebel Ali (Dubai)</p>
-                    </div>
-
-                    <div className="bg-brand-900/90 border border-brand-700/60 p-1.5 sm:p-2 rounded-lg backdrop-blur-md">
-                      <p className="font-bold text-white text-[10px] sm:text-[11px] font-serif">Oceania</p>
-                      <p className="text-[9px] sm:text-[10px] text-slate-300 font-mono">Sydney / Melbourne</p>
-                    </div>
-                  </div>
+                  <a
+                    href="https://www.google.com/maps/search/?api=1&query=Khurrianwala+Industrial+Zone+Faisalabad+Pakistan"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-2.5 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-[10px] sm:text-xs font-semibold shrink-0 flex items-center gap-1.5 shadow-md transition-all hover:scale-105"
+                  >
+                    <span>Open in Maps</span>
+                    <FontAwesomeIcon icon={faArrowUpRightFromSquare} className="text-[10px]" />
+                  </a>
                 </div>
               </div>
 
               {/* Incoterms Bar */}
-              <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-brand-700/60 flex flex-wrap items-center justify-between text-xs text-slate-300 gap-2">
-                <span className="text-slate-400 font-medium text-xs">Supported Incoterms:</span>
+              <div className="mt-3 sm:mt-4 pt-3 border-t border-brand-700/60 flex flex-wrap items-center justify-between text-xs text-slate-300 gap-2">
+                <span className="text-slate-400 font-medium text-[11px] sm:text-xs">Supported Incoterms:</span>
                 <div className="flex items-center gap-1 sm:gap-1.5 font-bold text-brand-200 text-[10px] sm:text-[11px] font-mono">
                   {['FOB', 'CIF', 'CFR', 'DDP', 'EXW'].map((term) => (
                     <span key={term} className="px-1.5 sm:px-2 py-0.5 rounded bg-brand-800 border border-brand-700/60">
