@@ -119,7 +119,7 @@ export default function SocialSection() {
           </div>
 
           <h2 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-slate-900 tracking-tight font-serif leading-tight">
-            Connect With A&amp;H IMPEX On <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-700 via-brand-600 to-blue-600">Social Media</span>
+            Connect With A<span className="font-sans font-semibold">&amp;</span>H IMPEX On <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-700 via-brand-600 to-blue-600">Social Media</span>
           </h2>
 
           <p className="text-slate-600 text-xs sm:text-base mt-2 sm:mt-3 font-normal leading-relaxed">
