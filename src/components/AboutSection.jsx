@@ -16,7 +16,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import SafeImage from './SafeImage';
 import { COMPANY } from '../data/company';
-import airJetWeavingImg from '../assets/air jet weaving.jpg';
+import sewingMachineImg from '../assets/sewing machine.jpg';
 
 export default function AboutSection({ onOpenQuoteModal }) {
   const capabilities = [
@@ -64,8 +64,8 @@ export default function AboutSection({ onOpenQuoteModal }) {
             {/* Outer decorative frame */}
             <div className="relative rounded-2xl overflow-hidden shadow-xl border border-slate-200 group">
               <SafeImage
-                src={airJetWeavingImg}
-                fallbackSrc={airJetWeavingImg}
+                src={sewingMachineImg}
+                fallbackSrc={sewingMachineImg}
                 alt="A&H IMPEX Garment & Bedsheet Precision Stitching & Manufacturing"
                 className="w-full h-64 sm:h-80 md:h-[480px] object-cover"
                 zoomOnHover={true}
